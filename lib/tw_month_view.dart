@@ -1,16 +1,17 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-07-24 16:20:33
+ * @LastEditTime: 2022-07-24 20:50:26
  * @Description: 月视图
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'tw_calendar_notification.dart';
 import 'tw_day_number.dart';
 import 'tw_month_title.dart';
 import 'utils/tw_calendart_tool.dart';
+
+class TWMonthViewConfigure {}
 
 class TWMonthView extends StatefulWidget {
   const TWMonthView({
@@ -36,6 +37,8 @@ class TWMonthView extends StatefulWidget {
   final List<String>? monthNames;
   final DateTime? selectStartDateTime;
   final DateTime? selectEndDateTime;
+
+  // final EdgeInsetsGeometry? margin;
 
   /// 开始的年月份
   final DateTime firstDate;
@@ -152,9 +155,7 @@ class _TWMonthViewState extends State<TWMonthView> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(
-                top: 5.w,
-              ),
+              margin: const EdgeInsets.only(top: 5),
               child: TWMonthTitle(
                 year: widget.year,
                 month: widget.month,
@@ -162,7 +163,7 @@ class _TWMonthViewState extends State<TWMonthView> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 8.w),
+              margin: const EdgeInsets.only(top: 15),
               child: buildMonthDays(context),
             ),
           ],
@@ -172,10 +173,11 @@ class _TWMonthViewState extends State<TWMonthView> {
   }
 
   /* Priavte Method */
-  bool canSelectedDate(
-      {required DateTime date,
-      required bool isToday,
-      bool canSeletedToday = false}) {
+  bool canSelectedDate({
+    required DateTime date,
+    required bool isToday,
+    bool canSeletedToday = false,
+  }) {
     if (isToday & !canSeletedToday) {
       // 当天不可以选择
       return false;

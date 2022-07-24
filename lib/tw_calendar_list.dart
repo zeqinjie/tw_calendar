@@ -1,13 +1,12 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-07-24 16:19:42
+ * @LastEditTime: 2022-07-24 20:41:10
  * @Description: 日历组件
  */
 library calendar_list;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'tw_month_view.dart';
 import 'tw_weekday_row.dart';
 import 'utils/tw_calendart_tool.dart';
@@ -40,11 +39,23 @@ class TWCalendarList extends StatefulWidget {
   /// 头部组件
   final Widget? headerView;
 
+  /// 选择模式
+  final TWCalendarListSeletedMode? seletedMode;
+
   /// 月视图高度
   final double? monthBodyHeight;
 
-  /// 选择模式
-  final TWCalendarListSeletedMode? seletedMode;
+  /// 周视图高度
+  final double? weekDayHeight;
+
+  /// 水平间隙
+  final double? horizontalSpace;
+
+  final double? ensureViewHeight;
+
+  final EdgeInsetsGeometry? ensureViewPadding;
+
+  final double? ensureTitleFontSize;
 
   /// 点击回调
   final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
@@ -58,6 +69,16 @@ class TWCalendarList extends StatefulWidget {
     this.selectedStartDate,
     this.selectedEndDate,
     this.monthBodyHeight = 300,
+    this.weekDayHeight = 48,
+    this.horizontalSpace = 8,
+    this.ensureViewHeight = 67,
+    this.ensureTitleFontSize = 16,
+    this.ensureViewPadding = const EdgeInsets.only(
+      left: 15,
+      top: 12,
+      bottom: 12,
+      right: 15,
+    ),
     this.onSelectDayRang,
     this.seletedMode = TWCalendarListSeletedMode.defaltSerial,
   })  : assert(!firstDate.isAfter(lastDate),
@@ -87,14 +108,6 @@ class _TWCalendarListState extends State<TWCalendarList> {
   /// 间隔多少月
   late int count;
 
-  /// 周视图高度
-  final double weekDayHeight = 48.w;
-
-  /// 水平间隙
-  final double horizontalPadding = 8.w;
-
-  final double ensureViewHeight = 67.w;
-
   /// 选中了多少天
   int seletedDays = 0;
 
@@ -117,7 +130,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
         children: [
           if (widget.headerView != null) widget.headerView!,
           SizedBox(
-            height: weekDayHeight,
+            height: widget.weekDayHeight,
             child: _buildWeekdayView(),
           ),
           SizedBox(
@@ -125,7 +138,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
             child: _buildMonthView(),
           ),
           SizedBox(
-            height: ensureViewHeight,
+            height: widget.ensureViewHeight,
             child: _buildEnsureView(),
           ),
         ],
@@ -136,8 +149,8 @@ class _TWCalendarListState extends State<TWCalendarList> {
   Widget _buildWeekdayView() {
     return Container(
       padding: EdgeInsets.only(
-        left: horizontalPadding,
-        right: horizontalPadding,
+        left: widget.horizontalSpace ?? 8,
+        right: widget.horizontalSpace ?? 8,
       ),
       decoration: const BoxDecoration(
         color: TWColors.twFFFFFF,
@@ -156,12 +169,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
   Widget _buildEnsureView() {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.only(
-        left: 15.w,
-        top: 12.w,
-        bottom: 12.w,
-        right: 15.w,
-      ),
+      padding: widget.ensureViewPadding,
       decoration: const BoxDecoration(
         color: TWColors.twFFFFFF,
         boxShadow: [
@@ -185,12 +193,6 @@ class _TWCalendarListState extends State<TWCalendarList> {
                     color: Colors.white,
                   ),
                 ),
-                padding: MaterialStateProperty.all(
-                  EdgeInsets.only(
-                    top: 12.w,
-                    bottom: 12.w,
-                  ),
-                ),
                 backgroundColor: MaterialStateProperty.all(
                     (selectStartTime != null ||
                             (selectStartTime != null && selectEndTime != null))
@@ -201,7 +203,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
                 _getEnsureTitle(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: widget.ensureTitleFontSize,
                   color: TWColors.twFFFFFF,
                 ),
               ),
@@ -239,7 +241,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
       context: context,
       year: year,
       month: month,
-      padding: horizontalPadding,
+      padding: widget.horizontalSpace ?? 8,
       firstDate: widget.firstDate,
       lastDate: widget.lastDate,
       selectStartDateTime: selectStartTime,
@@ -275,7 +277,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
     final selectedDaysTitle =
         TWCalendarTool.getSelectedDaysTitle(selectStartTime, selectEndTime);
     if (seletedDays != 0) {
-      btnTitle = '確定 ($selectedDaysTitle 共$seletedDays)';
+      btnTitle = '確定 ($selectedDaysTitle 共$seletedDays天)';
     }
     return btnTitle;
   }

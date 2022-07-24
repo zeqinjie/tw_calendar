@@ -1,20 +1,35 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-21 16:17:27
+ * @LastEditTime: 2022-07-24 18:35:11
  * @Description: 日期视图
  */
 import 'package:flutter/material.dart';
+import 'package:tw_calendar/utils/tw_colors.dart';
 
 class TWWeekdayRow extends StatelessWidget {
-  const TWWeekdayRow({Key? key}) : super(key: key);
+  final Color? color;
+  final double? fontSize;
+  const TWWeekdayRow({
+    Key? key,
+    this.color,
+    this.fontSize,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: _renderWeekDays(),
+    );
+  }
 
   Widget _weekdayContainer(String weekDay) => Expanded(
         child: Center(
           child: DefaultTextStyle(
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 16.0,
+            style: TextStyle(
+              color: color ?? TWColors.tw333333,
+              fontSize: fontSize ?? 16,
               fontWeight: FontWeight.bold,
             ),
             child: Text(
@@ -35,10 +50,4 @@ class TWWeekdayRow extends StatelessWidget {
     list.add(_weekdayContainer("六"));
     return list;
   }
-
-  @override
-  Widget build(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: _renderWeekDays(),
-      );
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-07-24 16:29:21
+ * @LastEditTime: 2022-07-24 20:44:46
  * @Description: 日历组件
  */
 
@@ -55,9 +55,6 @@ class _HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<_HomePage> {
-  List<DateTime> selectResult1 = <DateTime>[];
-  List<DateTime> selectResult2 = <DateTime>[];
-
   // Dialog方式
   _showNavigateDailog(BuildContext context) {
     showModalBottomSheet(
@@ -72,11 +69,7 @@ class _HomePageState extends State<_HomePage> {
       builder: (BuildContext context) {
         return const TWCalendarView();
       },
-    ).then((result) {
-      setState(() {
-        selectResult2 = result;
-      });
-    });
+    );
   }
 
   @override
@@ -111,8 +104,8 @@ class _TWCalendarViewState extends State<TWCalendarView> {
     return TWCalendarList(
       firstDate: DateTime(2022, 7, 21),
       lastDate: DateTime(2022, 9, 21),
-      // selectedStartDate: DateTime(2022, 8, 28),
-      // selectedEndDate: DateTime(2022, 9, 2),
+      selectedStartDate: DateTime(2022, 8, 28),
+      selectedEndDate: DateTime(2022, 9, 2),
       headerView: Container(
         alignment: Alignment.center,
         height: 55.w,
@@ -124,13 +117,13 @@ class _TWCalendarViewState extends State<TWCalendarView> {
           ),
         ),
       ),
+      onSelectDayRang: ((seletedDate, seletedDays) {
+        print('seletedDate : $seletedDate, seletedDays : $seletedDays');
+      }),
       onSelectFinish: (selectStartTime, selectEndTime) {
-        List<DateTime> result = <DateTime>[];
-        result.add(selectStartTime);
-        if (selectEndTime != null) {
-          result.add(selectEndTime);
-        }
-        Navigator.pop(context, result);
+        print(
+            'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
+        Navigator.pop(context);
       },
     );
   }

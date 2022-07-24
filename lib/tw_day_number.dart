@@ -1,11 +1,10 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-24 16:19:54
+ * @LastEditTime: 2022-07-24 20:43:40
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'tw_calendar_notification.dart';
 import 'utils/tw_calendart_tool.dart';
 import 'utils/tw_colors.dart';
@@ -19,6 +18,9 @@ class TWDayNumber extends StatefulWidget {
     this.isToday = false,
     this.canSelected = true,
     this.todayColor,
+    this.itemMargin = 5,
+    this.fontSize = 15,
+    this.todayFontSize = 10,
   }) : super(key: key);
 
   final int day;
@@ -27,15 +29,18 @@ class TWDayNumber extends StatefulWidget {
   final double size;
   final bool isDefaultSelected;
   final bool canSelected;
+  final double? itemMargin;
+  final double? fontSize;
+  final double? todayFontSize;
   @override
   _TWDayNumberState createState() => _TWDayNumberState();
 }
 
 class _TWDayNumberState extends State<TWDayNumber> {
-  final double itemMargin = 5.w;
   bool isSelected = false;
 
   Widget _dayItem() {
+    final double itemMargin = widget.itemMargin ?? 5;
     return Container(
       width: widget.size - itemMargin * 2,
       height: widget.size - itemMargin * 2,
@@ -75,7 +80,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: color,
-        fontSize: 15.sp,
+        fontSize: widget.fontSize,
         fontWeight: FontWeight.normal,
       ),
     );
@@ -87,7 +92,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 10.sp,
+        fontSize: widget.todayFontSize,
         fontWeight: FontWeight.normal,
       ),
     );

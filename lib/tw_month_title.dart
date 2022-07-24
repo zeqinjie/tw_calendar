@@ -1,11 +1,10 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-24 16:20:41
+ * @LastEditTime: 2022-07-24 20:43:45
  * @Description: your project
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'utils/tw_calendart_tool.dart';
 
 class TWMonthTitle extends StatelessWidget {
@@ -14,12 +13,13 @@ class TWMonthTitle extends StatelessWidget {
     required this.month,
     required this.year,
     this.monthNames,
+    this.fontSize = 16,
   }) : super(key: key);
 
   final int month;
   final int year;
   final List<String>? monthNames;
-
+  final double? fontSize;
   @override
   Widget build(BuildContext context) {
     final monthTitle =
@@ -29,7 +29,7 @@ class TWMonthTitle extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        fontSize: 16.sp,
+        fontSize: fontSize,
         fontWeight: FontWeight.w600,
       ),
       maxLines: 1,
