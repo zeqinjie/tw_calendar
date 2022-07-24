@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-07-24 20:50:26
+ * @LastEditTime: 2022-07-24 21:50:48
  * @Description: 月视图
  */
 
@@ -59,9 +59,7 @@ class _TWMonthViewState extends State<TWMonthView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: buildMonthView(context),
-    );
+    return buildMonthView(context);
   }
 
   Widget buildMonthDays(BuildContext context) {
@@ -154,18 +152,15 @@ class _TWMonthViewState extends State<TWMonthView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 5),
-              child: TWMonthTitle(
-                year: widget.year,
-                month: widget.month,
-                monthNames: widget.monthNames,
-              ),
+            TWMonthTitle(
+              year: widget.year,
+              month: widget.month,
+              monthNames: widget.monthNames,
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 15),
-              child: buildMonthDays(context),
+            SizedBox(
+              height: widget.padding,
             ),
+            buildMonthDays(context),
           ],
         ),
       ),

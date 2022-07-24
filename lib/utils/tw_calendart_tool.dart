@@ -1,22 +1,13 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-23 16:26:51
+ * @LastEditTime: 2022-07-24 21:26:09
  * @Description: 日历辅助工具类
  */
 
 import 'package:flutter/material.dart';
 
 class TWCalendarTool {
-  static double getMonthViewHeight(BuildContext context) {
-    const double padding = 8.0;
-    const double titleHeight = 21.0;
-
-    return (2 * padding) +
-        titleHeight +
-        8.0 +
-        (6 * TWCalendarTool.getDayNumberSize(context, 0));
-  }
 
   static double getDayNumberSize(BuildContext context, double padding) {
     return (MediaQuery.of(context).size.width - padding * 2) / 7;
@@ -104,8 +95,8 @@ class TWCalendarTool {
     if (selectStartTime != null && selectEndTime != null) {
       final start = DateTime(
           selectStartTime.year, selectStartTime.month, selectStartTime.day);
-      final end = DateTime(
-          selectEndTime.year, selectEndTime.month, selectEndTime.day);
+      final end =
+          DateTime(selectEndTime.year, selectEndTime.month, selectEndTime.day);
       final d = end.difference(start);
       return d.inDays + 1;
     }

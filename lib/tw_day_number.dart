@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-24 20:43:40
+ * @LastEditTime: 2022-07-24 21:42:24
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
       '今天',
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: Colors.white,
+        color: TWColors.twFFFFFF,
         fontSize: widget.todayFontSize,
         fontWeight: FontWeight.normal,
       ),

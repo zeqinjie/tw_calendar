@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-07-24 20:41:10
+ * @LastEditTime: 2022-07-24 21:36:12
  * @Description: 日历组件
  */
 library calendar_list;
@@ -55,6 +55,10 @@ class TWCalendarList extends StatefulWidget {
 
   final EdgeInsetsGeometry? ensureViewPadding;
 
+  final Color? ensureViewSelectedColor;
+
+  final Color? ensureViewUnSelectedColor;
+
   final double? ensureTitleFontSize;
 
   /// 点击回调
@@ -75,11 +79,13 @@ class TWCalendarList extends StatefulWidget {
     this.ensureTitleFontSize = 16,
     this.ensureViewPadding = const EdgeInsets.only(
       left: 15,
+      right: 15,
       top: 12,
       bottom: 12,
-      right: 15,
     ),
     this.onSelectDayRang,
+    this.ensureViewSelectedColor = TWColors.twFF8000,
+    this.ensureViewUnSelectedColor = TWColors.twB3B3B3,
     this.seletedMode = TWCalendarListSeletedMode.defaltSerial,
   })  : assert(!firstDate.isAfter(lastDate),
             'lastDate must be on or after firstDate'),
@@ -168,6 +174,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
 
   Widget _buildEnsureView() {
     return Container(
+      width: double.infinity,
       alignment: Alignment.center,
       padding: widget.ensureViewPadding,
       decoration: const BoxDecoration(
@@ -180,36 +187,31 @@ class _TWCalendarListState extends State<TWCalendarList> {
           )
         ],
       ),
-      child: Flex(
-        direction: Axis.horizontal,
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: TextButton(
-              onPressed: _finishSelect,
-              style: ButtonStyle(
-                textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                    (selectStartTime != null ||
-                            (selectStartTime != null && selectEndTime != null))
-                        ? TWColors.twFF8000
-                        : TWColors.twB3B3B3),
-              ),
-              child: Text(
-                _getEnsureTitle(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: widget.ensureTitleFontSize,
-                  color: TWColors.twFFFFFF,
-                ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints.expand(),
+        child: TextButton(
+          onPressed: _finishSelect,
+          style: ButtonStyle(
+            textStyle: MaterialStateProperty.all(
+              const TextStyle(
+                color: Colors.white,
               ),
             ),
+            backgroundColor: MaterialStateProperty.all(
+                (selectStartTime != null ||
+                        (selectStartTime != null && selectEndTime != null))
+                    ? widget.ensureViewSelectedColor
+                    : widget.ensureViewUnSelectedColor),
           ),
-        ],
+          child: Text(
+            _getEnsureTitle(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: widget.ensureTitleFontSize,
+              color: TWColors.twFFFFFF,
+            ),
+          ),
+        ),
       ),
     );
   }
