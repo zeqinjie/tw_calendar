@@ -1,7 +1,7 @@
 name: tw_calendar
-description: A new Flutter plugin project.
-version: 0.0.1
-homepage:
+description: A simple Calendar
+version: 0.1.0
+homepage: https://github.com/zeqinjie/tw_calendar
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
