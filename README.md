@@ -1,6 +1,6 @@
 # tw_calendar
 
-This is a simple step calendar widget.
+This is a simple calendar widget.
 
 ## introduce
 
