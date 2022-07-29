@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-07-29 10:46:00
+ * @LastEditTime: 2022-07-29 11:03:54
  * @Description: 日历组件
  */
 library calendar_list;
@@ -183,7 +183,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
         boxShadow: [
           BoxShadow(
             color: TWColors.twF5F5F5,
-            offset: Offset(0, -1.0),
+            offset: Offset(0, -0.5),
             blurRadius: 2.0,
           )
         ],
@@ -219,7 +219,16 @@ class _TWCalendarListState extends State<TWCalendarList> {
 
   Widget _buildMonthView() {
     return Container(
-      color: TWColors.twFFFFFF,
+      decoration: const BoxDecoration(
+        color: TWColors.twFFFFFF,
+        boxShadow: [
+          BoxShadow(
+            color: TWColors.twF5F5F5,
+            offset: Offset(0, -0.5),
+            blurRadius: 1.0,
+          )
+        ],
+      ),
       child: CustomScrollView(
         slivers: <Widget>[
           SliverList(
