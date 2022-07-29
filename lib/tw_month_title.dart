@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-24 21:53:32
+ * @LastEditTime: 2022-07-29 10:47:15
  * @Description: your project
  */
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class TWMonthTitle extends StatelessWidget {
     required this.month,
     required this.year,
     this.monthNames,
-    this.fontSize = 16,
+    this.fontSize,
   }) : super(key: key);
 
   final int month;
@@ -29,7 +29,7 @@ class TWMonthTitle extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        fontSize: fontSize,
+        fontSize: fontSize ?? 16,
         fontWeight: FontWeight.w600,
       ),
       maxLines: 1,

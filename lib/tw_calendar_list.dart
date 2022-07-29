@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-07-24 21:36:12
+ * @LastEditTime: 2022-07-29 10:46:00
  * @Description: 日历组件
  */
 library calendar_list;
@@ -72,17 +72,12 @@ class TWCalendarList extends StatefulWidget {
     this.onSelectFinish,
     this.selectedStartDate,
     this.selectedEndDate,
-    this.monthBodyHeight = 300,
-    this.weekDayHeight = 48,
-    this.horizontalSpace = 8,
-    this.ensureViewHeight = 67,
-    this.ensureTitleFontSize = 16,
-    this.ensureViewPadding = const EdgeInsets.only(
-      left: 15,
-      right: 15,
-      top: 12,
-      bottom: 12,
-    ),
+    this.monthBodyHeight,
+    this.weekDayHeight,
+    this.horizontalSpace,
+    this.ensureViewHeight,
+    this.ensureTitleFontSize,
+    this.ensureViewPadding,
     this.onSelectDayRang,
     this.ensureViewSelectedColor = TWColors.twFF8000,
     this.ensureViewUnSelectedColor = TWColors.twB3B3B3,
@@ -136,15 +131,15 @@ class _TWCalendarListState extends State<TWCalendarList> {
         children: [
           if (widget.headerView != null) widget.headerView!,
           SizedBox(
-            height: widget.weekDayHeight,
+            height: widget.weekDayHeight ?? 48,
             child: _buildWeekdayView(),
           ),
           SizedBox(
-            height: widget.monthBodyHeight,
+            height: widget.monthBodyHeight ?? 300,
             child: _buildMonthView(),
           ),
           SizedBox(
-            height: widget.ensureViewHeight,
+            height: widget.ensureViewHeight ?? 67,
             child: _buildEnsureView(),
           ),
         ],
@@ -176,7 +171,13 @@ class _TWCalendarListState extends State<TWCalendarList> {
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
-      padding: widget.ensureViewPadding,
+      padding: widget.ensureViewPadding ??
+          const EdgeInsets.only(
+            left: 15,
+            right: 15,
+            top: 12,
+            bottom: 12,
+          ),
       decoration: const BoxDecoration(
         color: TWColors.twFFFFFF,
         boxShadow: [
@@ -207,7 +208,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
             _getEnsureTitle(),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: widget.ensureTitleFontSize,
+              fontSize: widget.ensureTitleFontSize ?? 16,
               color: TWColors.twFFFFFF,
             ),
           ),

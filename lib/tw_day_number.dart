@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-24 21:42:24
+ * @LastEditTime: 2022-07-29 10:46:41
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
@@ -18,9 +18,9 @@ class TWDayNumber extends StatefulWidget {
     this.isToday = false,
     this.canSelected = true,
     this.todayColor,
-    this.itemMargin = 5,
-    this.fontSize = 15,
-    this.todayFontSize = 10,
+    this.itemMargin,
+    this.fontSize,
+    this.todayFontSize,
   }) : super(key: key);
 
   final int day;
@@ -80,7 +80,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: color,
-        fontSize: widget.fontSize,
+        fontSize: widget.fontSize ?? 15,
         fontWeight: FontWeight.normal,
       ),
     );
@@ -92,7 +92,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: TWColors.twFFFFFF,
-        fontSize: widget.todayFontSize,
+        fontSize: widget.todayFontSize ?? 10,
         fontWeight: FontWeight.normal,
       ),
     );
