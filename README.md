@@ -25,6 +25,7 @@ import 'package:tw_calendar/tw_calendar.dart';
 
 ## Getting Started
 some support property 
+
 ```dart
 /// 开始的年月份
 final DateTime firstDate;
@@ -101,3 +102,5 @@ TWCalendarList(
     )
 ```
 
+## thx
+thank you ,and modify form this demo. [flutter_calendar_list](https://github.com/heruijun/flutter_calendar_list)
