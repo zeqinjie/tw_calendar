@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-07-29 11:03:54
+ * @LastEditTime: 2022-07-29 11:06:45
  * @Description: 日历组件
  */
 library calendar_list;
@@ -158,8 +158,8 @@ class _TWCalendarListState extends State<TWCalendarList> {
         boxShadow: [
           BoxShadow(
             color: TWColors.twF5F5F5,
-            offset: Offset(0, 1.0),
-            blurRadius: 1.0,
+            offset: Offset(0, -0.5),
+            blurRadius: 2.0,
           )
         ],
       ),
