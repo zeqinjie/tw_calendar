@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-07-29 11:06:45
+ * @LastEditTime: 2022-07-29 11:14:40
  * @Description: 日历组件
  */
 library calendar_list;
@@ -149,19 +149,10 @@ class _TWCalendarListState extends State<TWCalendarList> {
 
   Widget _buildWeekdayView() {
     return Container(
+      color: TWColors.twFFFFFF,
       padding: EdgeInsets.only(
         left: widget.horizontalSpace ?? 8,
         right: widget.horizontalSpace ?? 8,
-      ),
-      decoration: const BoxDecoration(
-        color: TWColors.twFFFFFF,
-        boxShadow: [
-          BoxShadow(
-            color: TWColors.twF5F5F5,
-            offset: Offset(0, -0.5),
-            blurRadius: 2.0,
-          )
-        ],
       ),
       child: const TWWeekdayRow(),
     );
@@ -182,7 +173,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
         color: TWColors.twFFFFFF,
         boxShadow: [
           BoxShadow(
-            color: TWColors.twF5F5F5,
+            color: TWColors.twFFFFFF,
             offset: Offset(0, -0.5),
             blurRadius: 2.0,
           )
