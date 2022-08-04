@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-29 10:46:41
+ * @LastEditTime: 2022-08-04 16:09:43
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
@@ -41,6 +41,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
 
   Widget _dayItem() {
     final double itemMargin = widget.itemMargin ?? 5;
+    print('=====>${widget.isToday},${widget.day}');
     return Container(
       width: widget.size - itemMargin * 2,
       height: widget.size - itemMargin * 2,
@@ -51,7 +52,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
               color: TWColors.twFF8000,
               borderRadius: BorderRadius.circular(4),
             )
-          : widget.isToday
+          : (widget.isToday && widget.day > 0)
               ? BoxDecoration(
                   color: widget.todayColor,
                   borderRadius: BorderRadius.circular(4),
@@ -61,7 +62,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildDay(),
-          if (widget.isToday) _buildToDay(),
+          if (widget.isToday && widget.day > 0) _buildToDay(),
         ],
       ),
     );

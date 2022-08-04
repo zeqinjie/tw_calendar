@@ -1,14 +1,13 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-24 21:26:09
+ * @LastEditTime: 2022-08-04 15:28:27
  * @Description: 日历辅助工具类
  */
 
 import 'package:flutter/material.dart';
 
 class TWCalendarTool {
-
   static double getDayNumberSize(BuildContext context, double padding) {
     return (MediaQuery.of(context).size.width - padding * 2) / 7;
   }
@@ -16,6 +15,15 @@ class TWCalendarTool {
   static bool dateIsToday(DateTime date) {
     final DateTime now = DateTime.now();
     return isSameDate(date, now);
+  }
+
+  static DateTime get today {
+    final DateTime now = DateTime.now();
+    return DateTime(now.year, now.month, now.day);
+  }
+
+  static DateTime get tomorrow {
+    return today.add(const Duration(days: 1));
   }
 
   /// 在过去和未来直接

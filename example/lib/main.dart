@@ -1,12 +1,13 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-07-24 20:44:46
+ * @LastEditTime: 2022-08-04 15:50:32
  * @Description: 日历组件
  */
 
 import 'package:flutter/material.dart';
 import 'package:tw_calendar/tw_calendar_list.dart';
+import 'package:tw_calendar/utils/tw_calendart_tool.dart';
 import 'package:tw_calendar/utils/tw_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -102,10 +103,12 @@ class _TWCalendarViewState extends State<TWCalendarView> {
   @override
   Widget build(BuildContext context) {
     return TWCalendarList(
-      firstDate: DateTime(2022, 7, 21),
-      lastDate: DateTime(2022, 9, 21),
-      selectedStartDate: DateTime(2022, 8, 28),
-      selectedEndDate: DateTime(2022, 9, 2),
+      firstDate: TWCalendarTool.tomorrow,
+      lastDate: DateTime(2022, 11, 21),
+      selectedStartDate: DateTime(2022, 9, 2),
+      selectedEndDate: DateTime(2022, 9, 10),
+      monthBodyHeight: 300.w,
+      seletedMode: TWCalendarListSeletedMode.singleSerial,
       headerView: Container(
         alignment: Alignment.center,
         height: 55.w,

@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-07-29 11:14:40
+ * @LastEditTime: 2022-08-04 15:51:00
  * @Description: 日历组件
  */
 library calendar_list;
@@ -42,23 +42,28 @@ class TWCalendarList extends StatefulWidget {
   /// 选择模式
   final TWCalendarListSeletedMode? seletedMode;
 
-  /// 月视图高度
+  /// 月视图高度，为空则占满剩余空间
   final double? monthBodyHeight;
 
-  /// 周视图高度
+  /// 周视图高度， 默认 48
   final double? weekDayHeight;
 
   /// 水平间隙
   final double? horizontalSpace;
 
+  /// 确认周视图高度， 默认 66
   final double? ensureViewHeight;
 
+  /// 确认按钮的间隙
   final EdgeInsetsGeometry? ensureViewPadding;
 
+  /// 确认按钮选中颜色
   final Color? ensureViewSelectedColor;
 
+  /// 确认未按钮选中颜色
   final Color? ensureViewUnSelectedColor;
 
+  /// 确认按钮字体大小
   final double? ensureTitleFontSize;
 
   /// 点击回调
@@ -125,6 +130,15 @@ class _TWCalendarListState extends State<TWCalendarList> {
 
   /* UI Method */
   Widget _buildBody() {
+    Widget monthView;
+    if (widget.monthBodyHeight != null) {
+      monthView = SizedBox(
+        height: widget.monthBodyHeight,
+        child: _buildMonthView(),
+      );
+    } else {
+      monthView = Expanded(child: _buildMonthView());
+    }
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -134,12 +148,9 @@ class _TWCalendarListState extends State<TWCalendarList> {
             height: widget.weekDayHeight ?? 48,
             child: _buildWeekdayView(),
           ),
+          monthView,
           SizedBox(
-            height: widget.monthBodyHeight ?? 300,
-            child: _buildMonthView(),
-          ),
-          SizedBox(
-            height: widget.ensureViewHeight ?? 67,
+            height: widget.ensureViewHeight ?? 66,
             child: _buildEnsureView(),
           ),
         ],
@@ -149,7 +160,16 @@ class _TWCalendarListState extends State<TWCalendarList> {
 
   Widget _buildWeekdayView() {
     return Container(
-      color: TWColors.twFFFFFF,
+      decoration: const BoxDecoration(
+        color: TWColors.twFFFFFF,
+        boxShadow: [
+          BoxShadow(
+            color: TWColors.twF5F5F5,
+            offset: Offset(0, -0.5),
+            blurRadius: 1.0,
+          )
+        ],
+      ),
       padding: EdgeInsets.only(
         left: widget.horizontalSpace ?? 8,
         right: widget.horizontalSpace ?? 8,
@@ -289,7 +309,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
   void _onSelectDayChanged(DateTime dateTime) {
     switch (widget.seletedMode) {
       case TWCalendarListSeletedMode.singleSerial:
-        selectStartTime = widget.firstDate.add(const Duration(days: 1));
+        selectStartTime = widget.firstDate;
         selectEndTime = dateTime;
         break;
       default:
