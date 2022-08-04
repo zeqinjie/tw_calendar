@@ -2,6 +2,8 @@
 
 This is a simple calendar widget.
 
+pub：[tw_calendar](https://pub.flutter-io.cn/packages/tw_calendar)
+
 ## introduce
 
 ![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/1.gif)
