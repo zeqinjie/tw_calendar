@@ -1,10 +1,12 @@
 <!--
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:24
- * @LastEditTime: 2022-08-04 16:59:12
+ * @LastEditTime: 2022-08-04 18:30:52
  * @Description: 日历组件
 -->
-
+## 0.1.2
+* support control ensure button title
+* support modify day color
 ## 0.1.1
 
 * support continuous selection

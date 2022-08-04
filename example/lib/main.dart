@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-08-04 15:50:32
+ * @LastEditTime: 2022-08-04 18:24:34
  * @Description: 日历组件
  */
 
@@ -108,6 +108,9 @@ class _TWCalendarViewState extends State<TWCalendarView> {
       selectedStartDate: DateTime(2022, 9, 2),
       selectedEndDate: DateTime(2022, 9, 10),
       monthBodyHeight: 300.w,
+      ensureViewSelectedColor: Colors.blue,
+      dayNumberSelectedColor: Colors.orange,
+      dayNumberTodayColor: Colors.green,
       seletedMode: TWCalendarListSeletedMode.singleSerial,
       headerView: Container(
         alignment: Alignment.center,
@@ -123,6 +126,11 @@ class _TWCalendarViewState extends State<TWCalendarView> {
       onSelectDayRang: ((seletedDate, seletedDays) {
         print('seletedDate : $seletedDate, seletedDays : $seletedDays');
       }),
+      onSelectDayTitle: (selectStartTime, selectEndTime, seletedDays) {
+        print(
+            'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, seletedDays : $seletedDays');
+        return "确 定 (${selectStartTime?.month}月${selectStartTime?.day}日 - ${selectEndTime?.month}月${selectEndTime?.day}日）";
+      },
       onSelectFinish: (selectStartTime, selectEndTime) {
         print(
             'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');

@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-08-04 16:51:36
+ * @LastEditTime: 2022-08-04 18:24:07
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
@@ -10,19 +10,6 @@ import 'utils/tw_calendart_tool.dart';
 import 'utils/tw_colors.dart';
 
 class TWDayNumber extends StatefulWidget {
-  const TWDayNumber({
-    Key? key,
-    required this.size,
-    required this.day,
-    required this.isDefaultSelected,
-    this.isToday = false,
-    this.canSelected = true,
-    this.todayColor,
-    this.itemMargin,
-    this.fontSize,
-    this.todayFontSize,
-  }) : super(key: key);
-
   final int day;
   final bool isToday;
   final Color? todayColor;
@@ -32,6 +19,22 @@ class TWDayNumber extends StatefulWidget {
   final double? itemMargin;
   final double? fontSize;
   final double? todayFontSize;
+  final Color? selectedColor;
+
+  const TWDayNumber({
+    Key? key,
+    required this.size,
+    required this.day,
+    required this.isDefaultSelected,
+    this.isToday = false,
+    this.canSelected = true,
+    this.selectedColor,
+    this.todayColor,
+    this.itemMargin,
+    this.fontSize,
+    this.todayFontSize,
+  }) : super(key: key);
+
   @override
   _TWDayNumberState createState() => _TWDayNumberState();
 }
@@ -48,12 +51,12 @@ class _TWDayNumberState extends State<TWDayNumber> {
       alignment: Alignment.center,
       decoration: (isSelected && widget.day > 0)
           ? BoxDecoration(
-              color: TWColors.twFF8000,
+              color: widget.selectedColor ?? TWColors.twFF8000,
               borderRadius: BorderRadius.circular(4),
             )
           : (widget.isToday && widget.day > 0)
               ? BoxDecoration(
-                  color: widget.todayColor,
+                  color: widget.todayColor ?? TWColors.twB3B3B3,
                   borderRadius: BorderRadius.circular(4),
                 )
               : null,

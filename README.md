@@ -26,7 +26,7 @@ import 'package:tw_calendar/tw_calendar.dart';
 some support property 
 
 ```dart
- /// 开始的年月份
+/// 开始的年月份
   final DateTime firstDate;
 
   /// 结束的年月份
@@ -68,11 +68,22 @@ some support property
   /// 确认未按钮选中颜色
   final Color? ensureViewUnSelectedColor;
 
+  /// 今天的日期的背景颜色
+  final Color? dayNumberTodayColor;
+
+  /// 选中日期背景颜色
+  final Color? dayNumberSelectedColor;
+
   /// 确认按钮字体大小
   final double? ensureTitleFontSize;
 
   /// 点击回调
   final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
+
+  /// 选择 title 回调
+  final String Function(
+          DateTime? selectStartTime, DateTime? selectEndTime, int seletedDays)?
+      onSelectDayTitle;
 ```
 example
 

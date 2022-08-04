@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-07-24 21:50:48
+ * @LastEditTime: 2022-08-04 18:16:45
  * @Description: 月视图
  */
 
@@ -14,6 +14,16 @@ import 'utils/tw_calendart_tool.dart';
 class TWMonthViewConfigure {}
 
 class TWMonthView extends StatefulWidget {
+  final BuildContext context;
+  final int year;
+  final int month;
+  final double padding;
+  final Color? todayColor;
+  final Color? selectedColor;
+  final List<String>? monthNames;
+  final DateTime? selectStartDateTime;
+  final DateTime? selectEndDateTime;
+
   const TWMonthView({
     Key? key,
     required this.context,
@@ -27,18 +37,8 @@ class TWMonthView extends StatefulWidget {
     required this.lastDate,
     this.todayColor,
     this.monthNames,
+    this.selectedColor,
   }) : super(key: key);
-
-  final BuildContext context;
-  final int year;
-  final int month;
-  final double padding;
-  final Color? todayColor;
-  final List<String>? monthNames;
-  final DateTime? selectStartDateTime;
-  final DateTime? selectEndDateTime;
-
-  // final EdgeInsetsGeometry? margin;
 
   /// 开始的年月份
   final DateTime firstDate;
@@ -108,6 +108,7 @@ class _TWMonthViewState extends State<TWMonthView> {
           size: widget.itemWidth,
           day: day,
           isToday: isToday,
+          selectedColor: widget.selectedColor,
           isDefaultSelected: isDefaultSelected,
           todayColor: widget.todayColor,
           canSelected: canSelected,

@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-08-04 15:51:00
+ * @LastEditTime: 2022-08-04 18:24:14
  * @Description: 日历组件
  */
 library calendar_list;
@@ -63,11 +63,22 @@ class TWCalendarList extends StatefulWidget {
   /// 确认未按钮选中颜色
   final Color? ensureViewUnSelectedColor;
 
+  /// 今天的日期的背景颜色
+  final Color? dayNumberTodayColor;
+
+  /// 选中日期背景颜色
+  final Color? dayNumberSelectedColor;
+
   /// 确认按钮字体大小
   final double? ensureTitleFontSize;
 
   /// 点击回调
   final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
+
+  /// 选择 title 回调
+  final String Function(
+          DateTime? selectStartTime, DateTime? selectEndTime, int seletedDays)?
+      onSelectDayTitle;
 
   TWCalendarList({
     Key? key,
@@ -84,9 +95,12 @@ class TWCalendarList extends StatefulWidget {
     this.ensureTitleFontSize,
     this.ensureViewPadding,
     this.onSelectDayRang,
+    this.onSelectDayTitle,
     this.ensureViewSelectedColor = TWColors.twFF8000,
     this.ensureViewUnSelectedColor = TWColors.twB3B3B3,
     this.seletedMode = TWCalendarListSeletedMode.defaltSerial,
+    this.dayNumberTodayColor,
+    this.dayNumberSelectedColor,
   })  : assert(!firstDate.isAfter(lastDate),
             'lastDate must be on or after firstDate'),
         super(key: key);
@@ -269,7 +283,8 @@ class _TWCalendarListState extends State<TWCalendarList> {
       lastDate: widget.lastDate,
       selectStartDateTime: selectStartTime,
       selectEndDateTime: selectEndTime,
-      todayColor: TWColors.twB3B3B3,
+      todayColor: widget.dayNumberTodayColor,
+      selectedColor: widget.dayNumberSelectedColor,
       onSelectDayRang: (dateTime) => _onSelectDayChanged(dateTime),
     );
   }
@@ -295,12 +310,17 @@ class _TWCalendarListState extends State<TWCalendarList> {
         TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
   }
 
+  /// 获取确认按钮 title
   String _getEnsureTitle() {
     String btnTitle = '確   定';
     final selectedDaysTitle =
         TWCalendarTool.getSelectedDaysTitle(selectStartTime, selectEndTime);
     if (seletedDays != 0) {
       btnTitle = '確定 ($selectedDaysTitle 共$seletedDays天)';
+    }
+    if (widget.onSelectDayTitle != null) {
+      return widget.onSelectDayTitle!(
+          selectStartTime, selectEndTime, seletedDays);
     }
     return btnTitle;
   }
