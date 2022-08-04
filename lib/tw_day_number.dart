@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-08-04 16:09:43
+ * @LastEditTime: 2022-08-04 16:51:36
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
@@ -41,7 +41,6 @@ class _TWDayNumberState extends State<TWDayNumber> {
 
   Widget _dayItem() {
     final double itemMargin = widget.itemMargin ?? 5;
-    print('=====>${widget.isToday},${widget.day}');
     return Container(
       width: widget.size - itemMargin * 2,
       height: widget.size - itemMargin * 2,
