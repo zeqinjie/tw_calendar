@@ -1,6 +1,6 @@
 name: tw_calendar
 description: A simple Calendar
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/zeqinjie/tw_calendar
 
 environment:
