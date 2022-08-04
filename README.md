@@ -4,10 +4,9 @@ This is a simple calendar widget.
 
 ## introduce
 
-![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/1.png)
+![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/1.gif)
 
-![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/2.png)
-
+![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/2.gif)
 
 ## Installing
 
@@ -27,59 +26,64 @@ import 'package:tw_calendar/tw_calendar.dart';
 some support property 
 
 ```dart
-/// 开始的年月份
-final DateTime firstDate;
+ /// 开始的年月份
+  final DateTime firstDate;
 
-/// 结束的年月份
-final DateTime lastDate;
+  /// 结束的年月份
+  final DateTime lastDate;
 
-/// 选择开始日期
-final DateTime? selectedStartDate;
+  /// 选择开始日期
+  final DateTime? selectedStartDate;
 
-/// 选择结束日期
-final DateTime? selectedEndDate;
+  /// 选择结束日期
+  final DateTime? selectedEndDate;
 
-/// 点击方法回调
-final Function? onSelectFinish;
+  /// 点击方法回调
+  final Function? onSelectFinish;
 
-/// 头部组件
-final Widget? headerView;
+  /// 头部组件
+  final Widget? headerView;
 
-/// 选择模式
-final TWCalendarListSeletedMode? seletedMode;
+  /// 选择模式
+  final TWCalendarListSeletedMode? seletedMode;
 
-/// 月视图高度
-final double? monthBodyHeight;
+  /// 月视图高度，为空则占满剩余空间
+  final double? monthBodyHeight;
 
-/// 周视图高度
-final double? weekDayHeight;
+  /// 周视图高度， 默认 48
+  final double? weekDayHeight;
 
-/// 水平间隙
-final double? horizontalSpace;
+  /// 水平间隙
+  final double? horizontalSpace;
 
-/// 确认按钮高度
-final double? ensureViewHeight;
+  /// 确认周视图高度， 默认 66
+  final double? ensureViewHeight;
 
-/// 确认按钮 padding
-final EdgeInsetsGeometry? ensureViewPadding;
+  /// 确认按钮的间隙
+  final EdgeInsetsGeometry? ensureViewPadding;
 
-/// 确认按钮选择颜色
-final Color? ensureViewSelectedColor;
+  /// 确认按钮选中颜色
+  final Color? ensureViewSelectedColor;
 
-/// 确认按钮未选择颜色
-final Color? ensureViewUnSelectedColor;
+  /// 确认未按钮选中颜色
+  final Color? ensureViewUnSelectedColor;
 
-/// 确认 title 颜色
-final double? ensureTitleFontSize;
+  /// 确认按钮字体大小
+  final double? ensureTitleFontSize;
+
+  /// 点击回调
+  final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
 ```
 example
 
 ```dart
 TWCalendarList(
-      firstDate: DateTime(2022, 7, 21),
-      lastDate: DateTime(2022, 9, 21),
-      selectedStartDate: DateTime(2022, 8, 28),
-      selectedEndDate: DateTime(2022, 9, 2),
+      firstDate: TWCalendarTool.tomorrow,
+      lastDate: DateTime(2022, 11, 21),
+      selectedStartDate: DateTime(2022, 9, 2),
+      selectedEndDate: DateTime(2022, 9, 10),
+      monthBodyHeight: 300.w,
+      seletedMode: TWCalendarListSeletedMode.singleSerial,
       headerView: Container(
         alignment: Alignment.center,
         height: 55.w,
