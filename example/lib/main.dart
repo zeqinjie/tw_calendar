@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-08-04 18:24:34
+ * @LastEditTime: 2022-08-09 14:00:14
  * @Description: 日历组件
  */
 
@@ -10,6 +10,9 @@ import 'package:tw_calendar/tw_calendar_list.dart';
 import 'package:tw_calendar/utils/tw_calendart_tool.dart';
 import 'package:tw_calendar/utils/tw_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
+
+import 'feature/bidding_calendar_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -73,6 +76,41 @@ class _HomePageState extends State<_HomePage> {
     );
   }
 
+  _showNavigateRecommendDailog(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return BiddingCalendarView(
+          models: [
+            BiddingDayChoiceModel(),
+            BiddingDayChoiceModel(dayCount: 21),
+            BiddingDayChoiceModel(dayCount: 15),
+            BiddingDayChoiceModel(dayCount: 7),
+            BiddingDayChoiceModel(dayCount: 3),
+          ],
+          lastDate: DateTime(2022, 11, 21),
+          selectedStartDate: DateTime(2022, 9, 2),
+          selectedEndDate: DateTime(2022, 9, 10),
+          onSelectFinish: (selectStartTime, selectEndTime) {
+            print(
+                'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
+            Navigator.pop(context);
+          },
+          onSelectDayRang: ((seletedDate, seletedDays) {
+            print('seletedDate: $seletedDate, seletedDays: $seletedDays');
+          }),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -82,6 +120,12 @@ class _HomePageState extends State<_HomePage> {
             child: const Text('弹出框日历'),
             onPressed: () {
               _showNavigateDailog(context);
+            },
+          ),
+          TextButton(
+            child: const Text('弹出框日历-推荐日期'),
+            onPressed: () {
+              _showNavigateRecommendDailog(context);
             },
           ),
         ],

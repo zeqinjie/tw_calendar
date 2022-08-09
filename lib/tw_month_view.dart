@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-08-04 18:16:45
+ * @LastEditTime: 2022-08-09 14:32:02
  * @Description: 月视图
  */
 
@@ -10,8 +10,6 @@ import 'tw_calendar_notification.dart';
 import 'tw_day_number.dart';
 import 'tw_month_title.dart';
 import 'utils/tw_calendart_tool.dart';
-
-class TWMonthViewConfigure {}
 
 class TWMonthView extends StatefulWidget {
   final BuildContext context;

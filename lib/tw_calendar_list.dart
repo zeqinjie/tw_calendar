@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-08-04 18:24:14
+ * @LastEditTime: 2022-08-09 14:05:51
  * @Description: 日历组件
  */
 library calendar_list;
@@ -34,7 +34,8 @@ class TWCalendarList extends StatefulWidget {
   final DateTime? selectedEndDate;
 
   /// 点击方法回调
-  final Function? onSelectFinish;
+  final void Function(DateTime? selectStartTime, DateTime? selectEndTime)?
+      onSelectFinish;
 
   /// 头部组件
   final Widget? headerView;
@@ -375,7 +376,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
   }
 
   void _finishSelect() {
-    if (selectStartTime != null) {
+    if (widget.onSelectFinish != null) {
       widget.onSelectFinish!(selectStartTime, selectEndTime);
     }
   }
