@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-08-09 14:00:14
+ * @LastEditTime: 2022-08-10 14:43:33
  * @Description: 日历组件
  */
 
@@ -79,6 +79,7 @@ class _HomePageState extends State<_HomePage> {
   _showNavigateRecommendDailog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
+      clipBehavior: Clip.hardEdge,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(8),
