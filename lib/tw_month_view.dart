@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-08-09 14:32:02
+ * @LastEditTime: 2022-08-14 21:07:00
  * @Description: 月视图
  */
 
@@ -49,10 +49,10 @@ class TWMonthView extends StatefulWidget {
   double get itemWidth => TWCalendarTool.getDayNumberSize(context, padding);
 
   @override
-  _TWMonthViewState createState() => _TWMonthViewState();
+  TWMonthViewState createState() => TWMonthViewState();
 }
 
-class _TWMonthViewState extends State<TWMonthView> {
+class TWMonthViewState extends State<TWMonthView> {
   DateTime? selectedDate;
 
   @override

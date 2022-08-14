@@ -1,13 +1,12 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-08-04 18:24:07
+ * @LastEditTime: 2022-08-14 21:14:26
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
 import 'tw_calendar_notification.dart';
 import 'utils/tw_calendart_tool.dart';
-import 'utils/tw_colors.dart';
 
 class TWDayNumber extends StatefulWidget {
   final int day;
@@ -36,10 +35,10 @@ class TWDayNumber extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TWDayNumberState createState() => _TWDayNumberState();
+  TWDayNumberState createState() => TWDayNumberState();
 }
 
-class _TWDayNumberState extends State<TWDayNumber> {
+class TWDayNumberState extends State<TWDayNumber> {
   bool isSelected = false;
 
   Widget _dayItem() {
@@ -51,12 +50,12 @@ class _TWDayNumberState extends State<TWDayNumber> {
       alignment: Alignment.center,
       decoration: (isSelected && widget.day > 0)
           ? BoxDecoration(
-              color: widget.selectedColor ?? TWColors.twFF8000,
+              color: widget.selectedColor ?? const Color(0XFFFF8000),
               borderRadius: BorderRadius.circular(4),
             )
           : (widget.isToday && widget.day > 0)
               ? BoxDecoration(
-                  color: widget.todayColor ?? TWColors.twB3B3B3,
+                  color: widget.todayColor ?? const Color(0XFFB3B3B3),
                   borderRadius: BorderRadius.circular(4),
                 )
               : null,
@@ -71,12 +70,12 @@ class _TWDayNumberState extends State<TWDayNumber> {
   }
 
   Text _buildDay() {
-    Color color = TWColors.tw666666;
+    Color color = const Color(0XFF666666);
     if (!widget.canSelected) {
-      color = TWColors.twCCCCCC;
+      color = const Color(0XFFCCCCCC);
     }
     if (widget.isToday || isSelected) {
-      color = TWColors.twFFFFFF;
+      color = const Color(0XFFFFFFFF);
     }
     return Text(
       widget.day < 1 ? '' : TWCalendarTool.formatPadLeft(widget.day),
@@ -94,7 +93,7 @@ class _TWDayNumberState extends State<TWDayNumber> {
       '今天',
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: TWColors.twFFFFFF,
+        color: const Color(0XFFFFFFFF),
         fontSize: widget.todayFontSize ?? 10,
         fontWeight: FontWeight.normal,
       ),

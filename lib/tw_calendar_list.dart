@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-08-09 14:05:51
+ * @LastEditTime: 2022-08-14 21:21:52
  * @Description: 日历组件
  */
 library calendar_list;
@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'tw_month_view.dart';
 import 'tw_weekday_row.dart';
 import 'utils/tw_calendart_tool.dart';
-import 'utils/tw_colors.dart';
 
 enum TWCalendarListSeletedMode {
   /// 默认选择是连续多选
@@ -97,8 +96,8 @@ class TWCalendarList extends StatefulWidget {
     this.ensureViewPadding,
     this.onSelectDayRang,
     this.onSelectDayTitle,
-    this.ensureViewSelectedColor = TWColors.twFF8000,
-    this.ensureViewUnSelectedColor = TWColors.twB3B3B3,
+    this.ensureViewSelectedColor = const Color(0XFFFF8000),
+    this.ensureViewUnSelectedColor = const Color(0XFFB3B3B3),
     this.seletedMode = TWCalendarListSeletedMode.defaltSerial,
     this.dayNumberTodayColor,
     this.dayNumberSelectedColor,
@@ -107,10 +106,10 @@ class TWCalendarList extends StatefulWidget {
         super(key: key);
 
   @override
-  _TWCalendarListState createState() => _TWCalendarListState();
+  TWCalendarListState createState() => TWCalendarListState();
 }
 
-class _TWCalendarListState extends State<TWCalendarList> {
+class TWCalendarListState extends State<TWCalendarList> {
   late DateTime? selectStartTime;
   late DateTime? selectEndTime;
 
@@ -176,10 +175,10 @@ class _TWCalendarListState extends State<TWCalendarList> {
   Widget _buildWeekdayView() {
     return Container(
       decoration: const BoxDecoration(
-        color: TWColors.twFFFFFF,
+        color: Color(0XFFFFFFFF),
         boxShadow: [
           BoxShadow(
-            color: TWColors.twF5F5F5,
+            color: Color(0XFFF5F5F5),
             offset: Offset(0, -0.5),
             blurRadius: 1.0,
           )
@@ -205,10 +204,10 @@ class _TWCalendarListState extends State<TWCalendarList> {
             bottom: 12,
           ),
       decoration: const BoxDecoration(
-        color: TWColors.twFFFFFF,
+        color: Color(0XFFFFFFFF),
         boxShadow: [
           BoxShadow(
-            color: TWColors.twFFFFFF,
+            color: Color(0XFFFFFFFF),
             offset: Offset(0, -0.5),
             blurRadius: 2.0,
           )
@@ -235,7 +234,7 @@ class _TWCalendarListState extends State<TWCalendarList> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: widget.ensureTitleFontSize ?? 16,
-              color: TWColors.twFFFFFF,
+              color: const Color(0XFFFFFFFF),
             ),
           ),
         ),
@@ -246,10 +245,10 @@ class _TWCalendarListState extends State<TWCalendarList> {
   Widget _buildMonthView() {
     return Container(
       decoration: const BoxDecoration(
-        color: TWColors.twFFFFFF,
+        color: Color(0XFFFFFFFF),
         boxShadow: [
           BoxShadow(
-            color: TWColors.twF5F5F5,
+            color: Color(0XFFF5F5F5),
             offset: Offset(0, -0.5),
             blurRadius: 1.0,
           )

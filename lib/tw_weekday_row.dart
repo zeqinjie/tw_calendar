@@ -1,11 +1,10 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-07-24 18:35:11
+ * @LastEditTime: 2022-08-14 21:14:16
  * @Description: 日期视图
  */
 import 'package:flutter/material.dart';
-import 'package:tw_calendar/utils/tw_colors.dart';
 
 class TWWeekdayRow extends StatelessWidget {
   final Color? color;
@@ -28,7 +27,7 @@ class TWWeekdayRow extends StatelessWidget {
         child: Center(
           child: DefaultTextStyle(
             style: TextStyle(
-              color: color ?? TWColors.tw333333,
+              color: color ?? const Color(0XFF333333),
               fontSize: fontSize ?? 16,
               fontWeight: FontWeight.bold,
             ),

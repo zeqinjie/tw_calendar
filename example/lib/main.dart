@@ -1,14 +1,13 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-08-10 14:43:33
+ * @LastEditTime: 2022-08-14 21:19:11
  * @Description: 日历组件
  */
 
 import 'package:flutter/material.dart';
 import 'package:tw_calendar/tw_calendar_list.dart';
 import 'package:tw_calendar/utils/tw_calendart_tool.dart';
-import 'package:tw_calendar/utils/tw_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
 
@@ -141,10 +140,10 @@ class TWCalendarView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TWCalendarViewState createState() => _TWCalendarViewState();
+  TWCalendarViewState createState() => TWCalendarViewState();
 }
 
-class _TWCalendarViewState extends State<TWCalendarView> {
+class TWCalendarViewState extends State<TWCalendarView> {
   @override
   Widget build(BuildContext context) {
     return TWCalendarList(
@@ -163,7 +162,7 @@ class _TWCalendarViewState extends State<TWCalendarView> {
         child: Text(
           '日历组件',
           style: TextStyle(
-            color: TWColors.tw333333,
+            color: const Color(0XFF333333),
             fontSize: 18.w,
           ),
         ),
