@@ -1,10 +1,12 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 18:14:31
- * @LastEditTime: 2022-08-09 14:49:55
+ * @LastEditTime: 2022-08-28 15:31:36
  * @Description: your project
  */
 import 'package:flutter/material.dart';
+import 'package:tw_calendar/tw_calendar_cofigs.dart';
+import 'package:tw_calendar/tw_calendar_controller.dart';
 import 'package:tw_calendar/tw_calendar_list.dart';
 import 'package:tw_calendar/utils/tw_calendart_tool.dart';
 import 'package:tw_calendar_example/feature/bidding_calendar_header_view.dart';
@@ -34,15 +36,24 @@ class BiddingCalendarView extends StatefulWidget {
 }
 
 class _BiddingCalendarViewState extends State<BiddingCalendarView> {
-  DateTime? selectedStartDate;
-  DateTime? selectedEndDate;
   List<BiddingDayChoiceModel>? models;
-
+  late final TWCalendarController controller;
   @override
   void initState() {
     super.initState();
-    selectedStartDate = widget.selectedStartDate;
-    selectedEndDate = widget.selectedEndDate;
+    controller = TWCalendarController(
+      firstDate: TWCalendarTool.tomorrow,
+      lastDate: widget.lastDate,
+      selectedStartDate: widget.selectedStartDate,
+      selectedEndDate: widget.selectedEndDate,
+      onSelectFinish: widget.onSelectFinish,
+      onSelectDayRang: (seletedDate, seletedDays) {
+        handerSeletedDate(seletedDate, seletedDays);
+        if (widget.onSelectDayRang != null) {
+          widget.onSelectDayRang!(seletedDate, seletedDays);
+        }
+      },
+    );
     models = widget.models;
   }
 
@@ -52,20 +63,10 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
     return SizedBox(
       height: ScreenUtil().screenHeight * 0.8,
       child: TWCalendarList(
-        key: UniqueKey(),
-        firstDate: TWCalendarTool.tomorrow,
-        lastDate: widget.lastDate,
+        configs: TWCalendarConfigs(),
+        calendarController: controller,
         seletedMode: TWCalendarListSeletedMode.singleSerial,
-        selectedStartDate: selectedStartDate,
-        selectedEndDate: selectedEndDate,
         headerView: _buildHeader(context),
-        onSelectDayRang: (seletedDate, seletedDays) {
-          handerSeletedDate(seletedDate, seletedDays);
-          if (widget.onSelectDayRang != null) {
-            widget.onSelectDayRang!(seletedDate, seletedDays);
-          }
-        },
-        onSelectFinish: widget.onSelectFinish,
       ),
     );
   }
@@ -85,20 +86,21 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
       updateSelectedDays(dayCount);
       resetChoice();
       model.isChoice = true;
+      controller.updateData();
     });
   }
 
   void updateSelectedDays(int day) {
-    selectedStartDate = DateTime.now().tomorrow();
+    controller.selectedStartDate = DateTime.now().tomorrow();
     if (day > 1) {
-      selectedEndDate = DateTime.now().afterDays(days: day);
+      controller.selectedEndDate = DateTime.now().afterDays(days: day);
     }
   }
 
   void handerSeletedDate(DateTime seletedDate, int seletedDays) {
     setState(() {
-      selectedStartDate = DateTime.now().tomorrow();
-      selectedEndDate = seletedDate;
+      controller.selectedStartDate = DateTime.now().tomorrow();
+      controller.selectedEndDate = seletedDate;
       models?.forEach((element) {
         element.isChoice = element.dayCount == seletedDays;
       });

@@ -1,12 +1,14 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-08-14 21:21:52
+ * @LastEditTime: 2022-08-28 16:02:50
  * @Description: 日历组件
  */
 library calendar_list;
 
 import 'package:flutter/material.dart';
+import 'package:tw_calendar/tw_calendar_controller.dart';
+import 'tw_calendar_cofigs.dart';
 import 'tw_month_view.dart';
 import 'tw_weekday_row.dart';
 import 'utils/tw_calendart_tool.dart';
@@ -20,97 +22,33 @@ enum TWCalendarListSeletedMode {
 }
 
 class TWCalendarList extends StatefulWidget {
-  /// 开始的年月份
-  final DateTime firstDate;
-
-  /// 结束的年月份
-  final DateTime lastDate;
-
-  /// 选择开始日期
-  final DateTime? selectedStartDate;
-
-  /// 选择结束日期
-  final DateTime? selectedEndDate;
-
-  /// 点击方法回调
-  final void Function(DateTime? selectStartTime, DateTime? selectEndTime)?
-      onSelectFinish;
-
   /// 头部组件
   final Widget? headerView;
 
   /// 选择模式
   final TWCalendarListSeletedMode? seletedMode;
 
-  /// 月视图高度，为空则占满剩余空间
-  final double? monthBodyHeight;
+  final TWCalendarController calendarController;
 
-  /// 周视图高度， 默认 48
-  final double? weekDayHeight;
+  final TWCalendarConfigs configs;
 
-  /// 水平间隙
-  final double? horizontalSpace;
-
-  /// 确认周视图高度， 默认 66
-  final double? ensureViewHeight;
-
-  /// 确认按钮的间隙
-  final EdgeInsetsGeometry? ensureViewPadding;
-
-  /// 确认按钮选中颜色
-  final Color? ensureViewSelectedColor;
-
-  /// 确认未按钮选中颜色
-  final Color? ensureViewUnSelectedColor;
-
-  /// 今天的日期的背景颜色
-  final Color? dayNumberTodayColor;
-
-  /// 选中日期背景颜色
-  final Color? dayNumberSelectedColor;
-
-  /// 确认按钮字体大小
-  final double? ensureTitleFontSize;
-
-  /// 点击回调
-  final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
-
-  /// 选择 title 回调
-  final String Function(
-          DateTime? selectStartTime, DateTime? selectEndTime, int seletedDays)?
-      onSelectDayTitle;
-
-  TWCalendarList({
+  const TWCalendarList({
     Key? key,
-    required this.firstDate,
-    required this.lastDate,
+    required this.calendarController,
+    required this.configs,
     this.headerView,
-    this.onSelectFinish,
-    this.selectedStartDate,
-    this.selectedEndDate,
-    this.monthBodyHeight,
-    this.weekDayHeight,
-    this.horizontalSpace,
-    this.ensureViewHeight,
-    this.ensureTitleFontSize,
-    this.ensureViewPadding,
-    this.onSelectDayRang,
-    this.onSelectDayTitle,
-    this.ensureViewSelectedColor = const Color(0XFFFF8000),
-    this.ensureViewUnSelectedColor = const Color(0XFFB3B3B3),
-    this.seletedMode = TWCalendarListSeletedMode.defaltSerial,
-    this.dayNumberTodayColor,
-    this.dayNumberSelectedColor,
-  })  : assert(!firstDate.isAfter(lastDate),
-            'lastDate must be on or after firstDate'),
-        super(key: key);
+    this.seletedMode,
+  }) : super(key: key);
 
   @override
   TWCalendarListState createState() => TWCalendarListState();
 }
 
 class TWCalendarListState extends State<TWCalendarList> {
+  /// 选择开始日期
   late DateTime? selectStartTime;
+
+  /// 选择结束日期
   late DateTime? selectEndTime;
 
   /// 开始年份
@@ -134,7 +72,8 @@ class TWCalendarListState extends State<TWCalendarList> {
   @override
   void initState() {
     super.initState();
-    _configure();
+    widget.calendarController.state = this;
+    initData();
   }
 
   @override
@@ -145,9 +84,9 @@ class TWCalendarListState extends State<TWCalendarList> {
   /* UI Method */
   Widget _buildBody() {
     Widget monthView;
-    if (widget.monthBodyHeight != null) {
+    if (widget.configs.listConfig?.monthBodyHeight != null) {
       monthView = SizedBox(
-        height: widget.monthBodyHeight,
+        height: widget.configs.listConfig?.monthBodyHeight,
         child: _buildMonthView(),
       );
     } else {
@@ -159,12 +98,12 @@ class TWCalendarListState extends State<TWCalendarList> {
         children: [
           if (widget.headerView != null) widget.headerView!,
           SizedBox(
-            height: widget.weekDayHeight ?? 48,
+            height: widget.configs.listConfig?.weekDayHeight ?? 48,
             child: _buildWeekdayView(),
           ),
           monthView,
           SizedBox(
-            height: widget.ensureViewHeight ?? 66,
+            height: widget.configs.listConfig?.ensureViewHeight ?? 66,
             child: _buildEnsureView(),
           ),
         ],
@@ -185,8 +124,8 @@ class TWCalendarListState extends State<TWCalendarList> {
         ],
       ),
       padding: EdgeInsets.only(
-        left: widget.horizontalSpace ?? 8,
-        right: widget.horizontalSpace ?? 8,
+        left: widget.configs.listConfig?.horizontalSpace ?? 8,
+        right: widget.configs.listConfig?.horizontalSpace ?? 8,
       ),
       child: const TWWeekdayRow(),
     );
@@ -196,7 +135,7 @@ class TWCalendarListState extends State<TWCalendarList> {
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
-      padding: widget.ensureViewPadding ??
+      padding: widget.configs.listConfig?.ensureViewPadding ??
           const EdgeInsets.only(
             left: 15,
             right: 15,
@@ -209,7 +148,7 @@ class TWCalendarListState extends State<TWCalendarList> {
           BoxShadow(
             color: Color(0XFFFFFFFF),
             offset: Offset(0, -0.5),
-            blurRadius: 2.0,
+            blurRadius: 1.0,
           )
         ],
       ),
@@ -226,14 +165,14 @@ class TWCalendarListState extends State<TWCalendarList> {
             backgroundColor: MaterialStateProperty.all(
                 (selectStartTime != null ||
                         (selectStartTime != null && selectEndTime != null))
-                    ? widget.ensureViewSelectedColor
-                    : widget.ensureViewUnSelectedColor),
+                    ? widget.configs.listConfig?.ensureViewSelectedColor
+                    : widget.configs.listConfig?.ensureViewUnSelectedColor),
           ),
           child: Text(
             _getEnsureTitle(),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: widget.ensureTitleFontSize ?? 16,
+              fontSize: widget.configs.listConfig?.ensureTitleFontSize ?? 16,
               color: const Color(0XFFFFFFFF),
             ),
           ),
@@ -278,31 +217,30 @@ class TWCalendarListState extends State<TWCalendarList> {
       context: context,
       year: year,
       month: month,
-      padding: widget.horizontalSpace ?? 8,
-      firstDate: widget.firstDate,
-      lastDate: widget.lastDate,
+      padding: widget.configs.listConfig?.horizontalSpace ?? 8,
+      firstDate: widget.calendarController.firstDate,
+      lastDate: widget.calendarController.lastDate,
       selectStartDateTime: selectStartTime,
       selectEndDateTime: selectEndTime,
-      todayColor: widget.dayNumberTodayColor,
-      selectedColor: widget.dayNumberSelectedColor,
+      todayColor: widget.configs.listConfig?.dayNumberTodayColor,
+      selectedColor: widget.configs.listConfig?.dayNumberSelectedColor,
       onSelectDayRang: (dateTime) => _onSelectDayChanged(dateTime),
     );
   }
 
-  /* Private Method */
-  void _configure() {
+  void initData() {
     // 传入的选择开始日期
-    selectStartTime = widget.selectedStartDate;
+    selectStartTime = widget.calendarController.selectedStartDate;
     // 传入的选择结束日期
-    selectEndTime = widget.selectedEndDate;
+    selectEndTime = widget.calendarController.selectedEndDate;
     // 开始年份
-    yearStart = widget.firstDate.year;
+    yearStart = widget.calendarController.firstDate.year;
     // 结束年份
-    yearEnd = widget.lastDate.year;
+    yearEnd = widget.calendarController.lastDate.year;
     // 开始月份
-    monthStart = widget.firstDate.month;
+    monthStart = widget.calendarController.firstDate.month;
     // 结束月份
-    monthEnd = widget.lastDate.month;
+    monthEnd = widget.calendarController.lastDate.month;
     // 总月数
     count = monthEnd - monthStart + (yearEnd - yearStart) * 12 + 1;
 
@@ -310,6 +248,7 @@ class TWCalendarListState extends State<TWCalendarList> {
         TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
   }
 
+  /* Private Method */
   /// 获取确认按钮 title
   String _getEnsureTitle() {
     String btnTitle = '確   定';
@@ -318,8 +257,8 @@ class TWCalendarListState extends State<TWCalendarList> {
     if (seletedDays != 0) {
       btnTitle = '確定 ($selectedDaysTitle 共$seletedDays天)';
     }
-    if (widget.onSelectDayTitle != null) {
-      return widget.onSelectDayTitle!(
+    if (widget.calendarController.onSelectDayTitle != null) {
+      return widget.calendarController.onSelectDayTitle!(
           selectStartTime, selectEndTime, seletedDays);
     }
     return btnTitle;
@@ -329,7 +268,7 @@ class TWCalendarListState extends State<TWCalendarList> {
   void _onSelectDayChanged(DateTime dateTime) {
     switch (widget.seletedMode) {
       case TWCalendarListSeletedMode.singleSerial:
-        selectStartTime = widget.firstDate;
+        selectStartTime = widget.calendarController.firstDate;
         selectEndTime = dateTime;
         break;
       default:
@@ -369,14 +308,14 @@ class TWCalendarListState extends State<TWCalendarList> {
   }
 
   void _handerSelectDayRang(DateTime dateTime) {
-    if (widget.onSelectDayRang != null) {
-      widget.onSelectDayRang!(dateTime, seletedDays);
+    if (widget.calendarController.onSelectDayRang != null) {
+      widget.calendarController.onSelectDayRang!(dateTime, seletedDays);
     }
   }
 
   void _finishSelect() {
-    if (widget.onSelectFinish != null) {
-      widget.onSelectFinish!(selectStartTime, selectEndTime);
+    if (widget.calendarController.onSelectFinish != null) {
+      widget.calendarController.onSelectFinish!(selectStartTime, selectEndTime);
     }
   }
 }

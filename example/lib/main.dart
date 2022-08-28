@@ -1,11 +1,13 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-08-14 21:19:11
+ * @LastEditTime: 2022-08-28 16:02:01
  * @Description: 日历组件
  */
 
 import 'package:flutter/material.dart';
+import 'package:tw_calendar/tw_calendar_cofigs.dart';
+import 'package:tw_calendar/tw_calendar_controller.dart';
 import 'package:tw_calendar/tw_calendar_list.dart';
 import 'package:tw_calendar/utils/tw_calendart_tool.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -144,29 +146,16 @@ class TWCalendarView extends StatefulWidget {
 }
 
 class TWCalendarViewState extends State<TWCalendarView> {
+  late TWCalendarController controller;
+
   @override
-  Widget build(BuildContext context) {
-    return TWCalendarList(
+  void initState() {
+    super.initState();
+    controller = TWCalendarController(
       firstDate: TWCalendarTool.tomorrow,
       lastDate: DateTime(2022, 11, 21),
       selectedStartDate: DateTime(2022, 9, 2),
       selectedEndDate: DateTime(2022, 9, 10),
-      monthBodyHeight: 300.w,
-      ensureViewSelectedColor: Colors.blue,
-      dayNumberSelectedColor: Colors.orange,
-      dayNumberTodayColor: Colors.green,
-      seletedMode: TWCalendarListSeletedMode.singleSerial,
-      headerView: Container(
-        alignment: Alignment.center,
-        height: 55.w,
-        child: Text(
-          '日历组件',
-          style: TextStyle(
-            color: const Color(0XFF333333),
-            fontSize: 18.w,
-          ),
-        ),
-      ),
       onSelectDayRang: ((seletedDate, seletedDays) {
         print('seletedDate : $seletedDate, seletedDays : $seletedDays');
       }),
@@ -180,6 +169,33 @@ class TWCalendarViewState extends State<TWCalendarView> {
             'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
         Navigator.pop(context);
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TWCalendarList(
+      calendarController: controller,
+      configs: TWCalendarConfigs(
+        listConfig: TWCalendarListConfig(
+          monthBodyHeight: 300.w,
+          ensureViewSelectedColor: Colors.blue,
+          dayNumberSelectedColor: Colors.orange,
+          dayNumberTodayColor: Colors.green,
+        ),
+      ),
+      seletedMode: TWCalendarListSeletedMode.singleSerial,
+      headerView: Container(
+        alignment: Alignment.center,
+        height: 55.w,
+        child: Text(
+          '日历组件',
+          style: TextStyle(
+            color: const Color(0XFF333333),
+            fontSize: 18.w,
+          ),
+        ),
+      ),
     );
   }
 }
