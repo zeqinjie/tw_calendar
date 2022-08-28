@@ -1,34 +1,32 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 15:21:50
- * @LastEditTime: 2022-08-28 16:00:59
+ * @LastEditTime: 2022-08-28 22:57:22
  * @Description: your project
  * 
  */
 import 'package:flutter/material.dart';
 
 class TWCalendarConfigs {
-  ///  月历配置对象
-  final TWCalendarMonthViewConfig? monthViewConfig;
-
-  ///  日历列表配置对象
+  /// 日历列表配置对象
   final TWCalendarListConfig? listConfig;
+
+  /// 日历周视图配置对象
+  final TWCalendarWeekViewConfig? weekViewConfig;
+
+  /// 月历配置对象
+  final TWCalendarMonthViewConfig? monthViewConfig;
 
   TWCalendarConfigs({
     this.monthViewConfig,
     this.listConfig,
+    this.weekViewConfig,
   });
 }
 
 /* 列表部分 */
 class TWCalendarListConfig {
-  /// 月视图高度，为空则占满剩余空间
-  final double? monthBodyHeight;
-
-  /// 周视图高度， 默认 48
-  final double? weekDayHeight;
-
-  /// 水平间隙
+  /// 水平间隙，默认 8
   final double? horizontalSpace;
 
   /// 确认周视图高度， 默认 66
@@ -53,13 +51,11 @@ class TWCalendarListConfig {
   final double? ensureTitleFontSize;
 
   TWCalendarListConfig({
-    this.monthBodyHeight,
-    this.weekDayHeight,
     this.horizontalSpace,
     this.ensureViewHeight,
     this.ensureViewPadding,
-    this.ensureViewSelectedColor = const Color(0XFFFF8000),
-    this.ensureViewUnSelectedColor = const Color(0XFFB3B3B3),
+    this.ensureViewSelectedColor,
+    this.ensureViewUnSelectedColor,
     this.dayNumberTodayColor,
     this.dayNumberSelectedColor,
     this.ensureTitleFontSize,
@@ -67,7 +63,21 @@ class TWCalendarListConfig {
 }
 
 /* 月历视图部分 */
-class TWCalendarMonthViewConfig {}
+class TWCalendarMonthViewConfig {
+  /// 月视图高度，为空则占满剩余空间
+  final double? monthBodyHeight;
+
+  TWCalendarMonthViewConfig({
+    this.monthBodyHeight,
+  });
+}
 
 /* 周视图部分 */
-class TWCalendarWeekViewConfig {}
+class TWCalendarWeekViewConfig {
+  /// 周视图高度， 默认 48
+  final double? weekDayHeight;
+
+  TWCalendarWeekViewConfig({
+    this.weekDayHeight,
+  });
+}

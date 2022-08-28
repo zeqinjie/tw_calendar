@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-08-28 16:02:50
+ * @LastEditTime: 2022-08-28 22:57:03
  * @Description: 日历组件
  */
 library calendar_list;
@@ -84,9 +84,9 @@ class TWCalendarListState extends State<TWCalendarList> {
   /* UI Method */
   Widget _buildBody() {
     Widget monthView;
-    if (widget.configs.listConfig?.monthBodyHeight != null) {
+    if (widget.configs.monthViewConfig?.monthBodyHeight != null) {
       monthView = SizedBox(
-        height: widget.configs.listConfig?.monthBodyHeight,
+        height: widget.configs.monthViewConfig?.monthBodyHeight,
         child: _buildMonthView(),
       );
     } else {
@@ -98,7 +98,7 @@ class TWCalendarListState extends State<TWCalendarList> {
         children: [
           if (widget.headerView != null) widget.headerView!,
           SizedBox(
-            height: widget.configs.listConfig?.weekDayHeight ?? 48,
+            height: widget.configs.weekViewConfig?.weekDayHeight ?? 48,
             child: _buildWeekdayView(),
           ),
           monthView,
@@ -165,8 +165,10 @@ class TWCalendarListState extends State<TWCalendarList> {
             backgroundColor: MaterialStateProperty.all(
                 (selectStartTime != null ||
                         (selectStartTime != null && selectEndTime != null))
-                    ? widget.configs.listConfig?.ensureViewSelectedColor
-                    : widget.configs.listConfig?.ensureViewUnSelectedColor),
+                    ? widget.configs.listConfig?.ensureViewSelectedColor ??
+                        const Color(0XFFFF8000)
+                    : widget.configs.listConfig?.ensureViewUnSelectedColor ??
+                        const Color(0XFFB3B3B3)),
           ),
           child: Text(
             _getEnsureTitle(),

@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-08-28 16:02:01
+ * @LastEditTime: 2022-08-28 22:45:27
  * @Description: 日历组件
  */
 
@@ -178,10 +178,12 @@ class TWCalendarViewState extends State<TWCalendarView> {
       calendarController: controller,
       configs: TWCalendarConfigs(
         listConfig: TWCalendarListConfig(
-          monthBodyHeight: 300.w,
           ensureViewSelectedColor: Colors.blue,
           dayNumberSelectedColor: Colors.orange,
           dayNumberTodayColor: Colors.green,
+        ),
+        monthViewConfig: TWCalendarMonthViewConfig(
+          monthBodyHeight: 300.w,
         ),
       ),
       seletedMode: TWCalendarListSeletedMode.singleSerial,
