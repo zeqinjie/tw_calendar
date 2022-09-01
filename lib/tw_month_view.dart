@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-08-14 21:07:00
+ * @LastEditTime: 2022-09-01 16:24:14
  * @Description: 月视图
  */
 
@@ -172,9 +172,11 @@ class TWMonthViewState extends State<TWMonthView> {
     required bool isToday,
     bool canSeletedToday = false,
   }) {
-    if (isToday & !canSeletedToday) {
-      // 当天不可以选择
-      return false;
+    if (!canSeletedToday) {
+      if (isToday) {
+        // 当天不可以选择
+        return false;
+      }
     }
     return TWCalendarTool.dateIsBetweenIn(
       date,

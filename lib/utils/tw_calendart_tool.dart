@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-08-04 15:28:27
+ * @LastEditTime: 2022-09-01 16:22:26
  * @Description: 日历辅助工具类
  */
 
@@ -24,6 +24,14 @@ class TWCalendarTool {
 
   static DateTime get tomorrow {
     return today.add(const Duration(days: 1));
+  }
+
+  /// 确保去掉时分秒
+  static DateTime? onlyDay(DateTime? date) {
+    if (date != null) {
+      return DateTime(date.year, date.month, date.day);
+    }
+    return null;
   }
 
   /// 在过去和未来直接

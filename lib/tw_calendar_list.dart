@@ -232,9 +232,9 @@ class TWCalendarListState extends State<TWCalendarList> {
 
   void initData() {
     // 传入的选择开始日期
-    selectStartTime = widget.calendarController.selectedStartDate;
+    selectStartTime = TWCalendarTool.onlyDay(widget.calendarController.selectedStartDate);
     // 传入的选择结束日期
-    selectEndTime = widget.calendarController.selectedEndDate;
+    selectEndTime = TWCalendarTool.onlyDay(widget.calendarController.selectedEndDate);
     // 开始年份
     yearStart = widget.calendarController.firstDate.year;
     // 结束年份
