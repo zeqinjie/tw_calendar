@@ -1,37 +1,31 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-08-14 21:14:26
+ * @LastEditTime: 2022-09-03 22:21:14
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
+import 'tw_calendar_cofigs.dart';
 import 'tw_calendar_notification.dart';
 import 'utils/tw_calendart_tool.dart';
 
 class TWDayNumber extends StatefulWidget {
   final int day;
   final bool isToday;
-  final Color? todayColor;
   final double size;
   final bool isDefaultSelected;
   final bool canSelected;
-  final double? itemMargin;
-  final double? fontSize;
-  final double? todayFontSize;
-  final Color? selectedColor;
+
+  final TWCalendarDayNumberConfig? dayNumberConfig;
 
   const TWDayNumber({
     Key? key,
     required this.size,
     required this.day,
     required this.isDefaultSelected,
+    required this.dayNumberConfig,
     this.isToday = false,
     this.canSelected = true,
-    this.selectedColor,
-    this.todayColor,
-    this.itemMargin,
-    this.fontSize,
-    this.todayFontSize,
   }) : super(key: key);
 
   @override
@@ -42,7 +36,7 @@ class TWDayNumberState extends State<TWDayNumber> {
   bool isSelected = false;
 
   Widget _dayItem() {
-    final double itemMargin = widget.itemMargin ?? 5;
+    final double itemMargin = widget.dayNumberConfig?.itemMargin ?? 5;
     return Container(
       width: widget.size - itemMargin * 2,
       height: widget.size - itemMargin * 2,
@@ -50,12 +44,14 @@ class TWDayNumberState extends State<TWDayNumber> {
       alignment: Alignment.center,
       decoration: (isSelected && widget.day > 0)
           ? BoxDecoration(
-              color: widget.selectedColor ?? const Color(0XFFFF8000),
+              color: widget.dayNumberConfig?.selectedColor ??
+                  const Color(0XFFFF8000),
               borderRadius: BorderRadius.circular(4),
             )
           : (widget.isToday && widget.day > 0)
               ? BoxDecoration(
-                  color: widget.todayColor ?? const Color(0XFFB3B3B3),
+                  color: widget.dayNumberConfig?.todayColor ??
+                      const Color(0XFFB3B3B3),
                   borderRadius: BorderRadius.circular(4),
                 )
               : null,
@@ -82,7 +78,7 @@ class TWDayNumberState extends State<TWDayNumber> {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: color,
-        fontSize: widget.fontSize ?? 15,
+        fontSize: widget.dayNumberConfig?.fontSize ?? 15,
         fontWeight: FontWeight.normal,
       ),
     );
@@ -94,7 +90,7 @@ class TWDayNumberState extends State<TWDayNumber> {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: const Color(0XFFFFFFFF),
-        fontSize: widget.todayFontSize ?? 10,
+        fontSize: widget.dayNumberConfig?.todayFontSize ?? 10,
         fontWeight: FontWeight.normal,
       ),
     );

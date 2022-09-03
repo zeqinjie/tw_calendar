@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-08-28 22:57:03
+ * @LastEditTime: 2022-09-03 22:30:12
  * @Description: 日历组件
  */
 library calendar_list;
@@ -13,23 +13,14 @@ import 'tw_month_view.dart';
 import 'tw_weekday_row.dart';
 import 'utils/tw_calendart_tool.dart';
 
-enum TWCalendarListSeletedMode {
-  /// 默认选择是连续多选
-  defaltSerial,
-
-  /// 单选连续,从可选日开始
-  singleSerial,
-}
-
 class TWCalendarList extends StatefulWidget {
   /// 头部组件
   final Widget? headerView;
 
-  /// 选择模式
-  final TWCalendarListSeletedMode? seletedMode;
-
+  /// 日历数据控制器
   final TWCalendarController calendarController;
 
+  /// 配置对象
   final TWCalendarConfigs configs;
 
   const TWCalendarList({
@@ -37,7 +28,6 @@ class TWCalendarList extends StatefulWidget {
     required this.calendarController,
     required this.configs,
     this.headerView,
-    this.seletedMode,
   }) : super(key: key);
 
   @override
@@ -217,24 +207,24 @@ class TWCalendarListState extends State<TWCalendarList> {
     int month = dateTime.month;
     return TWMonthView(
       context: context,
+      configs: widget.configs,
       year: year,
       month: month,
-      padding: widget.configs.listConfig?.horizontalSpace ?? 8,
       firstDate: widget.calendarController.firstDate,
       lastDate: widget.calendarController.lastDate,
       selectStartDateTime: selectStartTime,
       selectEndDateTime: selectEndTime,
-      todayColor: widget.configs.listConfig?.dayNumberTodayColor,
-      selectedColor: widget.configs.listConfig?.dayNumberSelectedColor,
       onSelectDayRang: (dateTime) => _onSelectDayChanged(dateTime),
     );
   }
 
   void initData() {
     // 传入的选择开始日期
-    selectStartTime = TWCalendarTool.onlyDay(widget.calendarController.selectedStartDate);
+    selectStartTime =
+        TWCalendarTool.onlyDay(widget.calendarController.selectedStartDate);
     // 传入的选择结束日期
-    selectEndTime = TWCalendarTool.onlyDay(widget.calendarController.selectedEndDate);
+    selectEndTime =
+        TWCalendarTool.onlyDay(widget.calendarController.selectedEndDate);
     // 开始年份
     yearStart = widget.calendarController.firstDate.year;
     // 结束年份
@@ -268,7 +258,9 @@ class TWCalendarListState extends State<TWCalendarList> {
 
   // 选项处理回调
   void _onSelectDayChanged(DateTime dateTime) {
-    switch (widget.seletedMode) {
+    var seletedMode = widget.configs.listConfig?.seletedMode ??
+        TWCalendarListSeletedMode.singleSerial;
+    switch (seletedMode) {
       case TWCalendarListSeletedMode.singleSerial:
         selectStartTime = widget.calendarController.firstDate;
         selectEndTime = dateTime;

@@ -1,11 +1,12 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-09-01 16:24:14
+ * @LastEditTime: 2022-09-03 22:23:46
  * @Description: 月视图
  */
 
 import 'package:flutter/material.dart';
+import 'tw_calendar_cofigs.dart';
 import 'tw_calendar_notification.dart';
 import 'tw_day_number.dart';
 import 'tw_month_title.dart';
@@ -15,27 +16,23 @@ class TWMonthView extends StatefulWidget {
   final BuildContext context;
   final int year;
   final int month;
-  final double padding;
-  final Color? todayColor;
-  final Color? selectedColor;
-  final List<String>? monthNames;
   final DateTime? selectStartDateTime;
   final DateTime? selectEndDateTime;
+
+  /// 配置样式对象
+  final TWCalendarConfigs? configs;
 
   const TWMonthView({
     Key? key,
     required this.context,
     required this.year,
     required this.month,
-    required this.padding,
     required this.selectStartDateTime,
     required this.selectEndDateTime,
     required this.onSelectDayRang,
     required this.firstDate,
     required this.lastDate,
-    this.todayColor,
-    this.monthNames,
-    this.selectedColor,
+    required this.configs,
   }) : super(key: key);
 
   /// 开始的年月份
@@ -46,7 +43,8 @@ class TWMonthView extends StatefulWidget {
 
   final void Function(DateTime seletedDate) onSelectDayRang;
 
-  double get itemWidth => TWCalendarTool.getDayNumberSize(context, padding);
+  double get itemWidth => TWCalendarTool.getDayNumberSize(
+      context, configs?.monthViewConfig?.padding ?? 8);
 
   @override
   TWMonthViewState createState() => TWMonthViewState();
@@ -54,6 +52,13 @@ class TWMonthView extends StatefulWidget {
 
 class TWMonthViewState extends State<TWMonthView> {
   DateTime? selectedDate;
+  late double padding;
+
+  @override
+  void initState() {
+    super.initState();
+    padding = widget.configs?.monthViewConfig?.padding ?? 8;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,12 +109,11 @@ class TWMonthViewState extends State<TWMonthView> {
       dayRowChildren.add(
         TWDayNumber(
           size: widget.itemWidth,
-          day: day,
-          isToday: isToday,
-          selectedColor: widget.selectedColor,
           isDefaultSelected: isDefaultSelected,
-          todayColor: widget.todayColor,
+          isToday: isToday,
           canSelected: canSelected,
+          day: day,
+          dayNumberConfig: widget.configs?.dayNumberConfig,
         ),
       );
 
@@ -145,8 +149,8 @@ class TWMonthViewState extends State<TWMonthView> {
         return true;
       },
       child: Container(
-        width: 7 * TWCalendarTool.getDayNumberSize(context, widget.padding),
-        margin: EdgeInsets.all(widget.padding),
+        width: 7 * TWCalendarTool.getDayNumberSize(context, padding),
+        margin: EdgeInsets.all(padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -154,10 +158,10 @@ class TWMonthViewState extends State<TWMonthView> {
             TWMonthTitle(
               year: widget.year,
               month: widget.month,
-              monthNames: widget.monthNames,
+              monthNames: widget.configs?.monthViewConfig?.monthNames,
             ),
             SizedBox(
-              height: widget.padding,
+              height: padding,
             ),
             buildMonthDays(context),
           ],
@@ -170,9 +174,10 @@ class TWMonthViewState extends State<TWMonthView> {
   bool canSelectedDate({
     required DateTime date,
     required bool isToday,
-    bool canSeletedToday = false,
   }) {
-    if (!canSeletedToday) {
+    final canSelectedToday =
+        widget.configs?.monthViewConfig?.canSelectedToday ?? false;
+    if (!canSelectedToday) {
       if (isToday) {
         // 当天不可以选择
         return false;

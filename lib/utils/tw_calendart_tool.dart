@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-09-01 16:22:26
+ * @LastEditTime: 2022-09-03 21:20:29
  * @Description: 日历辅助工具类
  */
 
@@ -12,16 +12,19 @@ class TWCalendarTool {
     return (MediaQuery.of(context).size.width - padding * 2) / 7;
   }
 
+  /// 是否今天
   static bool dateIsToday(DateTime date) {
     final DateTime now = DateTime.now();
     return isSameDate(date, now);
   }
 
+  /// 今天
   static DateTime get today {
     final DateTime now = DateTime.now();
     return DateTime(now.year, now.month, now.day);
   }
 
+  /// 明天
   static DateTime get tomorrow {
     return today.add(const Duration(days: 1));
   }
@@ -34,7 +37,12 @@ class TWCalendarTool {
     return null;
   }
 
-  /// 在过去和未来直接
+  /// 多少天以后
+  static DateTime nowAfterDays(int days) {
+    return today.add(Duration(days: days));
+  }
+
+  /// 在 firstDate 和 lastDate 之间
   static bool dateIsBetweenIn(
       DateTime date, DateTime firstDate, DateTime lastDate) {
     final r1 = date.compareTo(firstDate);
@@ -45,18 +53,21 @@ class TWCalendarTool {
     return false;
   }
 
+  /// 是否同一天
   static bool isSameDate(DateTime firstDate, DateTime secondDate) {
     return firstDate.year == secondDate.year &&
         firstDate.month == secondDate.month &&
         firstDate.day == secondDate.day;
   }
 
+  /// 这个月多少天
   static int getDaysInMonth(int year, int month) {
     return month < DateTime.monthsPerYear
         ? DateTime(year, month + 1, 0).day
         : DateTime(year + 1, 1, 0).day;
   }
 
+  /// 月份
   static String getMonthName(
     int month, {
     List<String>? monthNames,
@@ -79,6 +90,7 @@ class TWCalendarTool {
     return names[month - 1];
   }
 
+  /// 年
   static String getYearName(
     int year,
   ) {
@@ -99,6 +111,7 @@ class TWCalendarTool {
     return null;
   }
 
+  /// 多少位，补充 0
   static String formatPadLeft(int number, {int count = 2}) {
     return number.toString().padLeft(count, '0');
   }

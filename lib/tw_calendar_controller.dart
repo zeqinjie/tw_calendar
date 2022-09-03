@@ -1,16 +1,16 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 13:22:42
- * @LastEditTime: 2022-08-28 14:29:55
+ * @LastEditTime: 2022-09-03 21:19:16
  * @Description: your project
  */
 import 'package:tw_calendar/tw_calendar_list.dart';
 
 class TWCalendarController {
-  /// 开始的年月份
+  /// 可以选择开始的年月份
   final DateTime firstDate;
 
-  /// 结束的年月份
+  /// 可以选择结束的年月份
   final DateTime lastDate;
 
   /// 选择开始日期

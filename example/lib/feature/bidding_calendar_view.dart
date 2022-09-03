@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 18:14:31
- * @LastEditTime: 2022-08-28 15:31:36
+ * @LastEditTime: 2022-09-03 22:29:44
  * @Description: your project
  */
 import 'package:flutter/material.dart';
@@ -65,7 +65,6 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
       child: TWCalendarList(
         configs: TWCalendarConfigs(),
         calendarController: controller,
-        seletedMode: TWCalendarListSeletedMode.singleSerial,
         headerView: _buildHeader(context),
       ),
     );

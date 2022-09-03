@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-08-28 22:45:27
+ * @LastEditTime: 2022-09-03 22:36:36
  * @Description: 日历组件
  */
 
@@ -12,7 +12,6 @@ import 'package:tw_calendar/tw_calendar_list.dart';
 import 'package:tw_calendar/utils/tw_calendart_tool.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
-
 import 'feature/bidding_calendar_view.dart';
 
 void main() {
@@ -97,9 +96,9 @@ class _HomePageState extends State<_HomePage> {
             BiddingDayChoiceModel(dayCount: 7),
             BiddingDayChoiceModel(dayCount: 3),
           ],
-          lastDate: DateTime(2022, 11, 21),
-          selectedStartDate: DateTime(2022, 9, 2),
-          selectedEndDate: DateTime(2022, 9, 10),
+          lastDate: TWCalendarTool.nowAfterDays(88),
+          selectedStartDate: TWCalendarTool.nowAfterDays(2),
+          selectedEndDate: TWCalendarTool.nowAfterDays(10),
           onSelectFinish: (selectStartTime, selectEndTime) {
             print(
                 'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
@@ -152,10 +151,10 @@ class TWCalendarViewState extends State<TWCalendarView> {
   void initState() {
     super.initState();
     controller = TWCalendarController(
-      firstDate: TWCalendarTool.tomorrow,
-      lastDate: DateTime(2022, 11, 21),
-      selectedStartDate: DateTime(2022, 9, 2),
-      selectedEndDate: DateTime(2022, 9, 10),
+      firstDate: TWCalendarTool.today,
+      lastDate: TWCalendarTool.nowAfterDays(33),
+      selectedStartDate: TWCalendarTool.nowAfterDays(2),
+      selectedEndDate: TWCalendarTool.nowAfterDays(10),
       onSelectDayRang: ((seletedDate, seletedDays) {
         print('seletedDate : $seletedDate, seletedDays : $seletedDays');
       }),
@@ -178,15 +177,18 @@ class TWCalendarViewState extends State<TWCalendarView> {
       calendarController: controller,
       configs: TWCalendarConfigs(
         listConfig: TWCalendarListConfig(
+          seletedMode: TWCalendarListSeletedMode.doubleSerial,
           ensureViewSelectedColor: Colors.blue,
-          dayNumberSelectedColor: Colors.orange,
-          dayNumberTodayColor: Colors.green,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
           monthBodyHeight: 300.w,
+          canSelectedToday: true,
+        ),
+        dayNumberConfig: TWCalendarDayNumberConfig(
+          selectedColor: Colors.red,
+          todayColor: Colors.green,
         ),
       ),
-      seletedMode: TWCalendarListSeletedMode.singleSerial,
       headerView: Container(
         alignment: Alignment.center,
         height: 55.w,
