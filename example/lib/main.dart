@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-09-03 22:36:36
+ * @LastEditTime: 2022-09-04 10:24:13
  * @Description: 日历组件
  */
 
@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('日历 demo'),
+          title: const Text('Calendar Demo'),
         ),
         body: const _HomePage(),
       ),
@@ -161,7 +161,10 @@ class TWCalendarViewState extends State<TWCalendarView> {
       onSelectDayTitle: (selectStartTime, selectEndTime, seletedDays) {
         print(
             'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, seletedDays : $seletedDays');
-        return "确 定 (${selectStartTime?.month}月${selectStartTime?.day}日 - ${selectEndTime?.month}月${selectEndTime?.day}日）";
+        if (selectStartTime != null && selectEndTime != null) {
+          return "ensure (${selectStartTime.year},${selectStartTime.month},${selectStartTime.day} - ${selectEndTime.year},${selectEndTime.month},${selectEndTime.day}）";
+        }
+        return "please choice...";
       },
       onSelectFinish: (selectStartTime, selectEndTime) {
         print(
@@ -183,20 +186,35 @@ class TWCalendarViewState extends State<TWCalendarView> {
         monthViewConfig: TWCalendarMonthViewConfig(
           monthBodyHeight: 300.w,
           canSelectedToday: true,
+          titleHandler: ((year, month) => '$year - $month'),
         ),
         dayNumberConfig: TWCalendarDayNumberConfig(
-          selectedColor: Colors.red,
-          todayColor: Colors.green,
+          selectedBackgroundColor: Colors.red,
+          todayBackgroudColor: Colors.green,
+          todyTitle: 'today',
+        ),
+        weekdayRowConfig: TWCalendarWeekdayRowConfig(
+          fontSize: 14.w,
+          titles: [
+            'Sun',
+            'Mon',
+            'Tues',
+            'Wed',
+            'Thurs',
+            'Fri',
+            'Satur',
+          ],
         ),
       ),
       headerView: Container(
         alignment: Alignment.center,
         height: 55.w,
         child: Text(
-          '日历组件',
+          'Calendar Widget',
           style: TextStyle(
             color: const Color(0XFF333333),
             fontSize: 18.w,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

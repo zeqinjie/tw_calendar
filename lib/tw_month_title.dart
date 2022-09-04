@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-09-04 09:06:21
+ * @LastEditTime: 2022-09-04 10:19:52
  * @Description: your project
  */
 import 'package:flutter/material.dart';
@@ -28,7 +28,10 @@ class TWMonthTitle extends StatelessWidget {
       monthNames: monthViewConfig?.monthNames,
     );
     final yearTitle = TWCalendarTool.getYearName(year);
-    final title = yearTitle + monthTitle;
+    var title = yearTitle + monthTitle;
+    if (monthViewConfig?.titleHandler != null) {
+      title = monthViewConfig?.titleHandler!(year, month) ?? '';
+    }
     return Text(
       title,
       style: TextStyle(

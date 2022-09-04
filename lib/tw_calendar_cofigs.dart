@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 15:21:50
- * @LastEditTime: 2022-09-04 09:05:40
+ * @LastEditTime: 2022-09-04 10:15:08
  * @Description: your project
  * 
  */
@@ -59,7 +59,14 @@ class TWCalendarListConfig {
   /// 确认按钮字体大小
   final double? ensureTitleFontSize;
 
+  /// 确认按钮字体颜色
+  final Color? ensureTitleColor;
+
+  /// 确定按钮 decoration
+  final Decoration? ensureViewDecoration;
+
   TWCalendarListConfig({
+    this.ensureTitleColor,
     this.seletedMode,
     this.horizontalSpace,
     this.ensureViewHeight,
@@ -67,6 +74,7 @@ class TWCalendarListConfig {
     this.ensureViewSelectedColor,
     this.ensureViewUnSelectedColor,
     this.ensureTitleFontSize,
+    this.ensureViewDecoration,
   });
 }
 
@@ -87,24 +95,37 @@ class TWCalendarMonthViewConfig {
   /// 间隙, 默认 8
   final double? padding;
 
+  /// 月历 title 回调
+  final String Function(int year, int month)? titleHandler;
+
   TWCalendarMonthViewConfig({
     this.padding,
     this.monthBodyHeight,
     this.canSelectedToday,
     this.monthNames,
     this.titleFontSize,
+    this.titleHandler,
   });
 }
 
 class TWCalendarDayNumberConfig {
   /// 今天颜色
-  final Color? todayColor;
+  final Color? todayBackgroudColor;
+
+  /// 今天颜色
+  final Color? todayTitleColor;
+
+  /// 选择背景颜色
+  final Color? selectedBackgroundColor;
 
   /// 选择颜色
-  final Color? selectedColor;
+  final Color? selectedTitleColor;
 
   /// 选择颜色
-  final Color? unSelectedColor;
+  final Color? unSelectedTitleColor;
+
+  /// 禁止选择颜色
+  final Color? forbidSelectedTitleColor;
 
   /// 间隙
   final double? itemMargin;
@@ -115,12 +136,19 @@ class TWCalendarDayNumberConfig {
   /// 今天字体大小
   final double? todayFontSize;
 
+  /// 今天标识
+  final String? todyTitle;
+
   TWCalendarDayNumberConfig({
-    this.todayColor,
-    this.selectedColor,
-    this.unSelectedColor,
+    this.todayBackgroudColor,
+    this.todayTitleColor,
+    this.selectedBackgroundColor,
+    this.selectedTitleColor,
+    this.unSelectedTitleColor,
+    this.forbidSelectedTitleColor,
     this.itemMargin,
     this.fontSize,
+    this.todyTitle,
     this.todayFontSize,
   });
 }
