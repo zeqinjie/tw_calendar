@@ -1,12 +1,12 @@
 <!--
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:24
- * @LastEditTime: 2022-09-04 10:31:35
+ * @LastEditTime: 2022-09-04 10:42:23
  * @Description: 日历组件
 -->
 
 
-## 0.1.4
+## 1.0.0
 * support change to modify style cofigures
 ## 0.1.3
 * fix bug
