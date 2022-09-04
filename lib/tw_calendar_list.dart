@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-09-03 22:30:12
+ * @LastEditTime: 2022-09-04 09:02:08
  * @Description: 日历组件
  */
 library calendar_list;
@@ -88,7 +88,7 @@ class TWCalendarListState extends State<TWCalendarList> {
         children: [
           if (widget.headerView != null) widget.headerView!,
           SizedBox(
-            height: widget.configs.weekViewConfig?.weekDayHeight ?? 48,
+            height: widget.configs.weekdayRowConfig?.weekDayHeight ?? 48,
             child: _buildWeekdayView(),
           ),
           monthView,
@@ -117,7 +117,9 @@ class TWCalendarListState extends State<TWCalendarList> {
         left: widget.configs.listConfig?.horizontalSpace ?? 8,
         right: widget.configs.listConfig?.horizontalSpace ?? 8,
       ),
-      child: const TWWeekdayRow(),
+      child: TWWeekdayRow(
+        weekdayRowConfig: widget.configs.weekdayRowConfig,
+      ),
     );
   }
 

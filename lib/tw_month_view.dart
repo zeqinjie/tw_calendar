@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-09-03 22:23:46
+ * @LastEditTime: 2022-09-04 09:07:00
  * @Description: 月视图
  */
 
@@ -158,7 +158,7 @@ class TWMonthViewState extends State<TWMonthView> {
             TWMonthTitle(
               year: widget.year,
               month: widget.month,
-              monthNames: widget.configs?.monthViewConfig?.monthNames,
+              monthViewConfig: widget.configs?.monthViewConfig,
             ),
             SizedBox(
               height: padding,

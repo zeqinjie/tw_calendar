@@ -1,18 +1,17 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-08-14 21:14:16
+ * @LastEditTime: 2022-09-04 09:01:57
  * @Description: 日期视图
  */
 import 'package:flutter/material.dart';
+import 'tw_calendar_cofigs.dart';
 
 class TWWeekdayRow extends StatelessWidget {
-  final Color? color;
-  final double? fontSize;
+  final TWCalendarWeekdayRowConfig? weekdayRowConfig;
   const TWWeekdayRow({
     Key? key,
-    this.color,
-    this.fontSize,
+    this.weekdayRowConfig,
   }) : super(key: key);
 
   @override
@@ -27,8 +26,9 @@ class TWWeekdayRow extends StatelessWidget {
         child: Center(
           child: DefaultTextStyle(
             style: TextStyle(
-              color: color ?? const Color(0XFF333333),
-              fontSize: fontSize ?? 16,
+              color:
+                  weekdayRowConfig?.backgroundColor ?? const Color(0XFF333333),
+              fontSize: weekdayRowConfig?.fontSize ?? 16,
               fontWeight: FontWeight.bold,
             ),
             child: Text(
@@ -39,14 +39,18 @@ class TWWeekdayRow extends StatelessWidget {
       );
 
   List<Widget> _renderWeekDays() {
-    List<Widget> list = [];
-    list.add(_weekdayContainer("日"));
-    list.add(_weekdayContainer("一"));
-    list.add(_weekdayContainer("二"));
-    list.add(_weekdayContainer("三"));
-    list.add(_weekdayContainer("四"));
-    list.add(_weekdayContainer("五"));
-    list.add(_weekdayContainer("六"));
-    return list;
+    final titles = weekdayRowConfig?.titles ??
+        [
+          '日',
+          '一',
+          '二',
+          '三',
+          '四',
+          '五',
+          '六',
+        ];
+
+    return List.generate(
+        titles.length, (index) => _weekdayContainer(titles[index])).toList();
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 15:21:50
- * @LastEditTime: 2022-09-03 22:36:01
+ * @LastEditTime: 2022-09-04 09:05:40
  * @Description: your project
  * 
  */
@@ -19,20 +19,20 @@ class TWCalendarConfigs {
   /// 日历列表配置对象
   final TWCalendarListConfig? listConfig;
 
-  /// 日历周视图配置对象
-  final TWCalendarWeekViewConfig? weekViewConfig;
-
   /// 月历配置对象
   final TWCalendarMonthViewConfig? monthViewConfig;
 
   /// 月历配置对象
   final TWCalendarDayNumberConfig? dayNumberConfig;
 
+  /// 周视图配置对象
+  final TWCalendarWeekdayRowConfig? weekdayRowConfig;
+
   TWCalendarConfigs({
     this.listConfig,
     this.monthViewConfig,
-    this.weekViewConfig,
     this.dayNumberConfig,
+    this.weekdayRowConfig,
   });
 }
 
@@ -81,6 +81,9 @@ class TWCalendarMonthViewConfig {
   /// 月份标题
   final List<String>? monthNames;
 
+  /// 年月标题字体大小
+  final double? titleFontSize;
+
   /// 间隙, 默认 8
   final double? padding;
 
@@ -89,6 +92,7 @@ class TWCalendarMonthViewConfig {
     this.monthBodyHeight,
     this.canSelectedToday,
     this.monthNames,
+    this.titleFontSize,
   });
 }
 
@@ -121,12 +125,18 @@ class TWCalendarDayNumberConfig {
   });
 }
 
-/* 周视图部分 */
-class TWCalendarWeekViewConfig {
+class TWCalendarWeekdayRowConfig {
   /// 周视图高度， 默认 48
   final double? weekDayHeight;
-
-  TWCalendarWeekViewConfig({
+  final Color? color;
+  final double? fontSize;
+  final Color? backgroundColor;
+  final List<String>? titles;
+  TWCalendarWeekdayRowConfig({
     this.weekDayHeight,
+    this.color,
+    this.fontSize,
+    this.backgroundColor,
+    this.titles,
   });
 }
