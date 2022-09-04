@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 15:21:50
- * @LastEditTime: 2022-09-04 10:15:08
+ * @LastEditTime: 2022-09-04 10:54:33
  * @Description: your project
  * 
  */
@@ -156,15 +156,19 @@ class TWCalendarDayNumberConfig {
 class TWCalendarWeekdayRowConfig {
   /// 周视图高度， 默认 48
   final double? weekDayHeight;
-  final Color? color;
-  final double? fontSize;
-  final Color? backgroundColor;
+
+  /// 标题颜色
+  final Color? titleColor;
+
+  /// 标题字体大小
+  final double? titleFontSize;
+
+  /// 周视图 titles
   final List<String>? titles;
   TWCalendarWeekdayRowConfig({
     this.weekDayHeight,
-    this.color,
-    this.fontSize,
-    this.backgroundColor,
+    this.titleColor,
+    this.titleFontSize,
     this.titles,
   });
 }

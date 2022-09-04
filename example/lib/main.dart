@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-09-04 10:24:13
+ * @LastEditTime: 2022-09-04 10:55:13
  * @Description: 日历组件
  */
 
@@ -189,12 +189,13 @@ class TWCalendarViewState extends State<TWCalendarView> {
           titleHandler: ((year, month) => '$year - $month'),
         ),
         dayNumberConfig: TWCalendarDayNumberConfig(
-          selectedBackgroundColor: Colors.red,
-          todayBackgroudColor: Colors.green,
+          selectedBackgroundColor: Colors.blue,
+          todayBackgroudColor: Colors.red,
           todyTitle: 'today',
         ),
         weekdayRowConfig: TWCalendarWeekdayRowConfig(
-          fontSize: 14.w,
+          titleFontSize: 14.w,
+          titleColor: Colors.blue,
           titles: [
             'Sun',
             'Mon',
@@ -212,7 +213,7 @@ class TWCalendarViewState extends State<TWCalendarView> {
         child: Text(
           'Calendar Widget',
           style: TextStyle(
-            color: const Color(0XFF333333),
+            color: Colors.blue,
             fontSize: 18.w,
             fontWeight: FontWeight.bold,
           ),
