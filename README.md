@@ -28,14 +28,6 @@ import 'package:tw_calendar/tw_calendar.dart';
 some support cofigures class 
 
 ```dart
-
-/*
- * @Author: zhengzeqin
- * @Date: 2022-08-28 15:21:50
- * @LastEditTime: 2022-09-04 10:54:33
- * @Description: your project
- * 
- */
 import 'package:flutter/material.dart';
 
 enum TWCalendarListSeletedMode {

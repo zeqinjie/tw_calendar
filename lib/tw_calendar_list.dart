@@ -277,13 +277,12 @@ class TWCalendarListState extends State<TWCalendarList> {
           selectStartTime = dateTime;
         }
     }
-    seletedDays =
-        TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
-    _handerSelectDayRang(dateTime);
     setState(() {
-      selectStartTime;
-      selectEndTime;
+      seletedDays =
+        TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
     });
+    _handerSelectDayRang(dateTime);
+    
   }
 
   void _handerSelectDayRang(DateTime dateTime) {
