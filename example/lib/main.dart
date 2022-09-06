@@ -1,16 +1,13 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-09-04 10:55:13
+ * @LastEditTime: 2022-09-06 13:42:15
  * @Description: 日历组件
  */
 
 import 'package:flutter/material.dart';
-import 'package:tw_calendar/tw_calendar_cofigs.dart';
-import 'package:tw_calendar/tw_calendar_controller.dart';
-import 'package:tw_calendar/tw_calendar_list.dart';
-import 'package:tw_calendar/utils/tw_calendart_tool.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tw_calendar/tw_calendar.dart';
 import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
 import 'feature/bidding_calendar_view.dart';
 

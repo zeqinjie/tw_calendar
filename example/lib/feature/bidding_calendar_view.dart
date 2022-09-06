@@ -1,14 +1,11 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 18:14:31
- * @LastEditTime: 2022-09-03 22:29:44
+ * @LastEditTime: 2022-09-06 13:42:40
  * @Description: your project
  */
 import 'package:flutter/material.dart';
-import 'package:tw_calendar/tw_calendar_cofigs.dart';
-import 'package:tw_calendar/tw_calendar_controller.dart';
-import 'package:tw_calendar/tw_calendar_list.dart';
-import 'package:tw_calendar/utils/tw_calendart_tool.dart';
+import 'package:tw_calendar/tw_calendar.dart';
 import 'package:tw_calendar_example/feature/bidding_calendar_header_view.dart';
 import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

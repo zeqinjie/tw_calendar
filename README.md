@@ -8,8 +8,6 @@ pub：[tw_calendar](https://pub.flutter-io.cn/packages/tw_calendar)
 
 ![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/1.gif)
 
-![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/2.gif)
-
 ## Installing
 
 Add tw_calendar to your pubspec.yaml file:

@@ -1,10 +1,9 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-09-04 09:47:17
+ * @LastEditTime: 2022-09-06 13:43:40
  * @Description: 日历组件
  */
-library calendar_list;
 
 import 'package:flutter/material.dart';
 import 'package:tw_calendar/tw_calendar_controller.dart';
@@ -21,12 +20,12 @@ class TWCalendarList extends StatefulWidget {
   final TWCalendarController calendarController;
 
   /// 配置对象
-  final TWCalendarConfigs configs;
+  final TWCalendarConfigs? configs;
 
   const TWCalendarList({
     Key? key,
     required this.calendarController,
-    required this.configs,
+    this.configs,
     this.headerView,
   }) : super(key: key);
 
@@ -74,9 +73,9 @@ class TWCalendarListState extends State<TWCalendarList> {
   /* UI Method */
   Widget _buildBody() {
     Widget monthView;
-    if (widget.configs.monthViewConfig?.monthBodyHeight != null) {
+    if (widget.configs?.monthViewConfig?.monthBodyHeight != null) {
       monthView = SizedBox(
-        height: widget.configs.monthViewConfig?.monthBodyHeight,
+        height: widget.configs?.monthViewConfig?.monthBodyHeight,
         child: _buildMonthView(),
       );
     } else {
@@ -88,12 +87,12 @@ class TWCalendarListState extends State<TWCalendarList> {
         children: [
           if (widget.headerView != null) widget.headerView!,
           SizedBox(
-            height: widget.configs.weekdayRowConfig?.weekDayHeight ?? 48,
+            height: widget.configs?.weekdayRowConfig?.weekDayHeight ?? 48,
             child: _buildWeekdayView(),
           ),
           monthView,
           SizedBox(
-            height: widget.configs.listConfig?.ensureViewHeight ?? 66,
+            height: widget.configs?.listConfig?.ensureViewHeight ?? 66,
             child: _buildEnsureView(),
           ),
         ],
@@ -105,11 +104,11 @@ class TWCalendarListState extends State<TWCalendarList> {
     return Container(
       decoration: _buildBoxDecoration(),
       padding: EdgeInsets.only(
-        left: widget.configs.listConfig?.horizontalSpace ?? 8,
-        right: widget.configs.listConfig?.horizontalSpace ?? 8,
+        left: widget.configs?.listConfig?.horizontalSpace ?? 8,
+        right: widget.configs?.listConfig?.horizontalSpace ?? 8,
       ),
       child: TWWeekdayRow(
-        weekdayRowConfig: widget.configs.weekdayRowConfig,
+        weekdayRowConfig: widget.configs?.weekdayRowConfig,
       ),
     );
   }
@@ -118,14 +117,14 @@ class TWCalendarListState extends State<TWCalendarList> {
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
-      padding: widget.configs.listConfig?.ensureViewPadding ??
+      padding: widget.configs?.listConfig?.ensureViewPadding ??
           const EdgeInsets.only(
             left: 15,
             right: 15,
             top: 12,
             bottom: 12,
           ),
-      decoration: widget.configs.listConfig?.ensureViewDecoration ??
+      decoration: widget.configs?.listConfig?.ensureViewDecoration ??
           _buildBoxDecoration(),
       child: ConstrainedBox(
         constraints: const BoxConstraints.expand(),
@@ -135,18 +134,18 @@ class TWCalendarListState extends State<TWCalendarList> {
             backgroundColor: MaterialStateProperty.all(
                 (selectStartTime != null ||
                         (selectStartTime != null && selectEndTime != null))
-                    ? widget.configs.listConfig?.ensureViewSelectedColor ??
+                    ? widget.configs?.listConfig?.ensureViewSelectedColor ??
                         const Color(0XFFFF8000)
-                    : widget.configs.listConfig?.ensureViewUnSelectedColor ??
+                    : widget.configs?.listConfig?.ensureViewUnSelectedColor ??
                         const Color(0XFFB3B3B3)),
           ),
           child: Text(
             _getEnsureTitle(),
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: widget.configs.listConfig?.ensureTitleFontSize ?? 16,
+              fontSize: widget.configs?.listConfig?.ensureTitleFontSize ?? 16,
               color:
-                  widget.configs.listConfig?.ensureTitleColor ?? Colors.white,
+                  widget.configs?.listConfig?.ensureTitleColor ?? Colors.white,
             ),
           ),
         ),
@@ -156,15 +155,15 @@ class TWCalendarListState extends State<TWCalendarList> {
 
   BoxDecoration _buildBoxDecoration() {
     return const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0XFFF5F5F5),
-              offset: Offset(0, -0.5),
-              blurRadius: 1.0,
-            )
-          ],
-        );
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Color(0XFFF5F5F5),
+          offset: Offset(0, -0.5),
+          blurRadius: 1.0,
+        )
+      ],
+    );
   }
 
   Widget _buildMonthView() {
@@ -243,7 +242,7 @@ class TWCalendarListState extends State<TWCalendarList> {
 
   // 选项处理回调
   void _onSelectDayChanged(DateTime dateTime) {
-    var seletedMode = widget.configs.listConfig?.seletedMode ??
+    var seletedMode = widget.configs?.listConfig?.seletedMode ??
         TWCalendarListSeletedMode.singleSerial;
     switch (seletedMode) {
       case TWCalendarListSeletedMode.singleSerial:
@@ -279,10 +278,9 @@ class TWCalendarListState extends State<TWCalendarList> {
     }
     setState(() {
       seletedDays =
-        TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
+          TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
     });
     _handerSelectDayRang(dateTime);
-    
   }
 
   void _handerSelectDayRang(DateTime dateTime) {
