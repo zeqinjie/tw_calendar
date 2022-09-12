@@ -249,6 +249,10 @@ class TWCalendarListState extends State<TWCalendarList> {
         selectStartTime = widget.calendarController.firstDate;
         selectEndTime = dateTime;
         break;
+      case TWCalendarListSeletedMode.multiple:
+        selectStartTime = widget.calendarController.firstDate;
+        selectEndTime = dateTime;
+        break; 
       default:
         if (selectStartTime == null && selectEndTime == null) {
           selectStartTime = dateTime;

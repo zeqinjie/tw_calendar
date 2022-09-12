@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-09-06 13:42:15
+ * @LastEditTime: 2022-09-12 13:10:09
  * @Description: 日历组件
  */
 
@@ -73,6 +73,22 @@ class _HomePageState extends State<_HomePage> {
     );
   }
 
+  _showNavigateMutilpleDailog(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return const TWCalendarMutilpleView();
+      },
+    );
+  }
+
   _showNavigateRecommendDailog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -124,6 +140,12 @@ class _HomePageState extends State<_HomePage> {
             child: const Text('弹出框日历-推荐日期'),
             onPressed: () {
               _showNavigateRecommendDailog(context);
+            },
+          ),
+          TextButton(
+            child: const Text('弹出框日历-多选不连续'),
+            onPressed: () {
+              _showNavigateMutilpleDailog(context);
             },
           ),
         ],
@@ -209,6 +231,62 @@ class TWCalendarViewState extends State<TWCalendarView> {
         height: 55.w,
         child: Text(
           'Calendar Widget',
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 18.w,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TWCalendarMutilpleView extends StatefulWidget {
+  const TWCalendarMutilpleView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  TWCalendarMutilpleViewState createState() => TWCalendarMutilpleViewState();
+}
+
+class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
+  late TWCalendarController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TWCalendarController(
+      firstDate: TWCalendarTool.today,
+      lastDate: TWCalendarTool.nowAfterDays(33),
+      selectedStartDate: TWCalendarTool.nowAfterDays(2),
+      selectedEndDate: TWCalendarTool.nowAfterDays(10),
+      onSelectDayRang: ((seletedDate, seletedDays) {
+        print('seletedDate : $seletedDate, seletedDays : $seletedDays');
+      }),
+      onSelectFinish: (selectStartTime, selectEndTime) {
+        print(
+            'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TWCalendarList(
+      calendarController: controller,
+      configs: TWCalendarConfigs(
+        monthViewConfig: TWCalendarMonthViewConfig(
+          monthBodyHeight: 300.w,
+        ),
+      ),
+      headerView: Container(
+        alignment: Alignment.center,
+        height: 55.w,
+        child: Text(
+          'Calendar Mutilple Widget',
           style: TextStyle(
             color: Colors.blue,
             fontSize: 18.w,

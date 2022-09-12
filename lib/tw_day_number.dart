@@ -104,7 +104,7 @@ class TWDayNumberState extends State<TWDayNumber> {
 
   @override
   Widget build(BuildContext context) {
-    isSelected = widget.isDefaultSelected;
+    isSelected = widget.isDefaultSelected && widget.canSelected;
     return widget.day > 0
         ? InkWell(
             onTap: () {

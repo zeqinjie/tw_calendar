@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 15:21:50
- * @LastEditTime: 2022-09-04 10:54:33
+ * @LastEditTime: 2022-09-12 13:04:54
  * @Description: your project
  * 
  */
@@ -13,6 +13,9 @@ enum TWCalendarListSeletedMode {
 
   /// 默认选择是连续多选
   doubleSerial,
+
+  /// 多个
+  multiple,
 }
 
 class TWCalendarConfigs {
