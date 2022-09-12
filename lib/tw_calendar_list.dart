@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-09-06 13:43:40
+ * @LastEditTime: 2022-09-12 13:57:56
  * @Description: 日历组件
  */
 
@@ -55,6 +55,9 @@ class TWCalendarListState extends State<TWCalendarList> {
   /// 间隔多少月
   late int count;
 
+  /// 不连续选择的日期数组
+  List<DateTime> mutipleSelectedTimes = [];
+
   /// 选中了多少天
   int seletedDays = 0;
 
@@ -68,6 +71,34 @@ class TWCalendarListState extends State<TWCalendarList> {
   @override
   Widget build(BuildContext context) {
     return _buildBody();
+  }
+
+  /* Handle Date Method */
+  void initData() {
+    // 传入的选择开始日期
+    selectStartTime =
+        TWCalendarTool.onlyDay(widget.calendarController.selectedStartDate);
+    // 传入的选择结束日期
+    selectEndTime =
+        TWCalendarTool.onlyDay(widget.calendarController.selectedEndDate);
+    // 开始年份
+    yearStart = widget.calendarController.firstDate.year;
+    // 结束年份
+    yearEnd = widget.calendarController.lastDate.year;
+    // 开始月份
+    monthStart = widget.calendarController.firstDate.month;
+    // 结束月份
+    monthEnd = widget.calendarController.lastDate.month;
+    // 总月数
+    count = monthEnd - monthStart + (yearEnd - yearStart) * 12 + 1;
+
+    seletedDays =
+        TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
+
+    // 非连续的选择
+    if (widget.calendarController.mutipleSelectedDates != null) {
+      mutipleSelectedTimes = widget.calendarController.mutipleSelectedDates!;
+    }
   }
 
   /* UI Method */
@@ -202,28 +233,6 @@ class TWCalendarListState extends State<TWCalendarList> {
     );
   }
 
-  void initData() {
-    // 传入的选择开始日期
-    selectStartTime =
-        TWCalendarTool.onlyDay(widget.calendarController.selectedStartDate);
-    // 传入的选择结束日期
-    selectEndTime =
-        TWCalendarTool.onlyDay(widget.calendarController.selectedEndDate);
-    // 开始年份
-    yearStart = widget.calendarController.firstDate.year;
-    // 结束年份
-    yearEnd = widget.calendarController.lastDate.year;
-    // 开始月份
-    monthStart = widget.calendarController.firstDate.month;
-    // 结束月份
-    monthEnd = widget.calendarController.lastDate.month;
-    // 总月数
-    count = monthEnd - monthStart + (yearEnd - yearStart) * 12 + 1;
-
-    seletedDays =
-        TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
-  }
-
   /* Private Method */
   /// 获取确认按钮 title
   String _getEnsureTitle() {
@@ -240,7 +249,15 @@ class TWCalendarListState extends State<TWCalendarList> {
     return btnTitle;
   }
 
-  // 选项处理回调
+  /// 处理多选数据
+  void _handerMutipleTimes(DateTime dateTime) {
+    mutipleSelectedTimes.add(dateTime);
+    for (var date in mutipleSelectedTimes) {
+      if (TWCalendarTool.isSameDate(date, dateTime)) {}
+    }
+  }
+
+  /// 选项处理回调
   void _onSelectDayChanged(DateTime dateTime) {
     var seletedMode = widget.configs?.listConfig?.seletedMode ??
         TWCalendarListSeletedMode.singleSerial;
@@ -252,7 +269,7 @@ class TWCalendarListState extends State<TWCalendarList> {
       case TWCalendarListSeletedMode.multiple:
         selectStartTime = widget.calendarController.firstDate;
         selectEndTime = dateTime;
-        break; 
+        break;
       default:
         if (selectStartTime == null && selectEndTime == null) {
           selectStartTime = dateTime;

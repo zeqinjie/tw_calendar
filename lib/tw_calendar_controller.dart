@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 13:22:42
- * @LastEditTime: 2022-09-03 21:19:16
+ * @LastEditTime: 2022-09-12 13:53:03
  * @Description: your project
  */
 import 'package:tw_calendar/tw_calendar_list.dart';
@@ -18,6 +18,9 @@ class TWCalendarController {
 
   /// 选择结束日期
   DateTime? selectedEndDate;
+
+  /// 不连续选择的日期数组, 注意选择类型 TWCalendarListSeletedMode.multiple
+  List<DateTime>? mutipleSelectedDates;
 
   /// 点击确定回调
   final void Function(DateTime? selectStartTime, DateTime? selectEndTime)?
