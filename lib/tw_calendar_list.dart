@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 22:10:08
- * @LastEditTime: 2022-09-12 13:57:56
+ * @LastEditTime: 2022-09-25 15:45:27
  * @Description: 日历组件
  */
 
@@ -56,10 +56,13 @@ class TWCalendarListState extends State<TWCalendarList> {
   late int count;
 
   /// 不连续选择的日期数组
-  List<DateTime> mutipleSelectedTimes = [];
+  List<DateTime> notSerialSelectedTimes = [];
 
   /// 选中了多少天
   int seletedDays = 0;
+
+  TWCalendarListSeletedMode seletedMode =
+      TWCalendarListSeletedMode.singleSerial;
 
   @override
   void initState() {
@@ -92,13 +95,17 @@ class TWCalendarListState extends State<TWCalendarList> {
     // 总月数
     count = monthEnd - monthStart + (yearEnd - yearStart) * 12 + 1;
 
-    seletedDays =
-        TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
-
-    // 非连续的选择
-    if (widget.calendarController.mutipleSelectedDates != null) {
-      mutipleSelectedTimes = widget.calendarController.mutipleSelectedDates!;
+    seletedMode = widget.configs?.listConfig?.seletedMode ??
+        TWCalendarListSeletedMode.singleSerial;
+    // 📢 非连续的选择数组非空，则 seletedMode = TWCalendarListSeletedMode.notSerial;
+    if (widget.calendarController.notSerialSelectedDates != null) {
+      notSerialSelectedTimes =
+          widget.calendarController.notSerialSelectedDates!;
+      _handerMutipleStartEndTime();
+      seletedMode = TWCalendarListSeletedMode.notSerial;
     }
+    // 初始化选择天数
+    _updateSelectedDays();
   }
 
   /* UI Method */
@@ -163,15 +170,15 @@ class TWCalendarListState extends State<TWCalendarList> {
           onPressed: _finishSelect,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
-                (selectStartTime != null ||
-                        (selectStartTime != null && selectEndTime != null))
-                    ? widget.configs?.listConfig?.ensureViewSelectedColor ??
-                        const Color(0XFFFF8000)
-                    : widget.configs?.listConfig?.ensureViewUnSelectedColor ??
-                        const Color(0XFFB3B3B3)),
+              _isHadSelectedDate
+                  ? widget.configs?.listConfig?.ensureViewSelectedColor ??
+                      const Color(0XFFFF8000)
+                  : widget.configs?.listConfig?.ensureViewUnSelectedColor ??
+                      const Color(0XFFB3B3B3),
+            ),
           ),
           child: Text(
-            _getEnsureTitle(),
+            _getEnsureTitle,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: widget.configs?.listConfig?.ensureTitleFontSize ?? 16,
@@ -227,15 +234,25 @@ class TWCalendarListState extends State<TWCalendarList> {
       month: month,
       firstDate: widget.calendarController.firstDate,
       lastDate: widget.calendarController.lastDate,
+      notSerialSelectedTimes: notSerialSelectedTimes,
       selectStartDateTime: selectStartTime,
       selectEndDateTime: selectEndTime,
       onSelectDayRang: (dateTime) => _onSelectDayChanged(dateTime),
     );
   }
+}
 
-  /* Private Method */
+/* Private Method */
+/// 数据处理
+extension TWCalendarListStateHandler on TWCalendarListState {
+  bool get _isHadSelectedDate {
+    return selectStartTime != null ||
+        (selectStartTime != null && selectEndTime != null) ||
+        notSerialSelectedTimes.isNotEmpty;
+  }
+
   /// 获取确认按钮 title
-  String _getEnsureTitle() {
+  String get _getEnsureTitle {
     String btnTitle = '確   定';
     final selectedDaysTitle =
         TWCalendarTool.getSelectedDaysTitle(selectStartTime, selectEndTime);
@@ -251,32 +268,57 @@ class TWCalendarListState extends State<TWCalendarList> {
 
   /// 处理多选数据
   void _handerMutipleTimes(DateTime dateTime) {
-    mutipleSelectedTimes.add(dateTime);
-    for (var date in mutipleSelectedTimes) {
-      if (TWCalendarTool.isSameDate(date, dateTime)) {}
+    if (TWCalendarTool.isHadSeletced(
+      selectedTimes: notSerialSelectedTimes,
+      dateTime: dateTime,
+    )) {
+      TWCalendarTool.removeSelected(
+        selectedTimes: notSerialSelectedTimes,
+        dateTime: dateTime,
+      );
+    } else {
+      notSerialSelectedTimes.add(dateTime);
+    }
+    _handerMutipleStartEndTime();
+  }
+
+  /// 处理开始与结束日期
+  void _handerMutipleStartEndTime() {
+    TWCalendarTool.sortDateTimes(notSerialSelectedTimes);
+    final count = notSerialSelectedTimes.length;
+    if (count == 0) {
+      selectStartTime = null;
+      selectEndTime = null;
+    } else {
+      selectStartTime = notSerialSelectedTimes.first;
+      selectEndTime = notSerialSelectedTimes.last;
+    }
+  }
+
+  /// 更新选择天数
+  void _updateSelectedDays() {
+    if (seletedMode == TWCalendarListSeletedMode.notSerial) {
+      seletedDays = notSerialSelectedTimes.length;
+    } else {
+      seletedDays =
+          TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
     }
   }
 
   /// 选项处理回调
   void _onSelectDayChanged(DateTime dateTime) {
-    var seletedMode = widget.configs?.listConfig?.seletedMode ??
-        TWCalendarListSeletedMode.singleSerial;
     switch (seletedMode) {
-      case TWCalendarListSeletedMode.singleSerial:
-        selectStartTime = widget.calendarController.firstDate;
-        selectEndTime = dateTime;
+      case TWCalendarListSeletedMode.notSerial:
+        _handerMutipleTimes(dateTime);
         break;
-      case TWCalendarListSeletedMode.multiple:
-        selectStartTime = widget.calendarController.firstDate;
-        selectEndTime = dateTime;
-        break;
-      default:
+      case TWCalendarListSeletedMode.doubleSerial:
         if (selectStartTime == null && selectEndTime == null) {
           selectStartTime = dateTime;
         } else if (selectStartTime != null && selectEndTime == null) {
           selectEndTime = dateTime;
           // 如果选择的开始日期和结束日期相等，则清除选项
           if (selectStartTime == selectEndTime) {
+            // ignore: invalid_use_of_protected_member
             setState(() {
               selectStartTime = null;
               selectEndTime = null;
@@ -292,14 +334,17 @@ class TWCalendarListState extends State<TWCalendarList> {
             selectEndTime = temp;
           }
         } else if (selectStartTime != null && selectEndTime != null) {
-          selectStartTime = null;
           selectEndTime = null;
           selectStartTime = dateTime;
         }
+        break;
+      default:
+        selectStartTime = widget.calendarController.firstDate;
+        selectEndTime = dateTime;
     }
+    // ignore: invalid_use_of_protected_member
     setState(() {
-      seletedDays =
-          TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
+      _updateSelectedDays();
     });
     _handerSelectDayRang(dateTime);
   }
@@ -312,7 +357,8 @@ class TWCalendarListState extends State<TWCalendarList> {
 
   void _finishSelect() {
     if (widget.calendarController.onSelectFinish != null) {
-      widget.calendarController.onSelectFinish!(selectStartTime, selectEndTime);
+      widget.calendarController.onSelectFinish!(
+          selectStartTime, selectEndTime, notSerialSelectedTimes);
     }
   }
 }

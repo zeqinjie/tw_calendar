@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 18:14:31
- * @LastEditTime: 2022-09-06 13:42:40
+ * @LastEditTime: 2022-09-25 15:56:03
  * @Description: your project
  */
 import 'package:flutter/material.dart';
@@ -15,8 +15,11 @@ class BiddingCalendarView extends StatefulWidget {
   final DateTime? selectedEndDate;
   final DateTime lastDate;
   final List<BiddingDayChoiceModel>? models;
-  final void Function(DateTime? selectStartTime, DateTime? selectEndTime)?
-      onSelectFinish;
+  final void Function(
+    DateTime? selectStartTime,
+    DateTime? selectEndTime,
+    List<DateTime>? notSerialSelectedTimes,
+  )? onSelectFinish;
   final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
   const BiddingCalendarView({
     Key? key,

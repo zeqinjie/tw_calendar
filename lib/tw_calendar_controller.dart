@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 13:22:42
- * @LastEditTime: 2022-09-12 13:53:03
+ * @LastEditTime: 2022-09-25 15:51:39
  * @Description: your project
  */
 import 'package:tw_calendar/tw_calendar_list.dart';
@@ -19,12 +19,15 @@ class TWCalendarController {
   /// 选择结束日期
   DateTime? selectedEndDate;
 
-  /// 不连续选择的日期数组, 注意选择类型 TWCalendarListSeletedMode.multiple
-  List<DateTime>? mutipleSelectedDates;
+  /// 不连续选择的日期数组, 注意选择类型 TWCalendarListSeletedMode.notSerial
+  List<DateTime>? notSerialSelectedDates;
 
   /// 点击确定回调
-  final void Function(DateTime? selectStartTime, DateTime? selectEndTime)?
-      onSelectFinish;
+  final void Function(
+    DateTime? selectStartTime,
+    DateTime? selectEndTime,
+    List<DateTime>? notSerialSelectedDates,
+  )? onSelectFinish;
 
   /// 每次选择日期回调
   final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
@@ -41,6 +44,7 @@ class TWCalendarController {
     required this.lastDate,
     this.selectedStartDate,
     this.selectedEndDate,
+    this.notSerialSelectedDates,
     this.onSelectFinish,
     this.onSelectDayRang,
     this.onSelectDayTitle,

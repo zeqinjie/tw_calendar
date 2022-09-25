@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-09-04 09:07:00
+ * @LastEditTime: 2022-09-25 15:35:37
  * @Description: 月视图
  */
 
@@ -18,17 +18,19 @@ class TWMonthView extends StatefulWidget {
   final int month;
   final DateTime? selectStartDateTime;
   final DateTime? selectEndDateTime;
+  final List<DateTime>? notSerialSelectedTimes;
 
   /// 配置样式对象
   final TWCalendarConfigs? configs;
 
   const TWMonthView({
     Key? key,
+    this.notSerialSelectedTimes,
+    this.selectStartDateTime,
+    this.selectEndDateTime,
     required this.context,
     required this.year,
     required this.month,
-    required this.selectStartDateTime,
-    required this.selectEndDateTime,
     required this.onSelectDayRang,
     required this.firstDate,
     required this.lastDate,
@@ -82,28 +84,35 @@ class TWMonthViewState extends State<TWMonthView> {
       final bool isToday = TWCalendarTool.dateIsToday(moment);
       final canSelected = canSelectedDate(date: moment, isToday: isToday);
       bool isDefaultSelected = false;
-      if (widget.selectStartDateTime == null &&
-          widget.selectEndDateTime == null &&
-          selectedDate == null) {
-        isDefaultSelected = false;
-      }
-      if (widget.selectStartDateTime == selectedDate &&
-          widget.selectEndDateTime == null &&
-          selectedDate?.day == day &&
-          day > 0) {
-        isDefaultSelected = true;
-      }
-      if (widget.selectStartDateTime != null &&
-          widget.selectEndDateTime != null) {
-        isDefaultSelected =
-            (TWCalendarTool.isSameDate(moment, widget.selectStartDateTime!) ||
-                        TWCalendarTool.isSameDate(
-                            moment, widget.selectEndDateTime!)) ||
-                    moment.isAfter(widget.selectStartDateTime!) &&
-                        moment.isBefore(widget.selectEndDateTime!) &&
-                        day > 0
-                ? true
-                : false;
+      // 连续选择
+      if (widget.notSerialSelectedTimes != null &&
+          widget.notSerialSelectedTimes!.isNotEmpty) {
+        isDefaultSelected = TWCalendarTool.isHadSeletced(
+            selectedTimes: widget.notSerialSelectedTimes!, dateTime: moment);
+      } else {
+        if (widget.selectStartDateTime == null &&
+            widget.selectEndDateTime == null &&
+            selectedDate == null) {
+          isDefaultSelected = false;
+        }
+        if (widget.selectStartDateTime == selectedDate &&
+            widget.selectEndDateTime == null &&
+            selectedDate?.day == day &&
+            day > 0) {
+          isDefaultSelected = true;
+        }
+        if (widget.selectStartDateTime != null &&
+            widget.selectEndDateTime != null) {
+          isDefaultSelected =
+              (TWCalendarTool.isSameDate(moment, widget.selectStartDateTime!) ||
+                          TWCalendarTool.isSameDate(
+                              moment, widget.selectEndDateTime!)) ||
+                      moment.isAfter(widget.selectStartDateTime!) &&
+                          moment.isBefore(widget.selectEndDateTime!) &&
+                          day > 0
+                  ? true
+                  : false;
+        }
       }
 
       dayRowChildren.add(

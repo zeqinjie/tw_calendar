@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-09-03 21:20:29
+ * @LastEditTime: 2022-09-21 22:21:45
  * @Description: 日历辅助工具类
  */
 
@@ -134,4 +134,35 @@ class TWCalendarTool {
     }
     return 0;
   }
+
+  /// 移除日期
+  static void removeSelected({
+    required List<DateTime> selectedTimes,
+    required DateTime dateTime,
+  }) {
+    selectedTimes
+        .removeWhere((date) => TWCalendarTool.isSameDate(date, dateTime));
+  }
+
+  /// 是否选择
+  static bool isHadSeletced({
+    required List<DateTime> selectedTimes,
+    required DateTime dateTime,
+  }) {
+    try {
+      selectedTimes
+          .firstWhere((date) => TWCalendarTool.isSameDate(date, dateTime));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /// 排序
+  static void sortDateTimes(List<DateTime> selectedTimes) {
+    selectedTimes
+        .sort((firstDate, secondDate) => firstDate.compareTo(secondDate));
+  }
+
+   
 }

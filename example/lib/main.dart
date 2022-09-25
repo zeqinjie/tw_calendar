@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-09-12 13:10:09
+ * @LastEditTime: 2022-09-25 15:34:06
  * @Description: 日历组件
  */
 
@@ -56,7 +56,7 @@ class _HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<_HomePage> {
-  // Dialog方式
+  /// 弹出框日历，默认连续选择
   _showNavigateDailog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -73,6 +73,7 @@ class _HomePageState extends State<_HomePage> {
     );
   }
 
+  /// 弹出框日历-多选不连续
   _showNavigateMutilpleDailog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -89,6 +90,7 @@ class _HomePageState extends State<_HomePage> {
     );
   }
 
+  /// 弹出框日历-推荐日期
   _showNavigateRecommendDailog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -112,7 +114,11 @@ class _HomePageState extends State<_HomePage> {
           lastDate: TWCalendarTool.nowAfterDays(88),
           selectedStartDate: TWCalendarTool.nowAfterDays(2),
           selectedEndDate: TWCalendarTool.nowAfterDays(10),
-          onSelectFinish: (selectStartTime, selectEndTime) {
+          onSelectFinish: (
+            selectStartTime,
+            selectEndTime,
+            notSerialSelectedTimes,
+          ) {
             print(
                 'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
             Navigator.pop(context);
@@ -175,19 +181,24 @@ class TWCalendarViewState extends State<TWCalendarView> {
       selectedStartDate: TWCalendarTool.nowAfterDays(2),
       selectedEndDate: TWCalendarTool.nowAfterDays(10),
       onSelectDayRang: ((seletedDate, seletedDays) {
-        print('seletedDate : $seletedDate, seletedDays : $seletedDays');
+        print(
+            'onSelectDayRang => seletedDate : $seletedDate, seletedDays : $seletedDays');
       }),
       onSelectDayTitle: (selectStartTime, selectEndTime, seletedDays) {
         print(
-            'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, seletedDays : $seletedDays');
+            'onSelectDayTitle => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, seletedDays : $seletedDays');
         if (selectStartTime != null && selectEndTime != null) {
           return "ensure (${selectStartTime.year},${selectStartTime.month},${selectStartTime.day} - ${selectEndTime.year},${selectEndTime.month},${selectEndTime.day}）";
         }
         return "please choice...";
       },
-      onSelectFinish: (selectStartTime, selectEndTime) {
+      onSelectFinish: (
+        selectStartTime,
+        selectEndTime,
+        notSerialSelectedTimes,
+      ) {
         print(
-            'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
+            'onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
         Navigator.pop(context);
       },
     );
@@ -260,14 +271,19 @@ class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
     controller = TWCalendarController(
       firstDate: TWCalendarTool.today,
       lastDate: TWCalendarTool.nowAfterDays(33),
-      selectedStartDate: TWCalendarTool.nowAfterDays(2),
-      selectedEndDate: TWCalendarTool.nowAfterDays(10),
+      notSerialSelectedDates: [
+        TWCalendarTool.nowAfterDays(1),
+        TWCalendarTool.nowAfterDays(3),
+        TWCalendarTool.nowAfterDays(5),
+        TWCalendarTool.nowAfterDays(7),
+      ],
       onSelectDayRang: ((seletedDate, seletedDays) {
-        print('seletedDate : $seletedDate, seletedDays : $seletedDays');
-      }),
-      onSelectFinish: (selectStartTime, selectEndTime) {
         print(
-            'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
+            'onSelectDayRang => onSelectDayRang => seletedDate : $seletedDate, seletedDays : $seletedDays');
+      }),
+      onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes) {
+        print(
+            'onSelectFinish => onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, notSerialSelectedTimes: $notSerialSelectedTimes');
         Navigator.pop(context);
       },
     );
@@ -278,6 +294,9 @@ class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
     return TWCalendarList(
       calendarController: controller,
       configs: TWCalendarConfigs(
+        listConfig: TWCalendarListConfig(
+          seletedMode: TWCalendarListSeletedMode.notSerial,
+        ),
         monthViewConfig: TWCalendarMonthViewConfig(
           monthBodyHeight: 300.w,
         ),
