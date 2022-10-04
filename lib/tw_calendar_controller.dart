@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 13:22:42
- * @LastEditTime: 2022-09-25 15:51:39
+ * @LastEditTime: 2022-10-03 12:54:34
  * @Description: your project
  */
 import 'package:tw_calendar/tw_calendar_list.dart';
@@ -30,12 +30,17 @@ class TWCalendarController {
   )? onSelectFinish;
 
   /// 每次选择日期回调
-  final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
+  final void Function(
+    DateTime seletedDate,
+    int seletedDays,
+  )? onSelectDayRang;
 
   /// 更新确定按钮 title 回调
   final String Function(
-          DateTime? selectStartTime, DateTime? selectEndTime, int seletedDays)?
-      onSelectDayTitle;
+    DateTime? selectStartTime,
+    DateTime? selectEndTime,
+    int seletedDays,
+  )? onSelectDayTitle;
 
   TWCalendarListState? state;
 

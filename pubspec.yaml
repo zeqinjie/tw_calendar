@@ -1,6 +1,6 @@
 name: tw_calendar
 description: simple custom calendar for your , support custom headerView, support modify widgets height...
-version: 1.1.0
+version: 1.2.0
 homepage: https://github.com/zeqinjie/tw_calendar
 
 environment:

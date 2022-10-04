@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-09-04 10:00:30
+ * @LastEditTime: 2022-10-04 12:29:50
  * @Description: 天数
  */
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class TWDayNumber extends StatefulWidget {
   final int day;
   final bool isToday;
   final double size;
-  final bool isDefaultSelected;
+  final bool isSelected;
   final bool canSelected;
 
   final TWCalendarDayNumberConfig? dayNumberConfig;
@@ -22,7 +22,7 @@ class TWDayNumber extends StatefulWidget {
     Key? key,
     required this.size,
     required this.day,
-    required this.isDefaultSelected,
+    required this.isSelected,
     required this.dayNumberConfig,
     this.isToday = false,
     this.canSelected = true,
@@ -104,15 +104,37 @@ class TWDayNumberState extends State<TWDayNumber> {
 
   @override
   Widget build(BuildContext context) {
-    isSelected = widget.isDefaultSelected && widget.canSelected;
+    isSelected = widget.isSelected && widget.canSelected;
     return widget.day > 0
-        ? InkWell(
-            onTap: () {
-              if (widget.canSelected) {
-                TWCalendarNotification(widget.day).dispatch(context);
-              }
-            },
-            child: _dayItem())
+        ? TWTapNotificationView(
+            canSelected: widget.canSelected,
+            day: widget.day,
+            child: _dayItem(),
+          )
         : _dayItem();
+  }
+}
+
+class TWTapNotificationView extends StatelessWidget {
+  final bool canSelected;
+  final int day;
+  final Widget child;
+  const TWTapNotificationView({
+    Key? key,
+    required this.canSelected,
+    required this.day,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        if (canSelected) {
+          TWCalendarNotification(day).dispatch(context);
+        }
+      },
+      child: child,
+    );
   }
 }

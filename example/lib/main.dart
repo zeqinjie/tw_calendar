@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-09-25 15:34:06
+ * @LastEditTime: 2022-10-04 13:08:23
  * @Description: 日历组件
  */
 
@@ -90,6 +90,23 @@ class _HomePageState extends State<_HomePage> {
     );
   }
 
+  /// 弹出框日历-多选不连续
+  _showNavigateCustomDateDailog(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return const TWCalendarCustomDateWidgetView();
+      },
+    );
+  }
+
   /// 弹出框日历-推荐日期
   _showNavigateRecommendDailog(BuildContext context) {
     showModalBottomSheet(
@@ -152,6 +169,12 @@ class _HomePageState extends State<_HomePage> {
             child: const Text('弹出框日历-多选不连续'),
             onPressed: () {
               _showNavigateMutilpleDailog(context);
+            },
+          ),
+          TextButton(
+            child: const Text('弹出框日历-Custom Date widget'),
+            onPressed: () {
+              _showNavigateCustomDateDailog(context);
             },
           ),
         ],
@@ -306,6 +329,121 @@ class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
         height: 55.w,
         child: Text(
           'Calendar Mutilple Widget',
+          style: TextStyle(
+            color: Colors.blue,
+            fontSize: 18.w,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TWCalendarCustomDateWidgetView extends StatefulWidget {
+  const TWCalendarCustomDateWidgetView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  TWCalendarCustomDateWidgetViewState createState() =>
+      TWCalendarCustomDateWidgetViewState();
+}
+
+class TWCalendarCustomDateWidgetViewState
+    extends State<TWCalendarCustomDateWidgetView> {
+  late TWCalendarController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TWCalendarController(
+      firstDate: TWCalendarTool.today,
+      lastDate: TWCalendarTool.nowAfterDays(33),
+      onSelectDayRang: ((seletedDate, seletedDays) {
+        print(
+            'onSelectDayRang => onSelectDayRang => seletedDate : $seletedDate, seletedDays : $seletedDays');
+      }),
+      onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes) {
+        print(
+            'onSelectFinish => onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, notSerialSelectedTimes: $notSerialSelectedTimes');
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TWCalendarList(
+      calendarController: controller,
+      configs: TWCalendarConfigs(
+        listConfig: TWCalendarListConfig(
+          seletedMode: TWCalendarListSeletedMode.notSerial,
+        ),
+        monthViewConfig: TWCalendarMonthViewConfig(
+          monthBodyHeight: 300.w,
+        ),
+        dayNumberConfig: TWCalendarDayNumberConfig(
+          widgetHandler: (
+            year,
+            month,
+            day,
+            size,
+            isSelected,
+            isToday,
+            canSelected,
+          ) {
+            bool tomorrow = TWCalendarTool.isSameDate(
+              TWCalendarTool.tomorrow,
+              DateTime(year, month, day),
+            );
+            return SizedBox(
+              width: size,
+              height: size,
+              child: Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: canSelected
+                      ? (isSelected
+                          ? Colors.orange.withOpacity(0.3)
+                          : Colors.black.withOpacity(0.1))
+                      : Colors.white,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      tomorrow ? '明天' : (isToday ? '今天' : '$day'),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: canSelected
+                            ? (isSelected ? Colors.red : Colors.black)
+                            : Colors.grey,
+                      ),
+                    ),
+                    if (tomorrow && canSelected)
+                      Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                          color: (isSelected ? Colors.red : Colors.black),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+      headerView: Container(
+        alignment: Alignment.center,
+        height: 55.w,
+        child: Text(
+          'Calendar Custom Date Widget',
           style: TextStyle(
             color: Colors.blue,
             fontSize: 18.w,

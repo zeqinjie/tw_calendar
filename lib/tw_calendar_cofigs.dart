@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-08-28 15:21:50
- * @LastEditTime: 2022-09-25 15:45:35
+ * @LastEditTime: 2022-10-04 12:51:35
  * @Description: your project
  * 
  */
@@ -92,6 +92,9 @@ class TWCalendarMonthViewConfig {
   /// 月份标题
   final List<String>? monthNames;
 
+  /// 年标题
+  final String? yearTitle;
+
   /// 年月标题字体大小
   final double? titleFontSize;
 
@@ -106,6 +109,7 @@ class TWCalendarMonthViewConfig {
     this.monthBodyHeight,
     this.canSelectedToday,
     this.monthNames,
+    this.yearTitle,
     this.titleFontSize,
     this.titleHandler,
   });
@@ -142,7 +146,19 @@ class TWCalendarDayNumberConfig {
   /// 今天标识
   final String? todyTitle;
 
+  /// 自定义 widget
+  final Widget? Function(
+    int year,
+    int month,
+    int day,
+    double size,
+    bool isSelected,
+    bool isToday,
+    bool canSelected,
+  )? widgetHandler;
+
   TWCalendarDayNumberConfig({
+    this.widgetHandler,
     this.todayBackgroudColor,
     this.todayTitleColor,
     this.selectedBackgroundColor,

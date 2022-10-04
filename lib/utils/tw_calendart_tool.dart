@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-20 14:41:08
- * @LastEditTime: 2022-09-21 22:21:45
+ * @LastEditTime: 2022-10-04 12:47:17
  * @Description: 日历辅助工具类
  */
 
@@ -92,9 +92,10 @@ class TWCalendarTool {
 
   /// 年
   static String getYearName(
-    int year,
-  ) {
-    return '$year年';
+    int year, {
+    String? title,
+  }) {
+    return '$year${title ?? '年'}';
   }
 
   /// 选择标题
@@ -163,6 +164,4 @@ class TWCalendarTool {
     selectedTimes
         .sort((firstDate, secondDate) => firstDate.compareTo(secondDate));
   }
-
-   
 }

@@ -1,14 +1,14 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-21 17:26:09
- * @LastEditTime: 2022-09-25 15:35:37
+ * @LastEditTime: 2022-10-04 12:30:16
  * @Description: 月视图
  */
 
 import 'package:flutter/material.dart';
+import 'package:tw_calendar/tw_day_number.dart';
 import 'tw_calendar_cofigs.dart';
 import 'tw_calendar_notification.dart';
-import 'tw_day_number.dart';
 import 'tw_month_title.dart';
 import 'utils/tw_calendart_tool.dart';
 
@@ -69,7 +69,7 @@ class TWMonthViewState extends State<TWMonthView> {
 
   Widget buildMonthDays(BuildContext context) {
     List<Row> dayRows = <Row>[];
-    List<TWDayNumber> dayRowChildren = <TWDayNumber>[];
+    List<Widget> dayRowChildren = <Widget>[];
 
     int daysInMonth = TWCalendarTool.getDaysInMonth(
       widget.year,
@@ -83,27 +83,27 @@ class TWMonthViewState extends State<TWMonthView> {
       DateTime moment = DateTime(widget.year, widget.month, day);
       final bool isToday = TWCalendarTool.dateIsToday(moment);
       final canSelected = canSelectedDate(date: moment, isToday: isToday);
-      bool isDefaultSelected = false;
+      bool isSelected = false;
       // 连续选择
       if (widget.notSerialSelectedTimes != null &&
           widget.notSerialSelectedTimes!.isNotEmpty) {
-        isDefaultSelected = TWCalendarTool.isHadSeletced(
+        isSelected = TWCalendarTool.isHadSeletced(
             selectedTimes: widget.notSerialSelectedTimes!, dateTime: moment);
       } else {
         if (widget.selectStartDateTime == null &&
             widget.selectEndDateTime == null &&
             selectedDate == null) {
-          isDefaultSelected = false;
+          isSelected = false;
         }
         if (widget.selectStartDateTime == selectedDate &&
             widget.selectEndDateTime == null &&
             selectedDate?.day == day &&
             day > 0) {
-          isDefaultSelected = true;
+          isSelected = true;
         }
         if (widget.selectStartDateTime != null &&
             widget.selectEndDateTime != null) {
-          isDefaultSelected =
+          isSelected =
               (TWCalendarTool.isSameDate(moment, widget.selectStartDateTime!) ||
                           TWCalendarTool.isSameDate(
                               moment, widget.selectEndDateTime!)) ||
@@ -114,23 +114,42 @@ class TWMonthViewState extends State<TWMonthView> {
                   : false;
         }
       }
-
-      dayRowChildren.add(
-        TWDayNumber(
-          size: widget.itemWidth,
-          isDefaultSelected: isDefaultSelected,
-          isToday: isToday,
-          canSelected: canSelected,
-          day: day,
-          dayNumberConfig: widget.configs?.dayNumberConfig,
-        ),
+      Widget? widgetHandler;
+      if (widget.configs?.dayNumberConfig?.widgetHandler != null) {
+        if (day > 0) {
+          widgetHandler = widget.configs?.dayNumberConfig?.widgetHandler!(
+            widget.year,
+            widget.month,
+            day,
+            widget.itemWidth,
+            isSelected,
+            isToday,
+            canSelected,
+          );
+          if (widgetHandler != null) {
+            widgetHandler = TWTapNotificationView(
+              canSelected: canSelected,
+              day: day,
+              child: widgetHandler,
+            );
+          }
+        }
+      }
+      widgetHandler ??= TWDayNumber(
+        size: widget.itemWidth,
+        isSelected: isSelected,
+        isToday: isToday,
+        canSelected: canSelected,
+        day: day,
+        dayNumberConfig: widget.configs?.dayNumberConfig,
       );
+      dayRowChildren.add(widgetHandler);
 
       if ((day - 1 + firstWeekdayOfMonth) % DateTime.daysPerWeek == 0 ||
           day == daysInMonth) {
         dayRows.add(
           Row(
-            children: List<TWDayNumber>.from(dayRowChildren),
+            children: List<Widget>.from(dayRowChildren),
           ),
         );
         dayRowChildren.clear();
