@@ -3,7 +3,7 @@
 This is a simple calendar widget.
 
 - pub: [tw_calendar](https://pub.flutter-io.cn/packages/tw_calendar)
-- juejin: [a simple calendar widget](https://zhengzeqin.netlify.app/2022/08/04/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84-flutter-%E6%97%A5%E5%8E%86%E7%BB%84%E4%BB%B6/)
+- blog: [a simple calendar widget](https://zhengzeqin.netlify.app/2022/08/04/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84-flutter-%E6%97%A5%E5%8E%86%E7%BB%84%E4%BB%B6/)
 
 ## introduce
 
