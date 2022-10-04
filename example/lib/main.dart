@@ -1,7 +1,7 @@
 /*
  * @Author: zhengzeqin
  * @Date: 2022-07-24 16:01:25
- * @LastEditTime: 2022-10-04 13:08:23
+ * @LastEditTime: 2022-10-04 13:43:03
  * @Description: 日历组件
  */
 
@@ -154,25 +154,25 @@ class _HomePageState extends State<_HomePage> {
       child: Column(
         children: <Widget>[
           TextButton(
-            child: const Text('弹出框日历'),
+            child: const Text('Calendar: Mutilple Serial Date Selected'),
             onPressed: () {
               _showNavigateDailog(context);
             },
           ),
           TextButton(
-            child: const Text('弹出框日历-推荐日期'),
+            child: const Text('Calendar: Custom Header Widget'),
             onPressed: () {
               _showNavigateRecommendDailog(context);
             },
           ),
           TextButton(
-            child: const Text('弹出框日历-多选不连续'),
+            child: const Text('Calendar: Mutilple NotSerial Date Selected'),
             onPressed: () {
               _showNavigateMutilpleDailog(context);
             },
           ),
           TextButton(
-            child: const Text('弹出框日历-Custom Date widget'),
+            child: const Text('Calendar: Custom Date Widget'),
             onPressed: () {
               _showNavigateCustomDateDailog(context);
             },
@@ -328,7 +328,7 @@ class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
         alignment: Alignment.center,
         height: 55.w,
         child: Text(
-          'Calendar Mutilple Widget',
+          'Mutilple Not Serial Date Widget',
           style: TextStyle(
             color: Colors.blue,
             fontSize: 18.w,
@@ -431,6 +431,12 @@ class TWCalendarCustomDateWidgetViewState
                           color: (isSelected ? Colors.red : Colors.black),
                           borderRadius: BorderRadius.circular(5),
                         ),
+                      )
+                    else
+                      Icon(
+                        Icons.favorite,
+                        color: (isSelected ? Colors.pink : Colors.black),
+                        size: 10.0,
                       )
                   ],
                 ),
