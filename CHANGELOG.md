@@ -4,6 +4,8 @@
  * @LastEditTime: 2022-10-04 13:09:25
  * @Description: 日历组件
 -->
+## 1.2.1
+*  support month position offset
 ## 1.2.0
 * support custom date widget
 ## 1.1.0
