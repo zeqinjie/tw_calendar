@@ -146,7 +146,7 @@ class TWCalendarTool {
   }
 
   /// 是否选择
-  static bool isHadSeletced({
+  static bool isHadSelected({
     required List<DateTime> selectedTimes,
     required DateTime dateTime,
   }) {

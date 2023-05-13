@@ -7,7 +7,8 @@
  */
 import 'package:flutter/material.dart';
 
-enum TWCalendarListSeletedMode {
+/// 选择模式
+enum TWCalendarListSelectedMode {
   /// 默认: 单选连续,从可选日开始
   singleSerial,
 
@@ -42,7 +43,7 @@ class TWCalendarConfigs {
 /* 列表部分 */
 class TWCalendarListConfig {
   /// 选择模式
-  final TWCalendarListSeletedMode? seletedMode;
+  final TWCalendarListSelectedMode? selectedMode;
 
   /// 水平间隙，默认 8
   final double? horizontalSpace;
@@ -70,7 +71,7 @@ class TWCalendarListConfig {
 
   TWCalendarListConfig({
     this.ensureTitleColor,
-    this.seletedMode,
+    this.selectedMode,
     this.horizontalSpace,
     this.ensureViewHeight,
     this.ensureViewPadding,
@@ -83,6 +84,9 @@ class TWCalendarListConfig {
 
 /* 月历视图部分 */
 class TWCalendarMonthViewConfig {
+  /// 月历标题排序， 默认从周日开始，如是周一开始则偏移量是 1
+  final int? sortOffset;
+
   /// 月视图高度，为空则占满剩余空间
   final double? monthBodyHeight;
 
@@ -104,6 +108,7 @@ class TWCalendarMonthViewConfig {
   /// 月历 title 回调
   final String Function(int year, int month)? titleHandler;
 
+  /// 月份配置对象
   TWCalendarMonthViewConfig({
     this.padding,
     this.monthBodyHeight,
@@ -111,13 +116,14 @@ class TWCalendarMonthViewConfig {
     this.monthNames,
     this.yearTitle,
     this.titleFontSize,
+    this.sortOffset,
     this.titleHandler,
   });
 }
 
 class TWCalendarDayNumberConfig {
   /// 今天颜色
-  final Color? todayBackgroudColor;
+  final Color? todayBackgroundColor;
 
   /// 今天颜色
   final Color? todayTitleColor;
@@ -159,7 +165,7 @@ class TWCalendarDayNumberConfig {
 
   TWCalendarDayNumberConfig({
     this.widgetHandler,
-    this.todayBackgroudColor,
+    this.todayBackgroundColor,
     this.todayTitleColor,
     this.selectedBackgroundColor,
     this.selectedTitleColor,

@@ -59,10 +59,10 @@ class TWCalendarListState extends State<TWCalendarList> {
   List<DateTime> notSerialSelectedTimes = [];
 
   /// 选中了多少天
-  int seletedDays = 0;
+  int selectedDays = 0;
 
-  TWCalendarListSeletedMode seletedMode =
-      TWCalendarListSeletedMode.singleSerial;
+  TWCalendarListSelectedMode selectedMode =
+      TWCalendarListSelectedMode.singleSerial;
 
   @override
   void initState() {
@@ -95,14 +95,14 @@ class TWCalendarListState extends State<TWCalendarList> {
     // 总月数
     count = monthEnd - monthStart + (yearEnd - yearStart) * 12 + 1;
 
-    seletedMode = widget.configs?.listConfig?.seletedMode ??
-        TWCalendarListSeletedMode.singleSerial;
-    // 📢 非连续的选择数组非空，则 seletedMode = TWCalendarListSeletedMode.notSerial;
+    selectedMode = widget.configs?.listConfig?.selectedMode ??
+        TWCalendarListSelectedMode.singleSerial;
+    // 📢 非连续的选择数组非空，则 selectedMode = TWCalendarListSelectedMode.notSerial;
     if (widget.calendarController.notSerialSelectedDates != null) {
       notSerialSelectedTimes =
           widget.calendarController.notSerialSelectedDates!;
-      _handerMutipleStartEndTime();
-      seletedMode = TWCalendarListSeletedMode.notSerial;
+      _handleMultipleStartEndTime();
+      selectedMode = TWCalendarListSelectedMode.notSerial;
     }
     // 初始化选择天数
     _updateSelectedDays();
@@ -256,19 +256,19 @@ extension TWCalendarListStateHandler on TWCalendarListState {
     String btnTitle = '確   定';
     final selectedDaysTitle =
         TWCalendarTool.getSelectedDaysTitle(selectStartTime, selectEndTime);
-    if (seletedDays != 0) {
-      btnTitle = '確定 ($selectedDaysTitle 共$seletedDays天)';
+    if (selectedDays != 0) {
+      btnTitle = '確定 ($selectedDaysTitle 共$selectedDays天)';
     }
     if (widget.calendarController.onSelectDayTitle != null) {
       return widget.calendarController.onSelectDayTitle!(
-          selectStartTime, selectEndTime, seletedDays);
+          selectStartTime, selectEndTime, selectedDays);
     }
     return btnTitle;
   }
 
   /// 处理多选数据
-  void _handerMutipleTimes(DateTime dateTime) {
-    if (TWCalendarTool.isHadSeletced(
+  void _handleMultipleTimes(DateTime dateTime) {
+    if (TWCalendarTool.isHadSelected(
       selectedTimes: notSerialSelectedTimes,
       dateTime: dateTime,
     )) {
@@ -279,11 +279,11 @@ extension TWCalendarListStateHandler on TWCalendarListState {
     } else {
       notSerialSelectedTimes.add(dateTime);
     }
-    _handerMutipleStartEndTime();
+    _handleMultipleStartEndTime();
   }
 
   /// 处理开始与结束日期
-  void _handerMutipleStartEndTime() {
+  void _handleMultipleStartEndTime() {
     TWCalendarTool.sortDateTimes(notSerialSelectedTimes);
     final count = notSerialSelectedTimes.length;
     if (count == 0) {
@@ -297,21 +297,21 @@ extension TWCalendarListStateHandler on TWCalendarListState {
 
   /// 更新选择天数
   void _updateSelectedDays() {
-    if (seletedMode == TWCalendarListSeletedMode.notSerial) {
-      seletedDays = notSerialSelectedTimes.length;
+    if (selectedMode == TWCalendarListSelectedMode.notSerial) {
+      selectedDays = notSerialSelectedTimes.length;
     } else {
-      seletedDays =
+      selectedDays =
           TWCalendarTool.getSelectedDays(selectStartTime, selectEndTime);
     }
   }
 
   /// 选项处理回调
   void _onSelectDayChanged(DateTime dateTime) {
-    switch (seletedMode) {
-      case TWCalendarListSeletedMode.notSerial:
-        _handerMutipleTimes(dateTime);
+    switch (selectedMode) {
+      case TWCalendarListSelectedMode.notSerial:
+        _handleMultipleTimes(dateTime);
         break;
-      case TWCalendarListSeletedMode.doubleSerial:
+      case TWCalendarListSelectedMode.doubleSerial:
         if (selectStartTime == null && selectEndTime == null) {
           selectStartTime = dateTime;
         } else if (selectStartTime != null && selectEndTime == null) {
@@ -323,8 +323,8 @@ extension TWCalendarListStateHandler on TWCalendarListState {
               selectStartTime = null;
               selectEndTime = null;
             });
-            seletedDays = 0;
-            _handerSelectDayRang(dateTime);
+            selectedDays = 0;
+            _handleSelectDayRang(dateTime);
             return;
           }
           // 如果用户反选，则交换开始和结束日期
@@ -346,12 +346,12 @@ extension TWCalendarListStateHandler on TWCalendarListState {
     setState(() {
       _updateSelectedDays();
     });
-    _handerSelectDayRang(dateTime);
+    _handleSelectDayRang(dateTime);
   }
 
-  void _handerSelectDayRang(DateTime dateTime) {
+  void _handleSelectDayRang(DateTime dateTime) {
     if (widget.calendarController.onSelectDayRang != null) {
-      widget.calendarController.onSelectDayRang!(dateTime, seletedDays);
+      widget.calendarController.onSelectDayRang!(dateTime, selectedDays);
     }
   }
 

@@ -31,15 +31,15 @@ class TWCalendarController {
 
   /// 每次选择日期回调
   final void Function(
-    DateTime seletedDate,
-    int seletedDays,
+    DateTime selectedDate,
+    int selectedDays,
   )? onSelectDayRang;
 
   /// 更新确定按钮 title 回调
   final String Function(
     DateTime? selectStartTime,
     DateTime? selectEndTime,
-    int seletedDays,
+    int selectedDays,
   )? onSelectDayTitle;
 
   TWCalendarListState? state;

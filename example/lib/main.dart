@@ -233,30 +233,31 @@ class TWCalendarViewState extends State<TWCalendarView> {
       calendarController: controller,
       configs: TWCalendarConfigs(
         listConfig: TWCalendarListConfig(
-          seletedMode: TWCalendarListSeletedMode.doubleSerial,
+          selectedMode: TWCalendarListSelectedMode.doubleSerial,
           ensureViewSelectedColor: Colors.blue,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
           monthBodyHeight: 300.w,
           canSelectedToday: true,
+          sortOffset: 1,
           titleHandler: ((year, month) => '$year - $month'),
         ),
         dayNumberConfig: TWCalendarDayNumberConfig(
           selectedBackgroundColor: Colors.blue,
-          todayBackgroudColor: Colors.red,
+          todayBackgroundColor: Colors.red,
           todyTitle: 'today',
         ),
         weekdayRowConfig: TWCalendarWeekdayRowConfig(
           titleFontSize: 14.w,
           titleColor: Colors.blue,
           titles: [
-            'Sun',
             'Mon',
             'Tues',
             'Wed',
             'Thurs',
             'Fri',
             'Satur',
+            'Sun',
           ],
         ),
       ),
@@ -318,7 +319,7 @@ class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
       calendarController: controller,
       configs: TWCalendarConfigs(
         listConfig: TWCalendarListConfig(
-          seletedMode: TWCalendarListSeletedMode.notSerial,
+          selectedMode: TWCalendarListSelectedMode.notSerial,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
           monthBodyHeight: 300.w,
@@ -378,7 +379,7 @@ class TWCalendarCustomDateWidgetViewState
       calendarController: controller,
       configs: TWCalendarConfigs(
         listConfig: TWCalendarListConfig(
-          seletedMode: TWCalendarListSeletedMode.notSerial,
+          selectedMode: TWCalendarListSelectedMode.notSerial,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
           monthBodyHeight: 300.w,

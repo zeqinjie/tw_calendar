@@ -43,7 +43,7 @@ class TWMonthView extends StatefulWidget {
   /// 结束的年月份
   final DateTime lastDate;
 
-  final void Function(DateTime seletedDate) onSelectDayRang;
+  final void Function(DateTime selectedDate) onSelectDayRang;
 
   double get itemWidth => TWCalendarTool.getDayNumberSize(
       context, configs?.monthViewConfig?.padding ?? 8);
@@ -67,6 +67,7 @@ class TWMonthViewState extends State<TWMonthView> {
     return buildMonthView(context);
   }
 
+  /// 构建月份
   Widget buildMonthDays(BuildContext context) {
     List<Row> dayRows = <Row>[];
     List<Widget> dayRowChildren = <Widget>[];
@@ -77,7 +78,9 @@ class TWMonthViewState extends State<TWMonthView> {
     );
 
     // 日 一 二 三 四 五 六
-    int firstWeekdayOfMonth = DateTime(widget.year, widget.month, 2).weekday;
+    final sortOffset = widget.configs?.monthViewConfig?.sortOffset ?? 2;
+    int firstWeekdayOfMonth =
+        DateTime(widget.year, widget.month, sortOffset).weekday;
 
     for (int day = 2 - firstWeekdayOfMonth; day <= daysInMonth; day++) {
       DateTime moment = DateTime(widget.year, widget.month, day);
@@ -87,7 +90,7 @@ class TWMonthViewState extends State<TWMonthView> {
       // 连续选择
       if (widget.notSerialSelectedTimes != null &&
           widget.notSerialSelectedTimes!.isNotEmpty) {
-        isSelected = TWCalendarTool.isHadSeletced(
+        isSelected = TWCalendarTool.isHadSelected(
             selectedTimes: widget.notSerialSelectedTimes!, dateTime: moment);
       } else {
         if (widget.selectStartDateTime == null &&
@@ -198,7 +201,9 @@ class TWMonthViewState extends State<TWMonthView> {
     );
   }
 
-  /* Priavte Method */
+  /// 是否能选择
+  /// [date] 日期
+  /// [isToday] 是否今天
   bool canSelectedDate({
     required DateTime date,
     required bool isToday,

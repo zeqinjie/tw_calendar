@@ -50,7 +50,7 @@ class TWDayNumberState extends State<TWDayNumber> {
             )
           : (widget.isToday && widget.day > 0)
               ? BoxDecoration(
-                  color: widget.dayNumberConfig?.todayBackgroudColor ??
+                  color: widget.dayNumberConfig?.todayBackgroundColor ??
                       const Color(0XFFB3B3B3),
                   borderRadius: BorderRadius.circular(4),
                 )
