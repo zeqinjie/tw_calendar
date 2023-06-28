@@ -200,9 +200,9 @@ class TWCalendarViewState extends State<TWCalendarView> {
     super.initState();
     controller = TWCalendarController(
       firstDate: TWCalendarTool.today,
-      lastDate: TWCalendarTool.nowAfterDays(10),
+      lastDate: TWCalendarTool.nowAfterDays(20),
       selectedStartDate: TWCalendarTool.nowAfterDays(2),
-      selectedEndDate: TWCalendarTool.nowAfterDays(20),
+      selectedEndDate: TWCalendarTool.nowAfterDays(10),
       onSelectDayRang: ((seletedDate, seletedDays) {
         print(
             'onSelectDayRang => seletedDate : $seletedDate, seletedDays : $seletedDays');
