@@ -57,7 +57,7 @@ class _HomePage extends StatefulWidget {
 
 class _HomePageState extends State<_HomePage> {
   /// 弹出框日历，默认连续选择
-  _showNavigateDailog(BuildContext context) {
+  _showNavigateDialog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -74,7 +74,7 @@ class _HomePageState extends State<_HomePage> {
   }
 
   /// 弹出框日历-多选不连续
-  _showNavigateMutilpleDailog(BuildContext context) {
+  _showNavigateMultipleDialog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -85,13 +85,13 @@ class _HomePageState extends State<_HomePage> {
       ),
       context: context,
       builder: (BuildContext context) {
-        return const TWCalendarMutilpleView();
+        return const TWCalendarMultipleView();
       },
     );
   }
 
   /// 弹出框日历-多选不连续
-  _showNavigateCustomDateDailog(BuildContext context) {
+  _showNavigateCustomDateDialog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -108,7 +108,7 @@ class _HomePageState extends State<_HomePage> {
   }
 
   /// 弹出框日历-推荐日期
-  _showNavigateRecommendDailog(BuildContext context) {
+  _showNavigateRecommendDialog(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
       clipBehavior: Clip.hardEdge,
@@ -154,27 +154,27 @@ class _HomePageState extends State<_HomePage> {
       child: Column(
         children: <Widget>[
           TextButton(
-            child: const Text('Calendar: Mutilple Serial Date Selected'),
+            child: const Text('Calendar: Multiple Double Serial Date Selected'),
             onPressed: () {
-              _showNavigateDailog(context);
+              _showNavigateDialog(context);
             },
           ),
           TextButton(
             child: const Text('Calendar: Custom Header Widget'),
             onPressed: () {
-              _showNavigateRecommendDailog(context);
+              _showNavigateRecommendDialog(context);
             },
           ),
           TextButton(
-            child: const Text('Calendar: Mutilple NotSerial Date Selected'),
+            child: const Text('Calendar: Multiple NotSerial Date Selected'),
             onPressed: () {
-              _showNavigateMutilpleDailog(context);
+              _showNavigateMultipleDialog(context);
             },
           ),
           TextButton(
             child: const Text('Calendar: Custom Date Widget'),
             onPressed: () {
-              _showNavigateCustomDateDailog(context);
+              _showNavigateCustomDateDialog(context);
             },
           ),
         ],
@@ -200,9 +200,9 @@ class TWCalendarViewState extends State<TWCalendarView> {
     super.initState();
     controller = TWCalendarController(
       firstDate: TWCalendarTool.today,
-      lastDate: TWCalendarTool.nowAfterDays(33),
+      lastDate: TWCalendarTool.nowAfterDays(10),
       selectedStartDate: TWCalendarTool.nowAfterDays(2),
-      selectedEndDate: TWCalendarTool.nowAfterDays(10),
+      selectedEndDate: TWCalendarTool.nowAfterDays(20),
       onSelectDayRang: ((seletedDate, seletedDays) {
         print(
             'onSelectDayRang => seletedDate : $seletedDate, seletedDays : $seletedDays');
@@ -277,16 +277,16 @@ class TWCalendarViewState extends State<TWCalendarView> {
   }
 }
 
-class TWCalendarMutilpleView extends StatefulWidget {
-  const TWCalendarMutilpleView({
+class TWCalendarMultipleView extends StatefulWidget {
+  const TWCalendarMultipleView({
     Key? key,
   }) : super(key: key);
 
   @override
-  TWCalendarMutilpleViewState createState() => TWCalendarMutilpleViewState();
+  TWCalendarMultipleViewState createState() => TWCalendarMultipleViewState();
 }
 
-class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
+class TWCalendarMultipleViewState extends State<TWCalendarMultipleView> {
   late TWCalendarController controller;
 
   @override
@@ -329,7 +329,7 @@ class TWCalendarMutilpleViewState extends State<TWCalendarMutilpleView> {
         alignment: Alignment.center,
         height: 55.w,
         child: Text(
-          'Mutilple Not Serial Date Widget',
+          'Multiple Not Serial Date Widget',
           style: TextStyle(
             color: Colors.blue,
             fontSize: 18.w,

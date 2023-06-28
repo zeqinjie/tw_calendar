@@ -357,8 +357,11 @@ extension TWCalendarListStateHandler on TWCalendarListState {
 
   void _finishSelect() {
     if (widget.calendarController.onSelectFinish != null) {
-      widget.calendarController.onSelectFinish!(
-          selectStartTime, selectEndTime, notSerialSelectedTimes);
+      if ((selectStartTime != null && selectEndTime != null) ||
+          notSerialSelectedTimes.isNotEmpty) {
+        widget.calendarController.onSelectFinish!(
+            selectStartTime, selectEndTime, notSerialSelectedTimes);
+      }
     }
   }
 }
