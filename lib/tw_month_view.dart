@@ -23,11 +23,19 @@ class TWMonthView extends StatefulWidget {
   /// 配置样式对象
   final TWCalendarConfigs? configs;
 
+  /// 是否超过最大选择天数
+  final bool isMaxSelectedDays;
+
+  /// 是否未低于最小选择天数
+  final bool isMinSelectedDays;
+
   const TWMonthView({
     Key? key,
     this.notSerialSelectedTimes,
     this.selectStartDateTime,
     this.selectEndDateTime,
+    this.isMaxSelectedDays = false,
+    this.isMinSelectedDays = false,
     required this.context,
     required this.year,
     required this.month,
@@ -87,11 +95,14 @@ class TWMonthViewState extends State<TWMonthView> {
       final bool isToday = TWCalendarTool.dateIsToday(moment);
       final canSelected = canSelectedDate(date: moment, isToday: isToday);
       bool isSelected = false;
+
       // 连续选择
       if (widget.notSerialSelectedTimes != null &&
           widget.notSerialSelectedTimes!.isNotEmpty) {
         isSelected = TWCalendarTool.isHadSelected(
-            selectedTimes: widget.notSerialSelectedTimes!, dateTime: moment);
+          selectedTimes: widget.notSerialSelectedTimes!,
+          dateTime: moment,
+        );
       } else {
         if (widget.selectStartDateTime == null &&
             widget.selectEndDateTime == null &&
@@ -128,6 +139,8 @@ class TWMonthViewState extends State<TWMonthView> {
             isSelected,
             isToday,
             canSelected,
+            widget.isMinSelectedDays,
+            widget.isMaxSelectedDays,
           );
           if (widgetHandler != null) {
             widgetHandler = TWTapNotificationView(
@@ -145,6 +158,8 @@ class TWMonthViewState extends State<TWMonthView> {
         canSelected: canSelected,
         day: day,
         dayNumberConfig: widget.configs?.dayNumberConfig,
+        isMaxSelectedDays: widget.isMaxSelectedDays,
+        isMinSelectedDays: widget.isMinSelectedDays,
       );
       dayRowChildren.add(widgetHandler);
 

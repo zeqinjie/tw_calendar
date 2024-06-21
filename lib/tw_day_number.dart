@@ -4,6 +4,8 @@
  * @LastEditTime: 2022-10-04 12:29:50
  * @Description: 天数
  */
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'tw_calendar_cofigs.dart';
 import 'tw_calendar_notification.dart';
@@ -16,6 +18,11 @@ class TWDayNumber extends StatefulWidget {
   final bool isSelected;
   final bool canSelected;
 
+  /// 是否超过最大选择天数
+  final bool isMaxSelectedDays;
+
+  /// 是否未低于最小选择天数
+  final bool isMinSelectedDays;
   final TWCalendarDayNumberConfig? dayNumberConfig;
 
   const TWDayNumber({
@@ -24,6 +31,8 @@ class TWDayNumber extends StatefulWidget {
     required this.day,
     required this.isSelected,
     required this.dayNumberConfig,
+    required this.isMaxSelectedDays,
+    required this.isMinSelectedDays,
     this.isToday = false,
     this.canSelected = true,
   }) : super(key: key);
@@ -42,19 +51,10 @@ class TWDayNumberState extends State<TWDayNumber> {
       height: widget.size - itemMargin * 2,
       margin: EdgeInsets.all(itemMargin),
       alignment: Alignment.center,
-      decoration: (isSelected && widget.day > 0)
-          ? BoxDecoration(
-              color: widget.dayNumberConfig?.selectedBackgroundColor ??
-                  const Color(0XFFFF8000),
-              borderRadius: BorderRadius.circular(4),
-            )
-          : (widget.isToday && widget.day > 0)
-              ? BoxDecoration(
-                  color: widget.dayNumberConfig?.todayBackgroundColor ??
-                      const Color(0XFFB3B3B3),
-                  borderRadius: BorderRadius.circular(4),
-                )
-              : null,
+      decoration: BoxDecoration(
+        color: _getBackgroundColor(),
+        borderRadius: BorderRadius.circular(4),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -65,7 +65,27 @@ class TWDayNumberState extends State<TWDayNumber> {
     );
   }
 
-  Text _buildDay() {
+  /// 获取背景颜色
+  Color? _getBackgroundColor() {
+    Color? backgroundColor;
+    if (isSelected && widget.day > 0) {
+      if (widget.isMaxSelectedDays || widget.isMinSelectedDays) {
+        backgroundColor =
+            widget.dayNumberConfig?.minOrMaxSelectedBackgroundColor ??
+                const Color(0XFFF5F5F5);
+      } else {
+        backgroundColor = widget.dayNumberConfig?.selectedBackgroundColor ??
+            const Color(0XFFFF8000);
+      }
+    } else if (widget.isToday && widget.day > 0) {
+      backgroundColor = widget.dayNumberConfig?.todayBackgroundColor ??
+          const Color(0XFFB3B3B3);
+    }
+    return backgroundColor;
+  }
+
+  /// 获取字体颜色
+  Color? _getDayTitleColor() {
     Color color =
         widget.dayNumberConfig?.unSelectedTitleColor ?? const Color(0XFF666666);
     if (!widget.canSelected) {
@@ -76,14 +96,34 @@ class TWDayNumberState extends State<TWDayNumber> {
       color = widget.dayNumberConfig?.todayTitleColor ?? Colors.white;
     }
     if (isSelected) {
-      color = widget.dayNumberConfig?.selectedTitleColor ?? Colors.white;
+      if (widget.isMaxSelectedDays || widget.isMinSelectedDays) {
+        color = widget.dayNumberConfig?.minOrMaxSelectedTitleColor ??
+            const Color(0XFFCCCCCC);
+      } else {
+        color = widget.dayNumberConfig?.selectedTitleColor ?? Colors.white;
+      }
     }
+    return color;
+  }
 
+  /// 获取今天字体颜色
+  Color? _getToDayTitleColor() {
+    Color? color = widget.dayNumberConfig?.todayTitleColor ?? Colors.white;
+    if (isSelected) {
+      if (widget.isMaxSelectedDays || widget.isMinSelectedDays) {
+        color = widget.dayNumberConfig?.minOrMaxSelectedTitleColor ??
+            const Color(0XFFCCCCCC);
+      }
+    }
+    return color;
+  }
+
+  Text _buildDay() {
     return Text(
       widget.day < 1 ? '' : TWCalendarTool.formatPadLeft(widget.day),
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: color,
+        color: _getDayTitleColor(),
         fontSize: widget.dayNumberConfig?.fontSize ?? 15,
         fontWeight: FontWeight.normal,
       ),
@@ -95,7 +135,7 @@ class TWDayNumberState extends State<TWDayNumber> {
       widget.dayNumberConfig?.todyTitle ?? '今天',
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: widget.dayNumberConfig?.todayTitleColor ?? Colors.white,
+        color: _getToDayTitleColor(),
         fontSize: widget.dayNumberConfig?.todayFontSize ?? 10,
         fontWeight: FontWeight.normal,
       ),

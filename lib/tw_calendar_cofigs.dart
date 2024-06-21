@@ -26,7 +26,7 @@ class TWCalendarConfigs {
   /// 月历配置对象
   final TWCalendarMonthViewConfig? monthViewConfig;
 
-  /// 月历配置对象
+  /// 日期配置对象
   final TWCalendarDayNumberConfig? dayNumberConfig;
 
   /// 周视图配置对象
@@ -69,6 +69,12 @@ class TWCalendarListConfig {
   /// 确定按钮 decoration
   final Decoration? ensureViewDecoration;
 
+  /// 最小选择天数
+  final int? minSelectDays;
+
+  /// 最大选择天数
+  final int? maxSelectDays;
+
   TWCalendarListConfig({
     this.ensureTitleColor,
     this.selectedMode,
@@ -79,6 +85,8 @@ class TWCalendarListConfig {
     this.ensureViewUnSelectedColor,
     this.ensureTitleFontSize,
     this.ensureViewDecoration,
+    this.minSelectDays,
+    this.maxSelectDays,
   });
 }
 
@@ -128,6 +136,12 @@ class TWCalendarDayNumberConfig {
   /// 今天颜色
   final Color? todayTitleColor;
 
+  /// 未符合最小或最大选择天数背景颜色
+  final Color? minOrMaxSelectedBackgroundColor;
+
+  /// 未符合最小或最大选择天数标题颜色
+  final Color? minOrMaxSelectedTitleColor;
+
   /// 选择背景颜色
   final Color? selectedBackgroundColor;
 
@@ -161,11 +175,15 @@ class TWCalendarDayNumberConfig {
     bool isSelected,
     bool isToday,
     bool canSelected,
+    bool isMinSelectedDays,
+    bool isMaxSelectedDays,
   )? widgetHandler;
 
   TWCalendarDayNumberConfig({
     this.widgetHandler,
     this.todayBackgroundColor,
+    this.minOrMaxSelectedBackgroundColor,
+    this.minOrMaxSelectedTitleColor,
     this.todayTitleColor,
     this.selectedBackgroundColor,
     this.selectedTitleColor,

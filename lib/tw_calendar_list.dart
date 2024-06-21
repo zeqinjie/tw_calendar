@@ -238,6 +238,8 @@ class TWCalendarListState extends State<TWCalendarList> {
       selectStartDateTime: selectStartTime,
       selectEndDateTime: selectEndTime,
       onSelectDayRang: (dateTime) => _onSelectDayChanged(dateTime),
+      isMaxSelectedDays: isMaxSelectedDays,
+      isMinSelectedDays: isMinSelectedDays,
     );
   }
 }
@@ -254,14 +256,19 @@ extension TWCalendarListStateHandler on TWCalendarListState {
   /// 获取确认按钮 title
   String get _getEnsureTitle {
     String btnTitle = '確   定';
-    final selectedDaysTitle =
-        TWCalendarTool.getSelectedDaysTitle(selectStartTime, selectEndTime);
+    final selectedDaysTitle = TWCalendarTool.getSelectedDaysTitle(
+      selectStartTime,
+      selectEndTime,
+    );
     if (selectedDays != 0) {
       btnTitle = '確定 ($selectedDaysTitle 共$selectedDays天)';
     }
     if (widget.calendarController.onSelectDayTitle != null) {
       return widget.calendarController.onSelectDayTitle!(
-          selectStartTime, selectEndTime, selectedDays);
+        selectStartTime,
+        selectEndTime,
+        selectedDays,
+      );
     }
     return btnTitle;
   }
@@ -346,6 +353,7 @@ extension TWCalendarListStateHandler on TWCalendarListState {
     setState(() {
       _updateSelectedDays();
     });
+
     _handleSelectDayRang(dateTime);
   }
 
@@ -360,8 +368,31 @@ extension TWCalendarListStateHandler on TWCalendarListState {
       if ((selectStartTime != null && selectEndTime != null) ||
           notSerialSelectedTimes.isNotEmpty) {
         widget.calendarController.onSelectFinish!(
-            selectStartTime, selectEndTime, notSerialSelectedTimes);
+          selectStartTime,
+          selectEndTime,
+          notSerialSelectedTimes,
+        );
       }
     }
+  }
+}
+
+extension TWCalendarListStateForMaxAndMin on TWCalendarListState {
+  /// 最大选择天数
+  bool get isMaxSelectedDays {
+    final maxSelectedDays = widget.configs?.listConfig?.maxSelectDays;
+    if (maxSelectedDays != null && selectedDays > maxSelectedDays) {
+      return true;
+    }
+    return false;
+  }
+
+  /// 最小选择天数
+  bool get isMinSelectedDays {
+    final minSelectedDays = widget.configs?.listConfig?.minSelectDays;
+    if (minSelectedDays != null && selectedDays < minSelectedDays) {
+      return true;
+    }
+    return false;
   }
 }
