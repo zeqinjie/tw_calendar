@@ -68,26 +68,7 @@ class _HomePageState extends State<_HomePage> {
       ),
       context: context,
       builder: (BuildContext context) {
-        return const TWCalendarView();
-      },
-    );
-  }
-
-  /// min or max select days
-  _showNavigateLimitMultipleSerialDialog(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8),
-          topRight: Radius.circular(8),
-        ),
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return const TWCalendarView(
-          minSelectedDays: 7,
-        );
+        return const TWCalendarMultipleSerialView();
       },
     );
   }
@@ -104,24 +85,7 @@ class _HomePageState extends State<_HomePage> {
       ),
       context: context,
       builder: (BuildContext context) {
-        return const TWCalendarMultipleView();
-      },
-    );
-  }
-
-  /// Custom Date Widget
-  _showNavigateCustomDateDialog(BuildContext context) {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8),
-          topRight: Radius.circular(8),
-        ),
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return const TWCalendarCustomDateWidgetView();
+        return const TWCalendarMultipleNotSerialView();
       },
     );
   }
@@ -154,15 +118,50 @@ class _HomePageState extends State<_HomePage> {
             selectStartTime,
             selectEndTime,
             notSerialSelectedTimes,
+            selectedDays,
           ) {
             print(
                 'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
             Navigator.pop(context);
           },
-          onSelectDayRang: ((seletedDate, seletedDays) {
-            print('seletedDate: $seletedDate, seletedDays: $seletedDays');
+          onSelectDayRang: ((selectedDate, selectedDays) {
+            print('selectedDate: $selectedDate, selectedDays: $selectedDays');
           }),
         );
+      },
+    );
+  }
+
+  /// Custom Date Widget
+  _showNavigateCustomDateDialog(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return const TWCalendarCustomDateView();
+      },
+    );
+  }
+
+  /// Limit max or min select days
+  _showNavigateLimitMaxOrMinDialog(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return const TWCalendarLimitMaxOrMinView();
       },
     );
   }
@@ -198,9 +197,11 @@ class _HomePageState extends State<_HomePage> {
           ),
           TextButton(
             child: const Text(
-                'Calendar: Multiple Serial Date Selected, support Max or Mix Selected Days'),
+              'Calendar: Limit Max or Min Selected Days',
+              textAlign: TextAlign.center,
+            ),
             onPressed: () {
-              _showNavigateLimitMultipleSerialDialog(context);
+              _showNavigateLimitMaxOrMinDialog(context);
             },
           ),
         ],
@@ -209,23 +210,18 @@ class _HomePageState extends State<_HomePage> {
   }
 }
 
-class TWCalendarView extends StatefulWidget {
-  /// 最小选择天数
-  final int? minSelectedDays;
-
-  /// 最大选择天数
-  final int? maxSelectedDays;
-  const TWCalendarView({
+class TWCalendarMultipleSerialView extends StatefulWidget {
+  const TWCalendarMultipleSerialView({
     Key? key,
-    this.minSelectedDays,
-    this.maxSelectedDays,
   }) : super(key: key);
 
   @override
-  TWCalendarViewState createState() => TWCalendarViewState();
+  TWCalendarMultipleSerialViewState createState() =>
+      TWCalendarMultipleSerialViewState();
 }
 
-class TWCalendarViewState extends State<TWCalendarView> {
+class TWCalendarMultipleSerialViewState
+    extends State<TWCalendarMultipleSerialView> {
   late TWCalendarController controller;
 
   @override
@@ -240,12 +236,15 @@ class TWCalendarViewState extends State<TWCalendarView> {
         print(
             '''onSelectDayRang => seletedDate : $seletedDate, seletedDays : $seletedDays''');
       }),
-      onSelectDayTitle: (selectStartTime, selectEndTime, seletedDays) {
+      onSelectDayTitle: (
+        selectStartTime,
+        selectEndTime,
+        seletedDays,
+      ) {
         print(
             'onSelectDayTitle => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, seletedDays : $seletedDays');
         if (selectStartTime != null && selectEndTime != null) {
-          return '''ensure (${selectStartTime.year},${selectStartTime.month},
-          ${selectStartTime.day} - ${selectEndTime.year},${selectEndTime.month},${selectEndTime.day}）''';
+          return '''ensure (${selectStartTime.year},${selectStartTime.month},${selectStartTime.day} - ${selectEndTime.year},${selectEndTime.month},${selectEndTime.day}）''';
         }
         return "please choice...";
       },
@@ -253,6 +252,7 @@ class TWCalendarViewState extends State<TWCalendarView> {
         selectStartTime,
         selectEndTime,
         notSerialSelectedTimes,
+        selectedDays,
       ) {
         print(
             '''onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime''');
@@ -269,8 +269,6 @@ class TWCalendarViewState extends State<TWCalendarView> {
         listConfig: TWCalendarListConfig(
           selectedMode: TWCalendarListSelectedMode.doubleSerial,
           ensureViewSelectedColor: Colors.blue,
-          minSelectDays: widget.minSelectedDays,
-          maxSelectDays: widget.maxSelectedDays,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
           monthBodyHeight: 300.w,
@@ -313,16 +311,18 @@ class TWCalendarViewState extends State<TWCalendarView> {
   }
 }
 
-class TWCalendarMultipleView extends StatefulWidget {
-  const TWCalendarMultipleView({
+class TWCalendarMultipleNotSerialView extends StatefulWidget {
+  const TWCalendarMultipleNotSerialView({
     Key? key,
   }) : super(key: key);
 
   @override
-  TWCalendarMultipleViewState createState() => TWCalendarMultipleViewState();
+  TWCalendarMultipleNotSerialViewState createState() =>
+      TWCalendarMultipleNotSerialViewState();
 }
 
-class TWCalendarMultipleViewState extends State<TWCalendarMultipleView> {
+class TWCalendarMultipleNotSerialViewState
+    extends State<TWCalendarMultipleNotSerialView> {
   late TWCalendarController controller;
 
   @override
@@ -341,7 +341,8 @@ class TWCalendarMultipleViewState extends State<TWCalendarMultipleView> {
         print('''onSelectDayRang => onSelectDayRang => 
             seletedDate : $seletedDate, seletedDays : $seletedDays''');
       }),
-      onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes) {
+      onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes,
+          selectedDays) {
         print(
             '''onSelectFinish => onSelectFinish => selectStartTime : $selectStartTime,
              selectEndTime : $selectEndTime, notSerialSelectedTimes: $notSerialSelectedTimes''');
@@ -378,18 +379,17 @@ class TWCalendarMultipleViewState extends State<TWCalendarMultipleView> {
   }
 }
 
-class TWCalendarCustomDateWidgetView extends StatefulWidget {
-  const TWCalendarCustomDateWidgetView({
+class TWCalendarCustomDateView extends StatefulWidget {
+  const TWCalendarCustomDateView({
     Key? key,
   }) : super(key: key);
 
   @override
-  TWCalendarCustomDateWidgetViewState createState() =>
-      TWCalendarCustomDateWidgetViewState();
+  TWCalendarCustomDateViewState createState() =>
+      TWCalendarCustomDateViewState();
 }
 
-class TWCalendarCustomDateWidgetViewState
-    extends State<TWCalendarCustomDateWidgetView> {
+class TWCalendarCustomDateViewState extends State<TWCalendarCustomDateView> {
   late TWCalendarController controller;
 
   @override
@@ -402,7 +402,8 @@ class TWCalendarCustomDateWidgetViewState
         print('''onSelectDayRang => onSelectDayRang => 
             seletedDate : $seletedDate, seletedDays : $seletedDays''');
       }),
-      onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes) {
+      onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes,
+          selectedDays) {
         print(
           '''onSelectFinish => onSelectFinish => selectStartTime : $selectStartTime
           , selectEndTime : $selectEndTime, notSerialSelectedTimes: $notSerialSelectedTimes''',
@@ -494,6 +495,90 @@ class TWCalendarCustomDateWidgetViewState
           'Calendar Custom Date Widget',
           style: TextStyle(
             color: Colors.blue,
+            fontSize: 18.w,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TWCalendarLimitMaxOrMinView extends StatefulWidget {
+  const TWCalendarLimitMaxOrMinView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  TWCalendarLimitMaxOrMinViewState createState() =>
+      TWCalendarLimitMaxOrMinViewState();
+}
+
+class TWCalendarLimitMaxOrMinViewState
+    extends State<TWCalendarLimitMaxOrMinView> {
+  late TWCalendarController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TWCalendarController(
+      firstDate: TWCalendarTool.today,
+      lastDate: TWCalendarTool.nowAfterDays(20),
+      selectedStartDate: TWCalendarTool.nowAfterDays(2),
+      selectedEndDate: TWCalendarTool.nowAfterDays(10),
+      onSelectDayRang: ((seletedDate, seletedDays) {
+        print(
+            '''onSelectDayRang => seletedDate : $seletedDate, seletedDays : $seletedDays''');
+      }),
+      onSelectDayTitle: (
+        selectStartTime,
+        selectEndTime,
+        seletedDays,
+      ) {
+        print(
+            'onSelectDayTitle => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, seletedDays : $seletedDays');
+        if (selectStartTime != null && selectEndTime != null) {
+          return '''ensure (${selectStartTime.year},${selectStartTime.month},${selectStartTime.day} - ${selectEndTime.year},${selectEndTime.month},${selectEndTime.day}）''';
+        }
+        return "please choice...";
+      },
+      onSelectFinish: (
+        selectStartTime,
+        selectEndTime,
+        notSerialSelectedTimes,
+        seletedDays,
+      ) {
+        print(
+            '''onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime''');
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TWCalendarList(
+      calendarController: controller,
+      configs: TWCalendarConfigs(
+        listConfig: TWCalendarListConfig(
+          selectedMode: TWCalendarListSelectedMode.doubleSerial,
+          minSelectDays: 3,
+          maxSelectDays: 5,
+        ),
+        monthViewConfig: TWCalendarMonthViewConfig(
+          monthBodyHeight: 300.w,
+          canSelectedToday: true,
+          sortOffset: 1,
+          titleHandler: ((year, month) => '$year - $month'),
+        ),
+      ),
+      headerView: Container(
+        alignment: Alignment.center,
+        height: 55.w,
+        child: Text(
+          'Calendar Widget',
+          style: TextStyle(
+            color: Colors.orange,
             fontSize: 18.w,
             fontWeight: FontWeight.bold,
           ),

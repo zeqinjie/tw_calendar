@@ -19,6 +19,7 @@ class BiddingCalendarView extends StatefulWidget {
     DateTime? selectStartTime,
     DateTime? selectEndTime,
     List<DateTime>? notSerialSelectedTimes,
+    int selectedDays,
   )? onSelectFinish;
   final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
   const BiddingCalendarView({

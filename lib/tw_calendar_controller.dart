@@ -27,6 +27,7 @@ class TWCalendarController {
     DateTime? selectStartTime,
     DateTime? selectEndTime,
     List<DateTime>? notSerialSelectedDates,
+    int selectedDays,
   )? onSelectFinish;
 
   /// 每次选择日期回调

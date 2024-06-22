@@ -247,7 +247,13 @@ class TWCalendarListState extends State<TWCalendarList> {
 /* Private Method */
 /// 数据处理
 extension TWCalendarListStateHandler on TWCalendarListState {
+  /// 是否有选择日期
   bool get _isHadSelectedDate {
+    // 小余最小选择天数或者大于最大选择天数
+    if (isMaxSelectedDays || isMinSelectedDays) {
+      return false;
+    }
+    // 未选择日期
     return selectStartTime != null ||
         (selectStartTime != null && selectEndTime != null) ||
         notSerialSelectedTimes.isNotEmpty;
@@ -371,6 +377,7 @@ extension TWCalendarListStateHandler on TWCalendarListState {
           selectStartTime,
           selectEndTime,
           notSerialSelectedTimes,
+          selectedDays,
         );
       }
     }

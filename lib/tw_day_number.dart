@@ -17,11 +17,7 @@ class TWDayNumber extends StatefulWidget {
   final double size;
   final bool isSelected;
   final bool canSelected;
-
-  /// 是否超过最大选择天数
   final bool isMaxSelectedDays;
-
-  /// 是否未低于最小选择天数
   final bool isMinSelectedDays;
   final TWCalendarDayNumberConfig? dayNumberConfig;
 
