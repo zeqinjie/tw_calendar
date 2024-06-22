@@ -21,7 +21,7 @@ class BiddingCalendarView extends StatefulWidget {
     List<DateTime>? notSerialSelectedTimes,
     int selectedDays,
   )? onSelectFinish;
-  final void Function(DateTime seletedDate, int seletedDays)? onSelectDayRang;
+  final void Function(DateTime selectedDate, int selectedDays)? onSelectDayRang;
   const BiddingCalendarView({
     Key? key,
     this.selectedStartDate,
@@ -48,10 +48,10 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
       selectedStartDate: widget.selectedStartDate,
       selectedEndDate: widget.selectedEndDate,
       onSelectFinish: widget.onSelectFinish,
-      onSelectDayRang: (seletedDate, seletedDays) {
-        handerSeletedDate(seletedDate, seletedDays);
+      onSelectDayRang: (selectedDate, selectedDays) {
+        handleSelectedDate(selectedDate, selectedDays);
         if (widget.onSelectDayRang != null) {
-          widget.onSelectDayRang!(seletedDate, seletedDays);
+          widget.onSelectDayRang!(selectedDate, selectedDays);
         }
       },
     );
@@ -97,13 +97,13 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
     }
   }
 
-  void handerSeletedDate(DateTime seletedDate, int seletedDays) {
+  void handleSelectedDate(DateTime selectedDate, int selectedDays) {
     setState(() {
       controller.selectedStartDate = DateTime.now().tomorrow();
-      controller.selectedEndDate = seletedDate;
+      controller.selectedEndDate = selectedDate;
       models?.forEach((element) {
-        element.isChoice = element.dayCount == seletedDays;
-      });
+        element.isChoice = element.dayCount == selectedDays;
+      }); 
     });
   }
 

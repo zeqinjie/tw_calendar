@@ -19,7 +19,7 @@ class TWCalendarController {
   /// 选择结束日期
   DateTime? selectedEndDate;
 
-  /// 不连续选择的日期数组, 注意选择类型 TWCalendarListSeletedMode.notSerial
+  /// 不连续选择的日期数组, 注意选择类型 TWCalendarListSelectedMode.notSerial
   List<DateTime>? notSerialSelectedDates;
 
   /// 点击确定回调
