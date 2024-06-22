@@ -9,31 +9,7 @@ This is a simple calendar widget.
 
 ![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/1.gif)
 
-## version
-- 1.2.0
-  - support custom date widget
-- 1.1.0
-  - support not serial multiple selection
-  - fix bug
-- 1.0.2
-  - add export class
-- 1.0.1
-  - remove unnecessary dependencies libraries
-- 1.0.0
-  - support change to modify style cofigures
-- 0.1.3
-  - fix bug
-- 0.1.2
-  - support control ensure button title
-  - support modify day color
-- 0.1.1
-  - support continuous selection
-  - support custom headerView 
-  - support modify widgets height
-  - fix bug
-- 0.1.0
-  - simple calendart
-  - Initial release
+
 ## Installing
 
 Add tw_calendar to your pubspec.yaml file:
@@ -722,7 +698,17 @@ class TWCalendarLimitMaxOrMinViewState
       ) {
         print(
             '''onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime''');
-        if (selectedDays > maxSelectedDays || selectedDays < minSelectedDays) {}
+        if (selectedDays > maxSelectedDays || selectedDays < minSelectedDays) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Please select $minSelectedDays to $maxSelectedDays days',
+              ),
+              duration: const Duration(seconds: 2),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
         Navigator.pop(context);
       },
     );
@@ -760,6 +746,7 @@ class TWCalendarLimitMaxOrMinViewState
     );
   }
 }
+
 
 ```
 
