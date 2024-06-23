@@ -7,7 +7,7 @@ This is a simple calendar widget.
 
 ## introduce
 
-![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/1.gif)
+![](https://github.com/zeqinjie/tw_calendar/blob/main/assets/1.gif?raw=true)
 
 
 ## Installing
