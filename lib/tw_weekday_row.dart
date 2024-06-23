@@ -5,7 +5,7 @@
  * @Description: 日期视图
  */
 import 'package:flutter/material.dart';
-import 'tw_calendar_cofigs.dart';
+import 'tw_calendar_configs.dart';
 
 class TWWeekdayRow extends StatelessWidget {
   final TWCalendarWeekdayRowConfig? weekdayRowConfig;

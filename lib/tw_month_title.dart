@@ -5,7 +5,7 @@
  * @Description: your project
  */
 import 'package:flutter/material.dart';
-import 'tw_calendar_cofigs.dart';
+import 'tw_calendar_configs.dart';
 import 'utils/tw_calendar_tool.dart';
 
 class TWMonthTitle extends StatelessWidget {

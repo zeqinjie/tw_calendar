@@ -1,6 +1,7 @@
-## 1.3.0
+## 2.0.0
 
 * support limit max and min selected days
+* rename file
 
 ## 1.2.1
 
@@ -45,5 +46,5 @@
 
 ## 0.1.0
 
-* simple calendart
+* simple calendar
 * Initial release

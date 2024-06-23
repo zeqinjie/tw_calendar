@@ -6,7 +6,7 @@
  */
 library tw_calendar;
 
-export 'tw_calendar_cofigs.dart';
+export 'tw_calendar_configs.dart';
 export 'tw_calendar_controller.dart';
 export 'tw_calendar_list.dart';
 export 'utils/tw_calendar_tool.dart';
