@@ -43,7 +43,12 @@ class TWCalendarController {
     int selectedDays,
   )? onSelectDayTitle;
 
-  TWCalendarListState? state;
+  TWCalendarListState? _state;
+
+  /// setState
+  set state(TWCalendarListState state) {
+    _state = state;
+  }
 
   TWCalendarController({
     required this.firstDate,
@@ -59,6 +64,6 @@ class TWCalendarController {
 
   /// 更新数据
   void updateData() {
-    state?.initData();
+    _state?.initData();
   }
 }
