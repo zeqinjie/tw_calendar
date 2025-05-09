@@ -120,12 +120,13 @@ class _HomePageState extends State<_HomePage> {
             notSerialSelectedTimes,
             selectedDays,
           ) {
-            print(
+            debugPrint(
                 'selectStartTime : $selectStartTime, selectEndTime : $selectEndTime');
             Navigator.pop(context);
           },
           onSelectDayRang: ((selectedDate, selectedDays) {
-            print('selectedDate: $selectedDate, selectedDays: $selectedDays');
+            debugPrint(
+                'selectedDate: $selectedDate, selectedDays: $selectedDays');
           }),
         );
       },
@@ -233,7 +234,7 @@ class TWCalendarMultipleSerialViewState
       selectedStartDate: TWCalendarTool.nowAfterDays(2),
       selectedEndDate: TWCalendarTool.nowAfterDays(10),
       onSelectDayRang: ((selectedDate, selectedDays) {
-        print(
+        debugPrint(
             '''onSelectDayRang => selectedDate : $selectedDate, selectedDays : $selectedDays''');
       }),
       onSelectDayTitle: (
@@ -241,7 +242,7 @@ class TWCalendarMultipleSerialViewState
         selectEndTime,
         selectedDays,
       ) {
-        print(
+        debugPrint(
             'onSelectDayTitle => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, selectedDays : $selectedDays');
         if (selectStartTime != null && selectEndTime != null) {
           return '''ensure (${selectStartTime.year},${selectStartTime.month},${selectStartTime.day} - ${selectEndTime.year},${selectEndTime.month},${selectEndTime.day}）''';
@@ -254,7 +255,7 @@ class TWCalendarMultipleSerialViewState
         notSerialSelectedTimes,
         selectedDays,
       ) {
-        print(
+        debugPrint(
             '''onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime''');
         Navigator.pop(context);
       },
@@ -338,12 +339,12 @@ class TWCalendarMultipleNotSerialViewState
         TWCalendarTool.nowAfterDays(7),
       ],
       onSelectDayRang: ((selectedDate, selectedDays) {
-        print('''onSelectDayRang => onSelectDayRang => 
+        debugPrint('''onSelectDayRang => onSelectDayRang => 
             selectedDate : $selectedDate, selectedDays : $selectedDays''');
       }),
       onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes,
           selectedDays) {
-        print(
+        debugPrint(
             '''onSelectFinish => onSelectFinish => selectStartTime : $selectStartTime,
              selectEndTime : $selectEndTime, notSerialSelectedTimes: $notSerialSelectedTimes''');
         Navigator.pop(context);
@@ -399,12 +400,12 @@ class TWCalendarCustomDateViewState extends State<TWCalendarCustomDateView> {
       firstDate: TWCalendarTool.today,
       lastDate: TWCalendarTool.nowAfterDays(33),
       onSelectDayRang: ((selectedDate, selectedDays) {
-        print('''onSelectDayRang => onSelectDayRang => 
+        debugPrint('''onSelectDayRang => onSelectDayRang => 
             selectedDate : $selectedDate, selectedDays : $selectedDays''');
       }),
       onSelectFinish: (selectStartTime, selectEndTime, notSerialSelectedTimes,
           selectedDays) {
-        print(
+        debugPrint(
           '''onSelectFinish => onSelectFinish => selectStartTime : $selectStartTime
           , selectEndTime : $selectEndTime, notSerialSelectedTimes: $notSerialSelectedTimes''',
         );
@@ -450,8 +451,8 @@ class TWCalendarCustomDateViewState extends State<TWCalendarCustomDateView> {
                   borderRadius: BorderRadius.circular(4),
                   color: canSelected
                       ? (isSelected
-                          ? Colors.orange.withOpacity(0.3)
-                          : Colors.black.withOpacity(0.1))
+                          ? Colors.orange.withValues(alpha: 0.3)
+                          : Colors.black.withValues(alpha: 0.1))
                       : Colors.white,
                 ),
                 child: Column(
@@ -528,7 +529,7 @@ class TWCalendarLimitMaxOrMinViewState
       firstDate: TWCalendarTool.today,
       lastDate: TWCalendarTool.nowAfterDays(50),
       onSelectDayRang: ((selectedDate, selectedDays) {
-        print(
+        debugPrint(
             '''onSelectDayRang => selectedDate : $selectedDate, selectedDays : $selectedDays''');
       }),
       onSelectDayTitle: (
@@ -536,7 +537,7 @@ class TWCalendarLimitMaxOrMinViewState
         selectEndTime,
         selectedDays,
       ) {
-        print(
+        debugPrint(
             'onSelectDayTitle => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime, selectedDays : $selectedDays');
         if (selectStartTime != null && selectEndTime != null) {
           return '''ensure (${selectStartTime.year},${selectStartTime.month},${selectStartTime.day} - ${selectEndTime.year},${selectEndTime.month},${selectEndTime.day}）''';
@@ -549,7 +550,7 @@ class TWCalendarLimitMaxOrMinViewState
         notSerialSelectedTimes,
         selectedDays,
       ) {
-        print(
+        debugPrint(
             '''onSelectFinish => selectStartTime : $selectStartTime, selectEndTime : $selectEndTime''');
         if (selectedDays > maxSelectedDays || selectedDays < minSelectedDays) {
           ScaffoldMessenger.of(context).showSnackBar(

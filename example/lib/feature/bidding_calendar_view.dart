@@ -103,7 +103,7 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
       controller.selectedEndDate = selectedDate;
       models?.forEach((element) {
         element.isChoice = element.dayCount == selectedDays;
-      }); 
+      });
     });
   }
 

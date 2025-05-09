@@ -169,7 +169,7 @@ class TWCalendarListState extends State<TWCalendarList> {
         child: TextButton(
           onPressed: _finishSelect,
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
+            backgroundColor: WidgetStateProperty.all(
               _isHadSelectedDate
                   ? widget.configs?.listConfig?.ensureViewSelectedColor ??
                       const Color(0XFFFF8000)
