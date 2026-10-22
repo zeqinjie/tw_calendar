@@ -1,10 +1,15 @@
 ## 3.0.0
 
+* **Breaking:** make `TWCalendarController.state` private; use `updateData()` to refresh the calendar
+* detach disposed or replaced controllers and clear stale non-consecutive selections when replacing a controller
 * fix calendar overflow in narrow containers and Web bottom sheets by sizing date cells to the available width
 * keep custom date widgets sized correctly when the calendar is resized
 * fix long today labels overflowing narrow date cells
 * fix oversized text and layouts in the Web example by removing screen-wide scaling
 * add regression tests for desktop and mobile layouts, resizing, and custom date selection
+* add unit tests for calendar utilities and controller lifecycle behavior
+* restore the Android example with v2 embedding and update the iOS example for current Xcode versions
+* add GitHub Actions for formatting, analysis, native and Chrome tests, and Android and iOS example builds
 
 ## 2.0.0
 
