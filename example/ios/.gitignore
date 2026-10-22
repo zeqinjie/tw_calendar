@@ -14,6 +14,7 @@ Icon?
 **/.symlinks/
 profile
 xcuserdata
+**/IDEWorkspaceChecks.plist
 **/.generated/
 Flutter/App.framework
 Flutter/Flutter.framework
