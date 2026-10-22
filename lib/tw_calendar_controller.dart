@@ -43,7 +43,7 @@ class TWCalendarController {
     int selectedDays,
   )? onSelectDayTitle;
 
-  TWCalendarListState? state;
+  TWCalendarListState? _state;
 
   TWCalendarController({
     required this.firstDate,
@@ -57,8 +57,20 @@ class TWCalendarController {
   }) : assert(!firstDate.isAfter(lastDate),
             'lastDate must be on or after firstDate');
 
+  /// 仅供日历组件关联状态。
+  void attach(TWCalendarListState state) {
+    _state = state;
+  }
+
+  /// 仅供日历组件解除状态关联。
+  void detach(TWCalendarListState state) {
+    if (_state == state) {
+      _state = null;
+    }
+  }
+
   /// 更新数据
   void updateData() {
-    state?.initData();
+    _state?.initData();
   }
 }

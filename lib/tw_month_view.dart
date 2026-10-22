@@ -77,6 +77,14 @@ class TWMonthViewState extends State<TWMonthView> {
 
   /// 构建月份
   Widget buildMonthDays(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return _buildMonthDays(constraints.maxWidth / DateTime.daysPerWeek);
+      },
+    );
+  }
+
+  Widget _buildMonthDays(double itemWidth) {
     List<Row> dayRows = <Row>[];
     List<Widget> dayRowChildren = <Widget>[];
 
@@ -135,7 +143,7 @@ class TWMonthViewState extends State<TWMonthView> {
             widget.year,
             widget.month,
             day,
-            widget.itemWidth,
+            itemWidth,
             isSelected,
             isToday,
             canSelected,
@@ -152,7 +160,7 @@ class TWMonthViewState extends State<TWMonthView> {
         }
       }
       widgetHandler ??= TWDayNumber(
-        size: widget.itemWidth,
+        size: itemWidth,
         isSelected: isSelected,
         isToday: isToday,
         canSelected: canSelected,
@@ -195,7 +203,6 @@ class TWMonthViewState extends State<TWMonthView> {
         return true;
       },
       child: Container(
-        width: 7 * TWCalendarTool.getDayNumberSize(context, padding),
         margin: EdgeInsets.all(padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

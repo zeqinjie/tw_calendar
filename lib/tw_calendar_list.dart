@@ -67,8 +67,24 @@ class TWCalendarListState extends State<TWCalendarList> {
   @override
   void initState() {
     super.initState();
-    widget.calendarController.state = this;
+    widget.calendarController.attach(this);
     initData();
+  }
+
+  @override
+  void didUpdateWidget(covariant TWCalendarList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.calendarController != widget.calendarController) {
+      oldWidget.calendarController.detach(this);
+      widget.calendarController.attach(this);
+      initData();
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.calendarController.detach(this);
+    super.dispose();
   }
 
   @override
@@ -97,10 +113,10 @@ class TWCalendarListState extends State<TWCalendarList> {
 
     selectedMode = widget.configs?.listConfig?.selectedMode ??
         TWCalendarListSelectedMode.singleSerial;
+    notSerialSelectedTimes =
+        widget.calendarController.notSerialSelectedDates ?? [];
     // 📢 非连续的选择数组非空，则 selectedMode = TWCalendarListSelectedMode.notSerial;
     if (widget.calendarController.notSerialSelectedDates != null) {
-      notSerialSelectedTimes =
-          widget.calendarController.notSerialSelectedDates!;
       _handleMultipleStartEndTime();
       selectedMode = TWCalendarListSelectedMode.notSerial;
     }

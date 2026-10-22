@@ -126,13 +126,16 @@ class TWDayNumberState extends State<TWDayNumber> {
   }
 
   Widget _buildToDay() {
-    return Text(
-      widget.dayNumberConfig?.todyTitle ?? '今天',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        color: _getToDayTitleColor(),
-        fontSize: widget.dayNumberConfig?.todayFontSize ?? 10,
-        fontWeight: FontWeight.normal,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        widget.dayNumberConfig?.todyTitle ?? '今天',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: _getToDayTitleColor(),
+          fontSize: widget.dayNumberConfig?.todayFontSize ?? 10,
+          fontWeight: FontWeight.normal,
+        ),
       ),
     );
   }

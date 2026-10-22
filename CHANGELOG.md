@@ -1,3 +1,11 @@
+## 3.0.0
+
+* fix calendar overflow in narrow containers and Web bottom sheets by sizing date cells to the available width
+* keep custom date widgets sized correctly when the calendar is resized
+* fix long today labels overflowing narrow date cells
+* fix oversized text and layouts in the Web example by removing screen-wide scaling
+* add regression tests for desktop and mobile layouts, resizing, and custom date selection
+
 ## 2.0.0
 
 * support limit max and min selected days

@@ -6,7 +6,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
 import 'package:tw_calendar_example/widget/tw_horizontal_scroll_list_view.dart';
 import 'package:tw_calendar_example/widget/tw_icon_button.dart';
@@ -14,8 +13,8 @@ import 'package:tw_calendar_example/widget/tw_icon_button.dart';
 class BiddingCalendarHeaderView extends StatelessWidget {
   final void Function(int index, BiddingDayChoiceModel model)? onTap;
   final List<BiddingDayChoiceModel>? models;
-  static final double _titleHeight = 55.w;
-  static final double _recommendHeight = 56.w;
+  static const double _titleHeight = 55;
+  static const double _recommendHeight = 56;
   const BiddingCalendarHeaderView({
     Key? key,
     this.onTap,
@@ -48,25 +47,25 @@ class BiddingCalendarHeaderView extends StatelessWidget {
       alignment: Alignment.center,
       fit: StackFit.expand,
       children: [
-        Align(
+        const Align(
           alignment: Alignment.center,
           child: Text(
             '選擇曝光時間',
             style: TextStyle(
-              color: const Color(0XFF333333),
-              fontSize: 18.w,
+              color: Color(0XFF333333),
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
         Positioned(
-          right: 10.w,
+          right: 10,
           child: TWIconButton(
             "assets/rh_close.png",
-            width: 30.w,
-            height: 30.w,
-            iconWidth: 24.w,
-            iconHeight: 24.w,
+            width: 30,
+            height: 30,
+            iconWidth: 24,
+            iconHeight: 24,
             onTap: () {
               Navigator.pop(context);
             },
@@ -85,16 +84,16 @@ class BiddingCalendarHeaderView extends StatelessWidget {
     return SizedBox(
       height: _recommendHeight,
       child: TWHorizontalScrollListView(
-        titleView: Padding(
+        titleView: const Padding(
           padding: EdgeInsets.only(
-            left: 12.w,
-            right: 8.w,
+            left: 12,
+            right: 8,
           ),
           child: Text(
             '推薦',
             style: TextStyle(
-              fontSize: 12.sp,
-              color: const Color(0XFF999999),
+              fontSize: 12,
+              color: Color(0XFF999999),
             ),
           ),
         ),
@@ -109,15 +108,15 @@ class BiddingCalendarHeaderView extends StatelessWidget {
 
   Widget _buildItem(int index, BiddingDayChoiceModel model) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: 12.w,
-        bottom: 12.w,
-        right: 8.w,
+      padding: const EdgeInsets.only(
+        top: 12,
+        bottom: 12,
+        right: 8,
       ),
       child: Material(
         child: Ink(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4.w),
+            borderRadius: BorderRadius.circular(4),
             color: model.isChoice
                 ? const Color(0XFFFF8000)
                 : const Color(0XFFF5F5F5),
@@ -136,7 +135,7 @@ class BiddingCalendarHeaderView extends StatelessWidget {
                 Text(
                   '${model.dayCount}天',
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: 14,
                     color: model.isChoice
                         ? const Color(0XFFFFFFFF)
                         : const Color(0XFF666666),

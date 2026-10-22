@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:tw_calendar/tw_calendar.dart';
 import 'package:tw_calendar_example/feature/bidding_calendar_header_view.dart';
 import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BiddingCalendarView extends StatefulWidget {
   final DateTime? selectedStartDate;
@@ -62,7 +61,7 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: ScreenUtil().screenHeight * 0.8,
+      height: MediaQuery.of(context).size.height * 0.8,
       child: TWCalendarList(
         configs: TWCalendarConfigs(),
         calendarController: controller,
@@ -103,7 +102,7 @@ class _BiddingCalendarViewState extends State<BiddingCalendarView> {
       controller.selectedEndDate = selectedDate;
       models?.forEach((element) {
         element.isChoice = element.dayCount == selectedDays;
-      }); 
+      });
     });
   }
 

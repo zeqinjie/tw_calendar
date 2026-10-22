@@ -6,7 +6,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tw_calendar/tw_calendar.dart';
 import 'package:tw_calendar_example/feature/bidding_day_choice_model.dart';
 import 'feature/bidding_calendar_view.dart';
@@ -25,20 +24,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 667),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          debugShowCheckedModeBanner: false,
-          home: child,
-        );
-      },
-      child: Scaffold(
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
         appBar: AppBar(
           title: const Text('Calendar Demo'),
         ),
@@ -271,7 +262,7 @@ class TWCalendarMultipleSerialViewState
           ensureViewSelectedColor: Colors.blue,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
-          monthBodyHeight: 300.w,
+          monthBodyHeight: 300,
           canSelectedToday: true,
           sortOffset: 1,
           titleHandler: ((year, month) => '$year - $month'),
@@ -282,7 +273,7 @@ class TWCalendarMultipleSerialViewState
           todyTitle: 'today',
         ),
         weekdayRowConfig: TWCalendarWeekdayRowConfig(
-          titleFontSize: 14.w,
+          titleFontSize: 14,
           titleColor: Colors.blue,
           titles: [
             'Mon',
@@ -297,12 +288,12 @@ class TWCalendarMultipleSerialViewState
       ),
       headerView: Container(
         alignment: Alignment.center,
-        height: 55.w,
-        child: Text(
+        height: 55,
+        child: const Text(
           'Calendar Widget',
           style: TextStyle(
             color: Colors.blue,
-            fontSize: 18.w,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -360,17 +351,17 @@ class TWCalendarMultipleNotSerialViewState
           selectedMode: TWCalendarListSelectedMode.notSerial,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
-          monthBodyHeight: 300.w,
+          monthBodyHeight: 300,
         ),
       ),
       headerView: Container(
         alignment: Alignment.center,
-        height: 55.w,
-        child: Text(
+        height: 55,
+        child: const Text(
           'Multiple Not Serial Date Widget',
           style: TextStyle(
             color: Colors.blue,
-            fontSize: 18.w,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -422,7 +413,7 @@ class TWCalendarCustomDateViewState extends State<TWCalendarCustomDateView> {
           selectedMode: TWCalendarListSelectedMode.notSerial,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
-          monthBodyHeight: 300.w,
+          monthBodyHeight: 300,
         ),
         dayNumberConfig: TWCalendarDayNumberConfig(
           widgetHandler: (
@@ -490,12 +481,12 @@ class TWCalendarCustomDateViewState extends State<TWCalendarCustomDateView> {
       ),
       headerView: Container(
         alignment: Alignment.center,
-        height: 55.w,
-        child: Text(
+        height: 55,
+        child: const Text(
           'Calendar Custom Date Widget',
           style: TextStyle(
             color: Colors.blue,
-            fontSize: 18.w,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -578,7 +569,7 @@ class TWCalendarLimitMaxOrMinViewState
           maxSelectDays: maxSelectedDays,
         ),
         monthViewConfig: TWCalendarMonthViewConfig(
-          monthBodyHeight: 300.w,
+          monthBodyHeight: 300,
           canSelectedToday: true,
           sortOffset: 1,
           titleHandler: ((year, month) => '$year - $month'),
@@ -586,12 +577,12 @@ class TWCalendarLimitMaxOrMinViewState
       ),
       headerView: Container(
         alignment: Alignment.center,
-        height: 55.w,
-        child: Text(
+        height: 55,
+        child: const Text(
           'Calendar Widget',
           style: TextStyle(
             color: Colors.orange,
-            fontSize: 18.w,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),

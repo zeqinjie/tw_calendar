@@ -18,9 +18,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # https://pub.flutter-io.cn/packages/flutter_screenutil/install
-  flutter_screenutil: ^5.9.0
-
   tw_calendar:
     # When depending on this package from a real application you should use:
     #   tw_calendar: ^x.y.z
