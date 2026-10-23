@@ -93,5 +93,6 @@ jobs:
       - run: flutter pub get
       - name: Install iOS dependencies
         working-directory: example/ios
-        run: pod install --deployment
+        # Runner images may use a different CocoaPods version than the lockfile.
+        run: pod install
       - run: flutter build ios --debug --no-codesign --no-pub
